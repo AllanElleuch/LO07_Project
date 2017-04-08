@@ -14,9 +14,24 @@ class DefaultController extends Controller
      */
     public function mesCursusAction(Request $request)
     {
+
+        $cursus = array(
+            array(
+                'label' => 'Mon cursus',
+                'student' => 'Corentin Laithier - 36795',
+                'nbElements' => '3',
+            ),
+            array(
+                'label' => 'Parcours UTT',
+                'student' => 'Allan Elleuch - 39678',
+                'nbElements' => '5',
+            ),
+        );
+
         // replace this example code with whatever you need
         return $this->render('cursus/mes-cursus.html.twig', array(
             'currentPage' => 'mes-cursus',
+            'cursus' => $cursus,
         ));
     }
 
