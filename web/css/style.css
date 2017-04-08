@@ -1,3 +1,24 @@
-h1 {
-    color: red;
+/* Barre de navigation inférieure
+ * ==============================
+ */
+.sub-nav{
+    display: block;
+    text-align: center;
+    padding: .8em;
+    background-color: rgb(245, 245, 245);
+}
+.sub-nav-item{
+    padding: inherit;
+    color: #777;
+}
+.sub-nav-item:hover{
+    border-bottom: 3px solid rgb(193, 193, 193);
+    text-decoration: none;
+    color: black;
+}
+.sub-nav-item.active{
+    border-bottom: 3px solid #5cb85c; /*Bootstrap Green*/
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
 }

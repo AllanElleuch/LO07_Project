@@ -1,15 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Index
+    Mes Cursus
 {% endblock %}
 
 {% block body %}
-    <div class="jumbotron">
-        <h1 class="display-4">Hello ! 😀</h1>
-        <hr class="jumbotron-hr">
-        <p class="lead">
-          I think it's working !
-        </p>
-    </div>
+    <ul class="sub-nav">
+        <a class="sub-nav-item active" href="#">Mes cursus</a>
+        <a class="sub-nav-item" href="#">Nouveau cursus</a>
+        <a class="sub-nav-item" href="#">Importer</a>
+        <a class="sub-nav-item" href="#">Exporter</a>
+    </ul>
 {% endblock %}

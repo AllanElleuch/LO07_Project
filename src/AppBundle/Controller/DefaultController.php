@@ -10,12 +10,49 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @Route("/cursus/mes-cursus/")
      */
-    public function indexAction(Request $request)
+    public function mesCursusAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);
+        return $this->render('cursus/mes-cursus.html.twig', array(
+            'currentPage' => 'mes-cursus',
+        ));
+    }
+
+
+    /**
+     * @Route("/cursus/new/")
+     */
+    public function newCursusAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('cursus/new.html.twig', array(
+            'currentPage' => "new",
+        ));
+    }
+
+
+    /**
+     * @Route("/cursus/import/")
+     */
+    public function importCursusAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('cursus/import.html.twig', array(
+            'currentPage' => "import",
+        ));
+    }
+
+
+    /**
+     * @Route("/cursus/export/")
+     */
+    public function exportCursusAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('cursus/export.html.twig', array(
+            'currentPage' => "export",
+        ));
     }
 }
