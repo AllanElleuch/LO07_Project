@@ -17,14 +17,22 @@ class DefaultController extends Controller
 
         $cursus = array(
             array(
+                'id' => 1,
                 'label' => 'Mon cursus',
                 'student' => 'Corentin Laithier - 36795',
                 'nbElements' => '3',
             ),
             array(
+                'id' => 2,
                 'label' => 'Parcours UTT',
                 'student' => 'Allan Elleuch - 39678',
                 'nbElements' => '5',
+            ),
+            array(
+                'id' => 3,
+                'label' => 'Parcours Test',
+                'student' => 'Corentin Laithier - 36795',
+                'nbElements' => '6',
             ),
         );
 
