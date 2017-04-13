@@ -4,11 +4,11 @@
 
     <!-- L'opérateur ternaire ajoute la classe 'active' à l'item s'il sagit de la page courante -->
     <ul class="sub-nav">
-        <a class="sub-nav-item {{ currentPage == 'mes-reglements' ? 'active' : '' }}"
+        <a class="sub-nav-item {{ subnav == 'mes-reglements' ? 'active' : '' }}"
            href="/reglements/mes-reglements/">Mes
             règlements</a>
-        <a class="sub-nav-item {{ currentPage == 'import' ? 'active' : '' }}" href="/reglements/import/">Importer</a>
-        <a class="sub-nav-item {{ currentPage == 'export' ? 'active' : '' }}" href="/reglements/export/">Exporter</a>
+        <a class="sub-nav-item {{ subnav == 'import' ? 'active' : '' }}" href="/reglements/import/">Importer</a>
+        <a class="sub-nav-item {{ subnav == 'export' ? 'active' : '' }}" href="/reglements/export/">Exporter</a>
     </ul>
 
     <div class="container">

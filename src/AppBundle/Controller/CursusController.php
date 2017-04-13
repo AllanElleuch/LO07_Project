@@ -52,7 +52,8 @@ class CursusController extends Controller
 
         // replace this example code with whatever you need
         return $this->render('cursus/mes-cursus.html.twig', array(
-            'currentPage' => 'mes-cursus','cursus'=>$cursus,
+            'nav' => "cursus",
+            'subnav' => 'mes-cursus','cursus'=>$cursus,
             'cursus' => $cursus,
         ));
 
@@ -77,23 +78,25 @@ class CursusController extends Controller
       $form->handleRequest($request);
 
       if ($form->isSubmitted() && $form->isValid()) {
-      // $form->getData() holds the submitted values
-      // but, the original `$task` variable has also been updated
-          $cursus = $form->getData();
+          // $form->getData() holds the submitted values
+          // but, the original `$task` variable has also been updated
+              $cursus = $form->getData();
 
-      // ... perform some action, such as saving the task to the database
-      // for example, if Task is a Doctrine entity, save it!
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($cursus);
-      $em->flush();
+          // ... perform some action, such as saving the task to the database
+          // for example, if Task is a Doctrine entity, save it!
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($cursus);
+          $em->flush();
 
-    return $this->redirectToRoute('homepage');
-}
+        return $this->redirectToRoute('homepage');
+    }
 
 
 
       return $this->render('cursus/new.html.twig', array(
-          'form' => $form->createView(),'currentPage' => "new",
+          'form' => $form->createView(),
+          'nav' => "cursus",
+          'subnav' => "new",
       ));
 
 
@@ -113,7 +116,8 @@ class CursusController extends Controller
     {
         // replace this example code with whatever you need
         return $this->render('cursus/import.html.twig', array(
-            'currentPage' => "import",
+            'nav' => "cursus",
+            'subnav' => "import",
         ));
     }
 
@@ -125,7 +129,8 @@ class CursusController extends Controller
     {
         // replace this example code with whatever you need
         return $this->render('cursus/export.html.twig', array(
-            'currentPage' => "export",
+            'nav' => "cursus",
+            'subnav' => "export",
         ));
     }
 }

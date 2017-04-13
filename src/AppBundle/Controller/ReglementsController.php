@@ -20,25 +20,28 @@ class ReglementsController extends Controller {
     public function mesReglementsAction(Request $request)
     {
         return $this->render('reglements/mes-reglements.html.twig', array(
-            'currentPage' => "mes-reglements",
+            'nav' => "reglements",
+            'subnav' => "mes-reglements",
         ));
     }
     /**
-     * @Route("/reglements/mes-reglements/")
+     * @Route("/reglements/import/")
      */
     public function importReglementsAction(Request $request)
     {
         return $this->render('reglements/import.html.twig', array(
-            'currentPage' => "import",
+            'nav' => "reglements",
+            'subnav' => "import",
         ));
     }
     /**
-     * @Route("/reglements/mes-reglements/")
+     * @Route("/reglements/export/")
      */
     public function exportReglementsAction(Request $request)
     {
         return $this->render('reglements/export.html.twig', array(
-            'currentPage' => "export",
+            'nav' => "reglements",
+            'subnav' => "export",
         ));
     }
 
