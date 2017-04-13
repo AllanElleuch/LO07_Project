@@ -28,9 +28,32 @@ class DefaultController extends Controller
        );
 }
 */
+
+        $cursus = array(
+            array(
+                'id' => 1,
+                'label' => 'Mon cursus',
+                'student' => 'Corentin Laithier - 36795',
+                'nbElements' => '3',
+            ),
+            array(
+                'id' => 2,
+                'label' => 'Parcours UTT',
+                'student' => 'Allan Elleuch - 39678',
+                'nbElements' => '5',
+            ),
+            array(
+                'id' => 3,
+                'label' => 'Parcours Test',
+                'student' => 'Corentin Laithier - 36795',
+                'nbElements' => '6',
+            ),
+        );
+
         // replace this example code with whatever you need
         return $this->render('cursus/mes-cursus.html.twig', array(
             'currentPage' => 'mes-cursus','cursus'=>$cursus,
+            'cursus' => $cursus,
         ));
 
   }
@@ -48,7 +71,7 @@ class DefaultController extends Controller
 
       $form = $this->createFormBuilder($cursus)
           ->add('label', TextType::class)
-          ->add('envoyer', SubmitType::class, array('label' => 'crÃ©ation cursus'))
+          ->add('envoyer', SubmitType::class, array('label' => 'création cursus'))
           ->getForm();
 
       $form->handleRequest($request);

@@ -1,7 +1,50 @@
 {% extends 'cursus/cursus-subnav.html.twig' %}
 
 {% block content %}
+{% extends 'cursus/cursus-subnav.html.twig' %}
+
+{% block content %}
     Mes cursus
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Cursus</th>
+            <th></th>
+            <th></th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for oneCursus in cursus %}
+            <tr>
+                <td>{{ oneCursus.label }}</td>
+                <td>{{ oneCursus.student }}</td>
+                <td><span class="badge badge-default">{{ oneCursus.nbElements }} éléments</span></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="#" class="dropdown-item btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>
+                                Voir</a>
+                            <a href="#" class="dropdown-item btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i>
+                                Modifier</a>
+                            <a href="#" class="dropdown-item btn-sm"><i class="fa fa-files-o" aria-hidden="true"></i>
+                                Dupliquer</a>
+                            <a href="#" class="dropdown-item btn-sm text-danger"><i class="fa fa-trash-o"
+                                                                              aria-hidden="true"></i> Supprimer</a>
+                        </div>
+                        <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"
+                                                                        aria-hidden="true"></i> Appliquer un
+                            règlement</a>
+
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 
     {% for c in cursus %}
