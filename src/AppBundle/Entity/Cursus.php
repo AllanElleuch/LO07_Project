@@ -12,27 +12,28 @@ class Cursus
 {
 
 
-  /**
-   * @ORM\Column(type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
 
-/**
- * Un cursus à plusieurs éléments de formations.
- * @ORM\OneToMany(targetEntity="ElementFormation", mappedBy="cursus")
- */
+    /**
+     * Un cursus à plusieurs éléments de formations.
+     * @ORM\OneToMany(targetEntity="ElementFormation", mappedBy="cursus")
+     */
     private $elementsFormations;
+
 
     public function __construct() {
         $this->elementsFormations = new ArrayCollection();
     }
 
     /**
- * @ORM\Column(type="string", length=100)
- */
+     * @ORM\Column(type="string", length=100)
+     */
     private $label;
 
     /**
@@ -40,8 +41,7 @@ class Cursus
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -49,13 +49,10 @@ class Cursus
      * Set elementsFormations
      *
      * @param array $elementsFormations
-     *
      * @return Cursus
      */
-    public function setelementsFormations($elementsFormations)
-    {
+    public function setelementsFormations($elementsFormations) {
         $this->elementsFormations = $elementsFormations;
-
         return $this;
     }
 
@@ -64,8 +61,7 @@ class Cursus
      *
      * @return array
      */
-    public function getelementsFormations()
-    {
+    public function getelementsFormations() {
         return $this->elementsFormations;
     }
 
@@ -73,13 +69,10 @@ class Cursus
      * Set label
      *
      * @param string $label
-     *
      * @return Cursus
      */
-    public function setLabel($label)
-    {
+    public function setLabel($label){
         $this->label = $label;
-
         return $this;
     }
 
@@ -88,8 +81,7 @@ class Cursus
      *
      * @return string
      */
-    public function getLabel()
-    {
+    public function getLabel() {
         return $this->label;
     }
 
@@ -97,13 +89,10 @@ class Cursus
      * Add elementsFormation
      *
      * @param \AppBundle\Entity\ElementFormation $elementsFormation
-     *
      * @return Cursus
      */
-    public function addElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation)
-    {
+    public function addElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation) {
         $this->elementsFormations[] = $elementsFormation;
-
         return $this;
     }
 
@@ -112,8 +101,7 @@ class Cursus
      *
      * @param \AppBundle\Entity\ElementFormation $elementsFormation
      */
-    public function removeElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation)
-    {
+    public function removeElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation) {
         $this->elementsFormations->removeElement($elementsFormation);
     }
 }

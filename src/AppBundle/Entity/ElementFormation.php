@@ -9,24 +9,26 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ElementFormation
 {
-  /**
-   * @ORM\Column(type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-  /**
-* @ORM\Column(type="string", length=100)
-*/
-  private $label;
 
-  /**
- * Plusieurs élément de formations on un seul cursus.
- * @ORM\ManyToOne(targetEntity="Cursus", inversedBy="elementsFormations")
- * @ORM\JoinColumn(name="cursus_id", referencedColumnName="id")
- */
-private $cursus;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $label;
+
+    /**
+     * Plusieurs élément de formations appartiennent un seul cursus.
+     * @ORM\ManyToOne(targetEntity="Cursus", inversedBy="elementsFormations")
+     * @ORM\JoinColumn(name="cursus_id", referencedColumnName="id")
+     */
+    private $cursus;
 
 
     /**
@@ -34,8 +36,7 @@ private $cursus;
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -46,10 +47,8 @@ private $cursus;
      *
      * @return ElementFormation
      */
-    public function setLabel($label)
-    {
+    public function setLabel($label) {
         $this->label = $label;
-
         return $this;
     }
 
@@ -58,8 +57,7 @@ private $cursus;
      *
      * @return string
      */
-    public function getLabel()
-    {
+    public function getLabel() {
         return $this->label;
     }
 
@@ -67,13 +65,10 @@ private $cursus;
      * Set cursus
      *
      * @param \AppBundle\Entity\Cursus $cursus
-     *
      * @return ElementFormation
      */
-    public function setCursus(\AppBundle\Entity\Cursus $cursus = null)
-    {
+    public function setCursus(\AppBundle\Entity\Cursus $cursus = null) {
         $this->cursus = $cursus;
-
         return $this;
     }
 
@@ -82,8 +77,7 @@ private $cursus;
      *
      * @return \AppBundle\Entity\Cursus
      */
-    public function getCursus()
-    {
+    public function getCursus() {
         return $this->cursus;
     }
 }
