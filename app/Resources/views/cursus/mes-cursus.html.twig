@@ -2,4 +2,11 @@
 
 {% block content %}
     Mes cursus
+
+
+    {% for c in cursus %}
+        <li>{{ c.label|e }}</li>
+    {% endfor %}
+
+
 {% endblock %}
