@@ -1,23 +1,60 @@
-/* Barre de navigation inférieure
+/* Barre de navigation principale
+ * ==============================
+ */
+.main-nav{
+    margin-bottom: 0;
+    padding: .8em;
+    display: block;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+}
+.main-nav-item{
+    padding-bottom: .9em;
+    padding-left: .9em;
+    padding-right: .9em;
+    color: #777;
+}
+
+.main-nav-item:hover{
+    border-bottom: 3px solid rgb(193, 193, 193);
+    text-decoration: none;
+    color: black;
+}
+.main-nav-item.active{
+    border-bottom: 3px solid #5cb85c;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+
+
+
+
+/* Barre de navigation secondaire
  * ==============================
  */
 .sub-nav{
     display: block;
     text-align: center;
     padding: .8em;
-    background-color: rgb(245, 245, 245);
+    font-size: 0.9em;
+    background-color: #fafafa;
+    border-bottom: 1px solid #e0e0e0;
 }
 .sub-nav-item{
-    padding: inherit;
+    padding-bottom: .9em;
+    padding-left: .9em;
+    padding-right: .9em;
     color: #777;
 }
 .sub-nav-item:hover{
-    border-bottom: 3px solid rgb(193, 193, 193);
+    border-bottom: 2px solid rgb(193, 193, 193);
     text-decoration: none;
     color: black;
 }
 .sub-nav-item.active{
-    border-bottom: 3px solid #5cb85c; /*Bootstrap Green*/
+    border-bottom: 2px solid #5cb85c;
     text-decoration: none;
     color: black;
     font-weight: 500;

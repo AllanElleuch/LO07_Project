@@ -29,15 +29,7 @@
             <a class="navbar-brand" href="#">EasyCursus</a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Cursus <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Règlements</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Item</a>
-                    </li>
+                    <!-- Empty but allow to right align the ID of connected -->
                 </ul>
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item dropdown">
@@ -53,6 +45,11 @@
                 </ul>
             </div>
         </nav>
+
+        <ul class="main-nav">
+            <a href="#" class="main-nav-item active">Cursus</a>
+            <a href="#" class="main-nav-item">Règlements</a>
+        </ul>
 
 
         {% block body %}
