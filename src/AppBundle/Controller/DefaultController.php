@@ -71,7 +71,7 @@ class DefaultController extends Controller
 
       $form = $this->createFormBuilder($cursus)
           ->add('label', TextType::class)
-          ->add('envoyer', SubmitType::class, array('label' => 'création cursus'))
+          ->add('envoyer', SubmitType::class, array('label' => 'crÃ©ation cursus'))
           ->getForm();
 
       $form->handleRequest($request);
