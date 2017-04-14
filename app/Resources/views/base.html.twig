@@ -65,8 +65,14 @@
         <!-- Import jQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- Compiled and minified JavaScript -->
+        <script src="{{ asset('js/tether.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/theter.min.js') }}"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
 
         {% block javascripts %}{% endblock %}
     </body>
