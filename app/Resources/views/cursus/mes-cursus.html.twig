@@ -5,9 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    Mes cursus
     <table class="table">
-        <thead>
+        <thead class="thead-default">
         <tr>
             <th>Cursus</th>
             <th></th>
@@ -19,8 +18,8 @@
         {% for oneCursus in cursus %}
             <tr>
                 <td>{{ oneCursus.label }}</td>
-                <td>{{ oneCursus.student }}</td>
-                <td><span class="badge badge-default">{{ oneCursus.nbElements }} éléments</span></td>
+                <td class="grey">{{ oneCursus.student }}</td>
+                <td class="grey">{{ oneCursus.nbElements }} éléments</td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

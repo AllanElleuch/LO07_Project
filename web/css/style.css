@@ -1,31 +1,46 @@
+/* STYLE.CSS
+ * =========
+ *
+ * EasyCursus, projet LO07
+ * Allan Elleuch, Corentin Laithier
+ *
+ */
+
+
+
 /* Barre de navigation principale
  * ==============================
  */
+.bg-custom {
+    background-color: #f5f5f5 !important;
+}
+
 .main-nav{
-    margin-bottom: 0;
-    padding: .8em;
     display: block;
+    text-align: center;
+    padding: .8em;
+    margin-bottom: 0;
     background-color: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
 }
 .main-nav-item{
-    padding-bottom: .9em;
+    padding-bottom: .97em;
     padding-left: .9em;
     padding-right: .9em;
     color: #777;
 }
 
 .main-nav-item:hover{
-    border-bottom: 3px solid rgb(193, 193, 193);
+    border-bottom: 2px solid rgb(193, 193, 193);
     text-decoration: none;
-    color: black;
+    color: #000;
 }
 .main-nav-item.active{
-    border-bottom: 3px solid #5cb85c;
+    border-bottom: 2px solid #5cb85c;
     text-decoration: none;
-    color: black;
+    color: #000;
     font-weight: 600;
 }
+
 
 
 
@@ -39,8 +54,9 @@
     text-align: center;
     padding: .8em;
     font-size: 0.9em;
-    background-color: #fafafa;
-    border-bottom: 1px solid #e0e0e0;
+    background-color: #ebebeb;
+    border-bottom: 1px solid #cecece;
+    border-top: 1px solid #cecece;
 }
 .sub-nav-item{
     padding-bottom: .9em;
@@ -49,13 +65,33 @@
     color: #777;
 }
 .sub-nav-item:hover{
-    border-bottom: 2px solid rgb(193, 193, 193);
+    /*border-bottom: 2px solid rgb(193, 193, 193);*/
     text-decoration: none;
     color: black;
 }
 .sub-nav-item.active{
-    border-bottom: 2px solid #5cb85c;
+    /*border-bottom: 2px solid #5cb85c;*/
     text-decoration: none;
-    color: black;
+    color: #5cb85c;
     font-weight: 500;
+}
+
+
+/* Tableaux
+ * ========
+ */
+.thead-default th{
+    background-color: #fafafa;
+    font-weight: 500;
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2 !important;
+}
+
+.table td{
+    font-size: .9em;
+    border-top: 1px solid #e2e2e2;
+}
+
+.grey{
+    color: #777;
 }
