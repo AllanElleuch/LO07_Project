@@ -11,5 +11,5 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DefaultController extends Controller
 {
-  
+
 }

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class CursusController extends Controller
 {
     /**
+     * affiche les cursus d'un étudiant
      * @Route("/", name="homepage")
      * @Route("/cursus/mes-cursus/")
      */
@@ -52,6 +53,9 @@ class CursusController extends Controller
 
   }
 
+
+
+
   /**
    * @Route("/cursus/delete/{id}")
    */  public function deleteCursus(Cursus $cursus)
@@ -67,31 +71,59 @@ $em->flush();
 return $this->redirectToRoute('homepage');
 
 
+}
 
-/*
-    $em = $this->getDoctrine()->getManager();
-    $cursus = $em->getRepository('AppBundle:Cursus')->find($cursusid);
+/**
+ * @Route("/cursus/update/{id}")
+ */  public function updateCursus(Request $request,$id)
+{
+
+
+
+  // create a cursus and give it some dummy data for this example
+  $cursus = $this->getDoctrine()
+   ->getRepository('AppBundle:Cursus')
+   ->find($id);
 
    if (!$cursus) {
-       throw $this->createNotFoundException(
-           'Pas de cursus pour cette id'.$cursusid
-       );
-   }
-
-   $em->remove($product);
-   $em->flush();
-   return $this->redirectToRoute('homepage');
+        throw $this->createNotFoundException('Aucun cursus à édité.');
+    }
 
 
+   $form = $this->createFormBuilder($cursus)
+       ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
+       ->add('envoyer', SubmitType::class, array('label' => 'Modifier cursus'))
+       ->getForm();
 
-   $em = $this->getDoctrine()->getEntityManager();
-      $em->remove($guest);
+
+
+  $form->handleRequest($request);
+
+  if ($form->isSubmitted() && $form->isValid()) {
+      // $form->getData() holds the submitted values
+      // but, the original `$task` variable has also been updated
+          $cursus = $form->getData();
+
+      // ... perform some action, such as saving the task to the database
+      // for example, if Task is a Doctrine entity, save it!
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($cursus);
       $em->flush();
 
-      return $this->redirect($this->generateUrl('GuestBundle:Page:viewGuests.html.twig'));
-   */
+    return $this->redirectToRoute('homepage');
+
 
 }
+
+return $this->render('cursus/new.html.twig', array(
+    'form' => $form->createView(),
+    'nav' => "cursus",
+    'subnav' => "new",
+));
+
+
+}
+
 
 
 
