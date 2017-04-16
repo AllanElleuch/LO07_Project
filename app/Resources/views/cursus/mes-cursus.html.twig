@@ -17,9 +17,9 @@
         <tbody>
         {% for oneCursus in cursus %}
             <tr>
-                <td>{{ oneCursus.label }}</td>
-                <td class="grey">{{ oneCursus.student }}</td>
-                <td class="grey">{{ oneCursus.nbElements }} éléments</td>
+                <td>{{ oneCursus.label|e }}</td>
+                <td class="grey"></td>
+                <td class="grey"> </td>
                 <td>
                     <div class="btn-group btn-group-sm">
                         <a href="#" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
@@ -28,7 +28,7 @@
                            title="Modifier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                         <a href="#" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
                            title="Dupliquer"><i class="fa fa-files-o" aria-hidden="true"></i></a>
-                        <a href="#" class="btn btn-secondary btn-sm text-danger" data-toggle="tooltip"
+                        <a href="/cursus/delete/{{oneCursus.id}}" class="btn btn-secondary btn-sm text-danger" data-toggle="tooltip"
                            data-placement="bottom"
                            title="Supprimer"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     </div>
@@ -43,9 +43,6 @@
     </table>
 
 
-    {% for c in cursus2 %}
-        <li>{{ c.label|e }}</li>
-    {% endfor %}
 
 
 {% endblock %}

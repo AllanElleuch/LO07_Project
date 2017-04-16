@@ -18,17 +18,11 @@ class CursusController extends Controller
     public function mesCursusAction(Request $request)
     {
 
-      $cursus2 = $this->getDoctrine()
+      $cursus = $this->getDoctrine()
        ->getRepository('AppBundle:Cursus')
        ->findAll();
-/*
-   if (!$cursus) {
-       throw $this->createNotFoundException(
-           'Pas de cursus trouver '
-       );
-}
-*/
 
+/*
         $cursus = array(
             array(
                 'id' => 1,
@@ -49,15 +43,57 @@ class CursusController extends Controller
                 'nbElements' => '6',
             ),
         );
+*/
 
-        // replace this example code with whatever you need
         return $this->render('cursus/mes-cursus.html.twig', array(
             'nav' => "cursus",
             'subnav' => 'mes-cursus','cursus'=>$cursus,
-            'cursus2' => $cursus2,
         ));
 
   }
+
+  /**
+   * @Route("/cursus/delete/{id}")
+   */  public function deleteCursus(Cursus $cursus)
+ {
+
+   if (!$cursus) {
+    throw $this->createNotFoundException('Cursus introuvable');
+}
+$em = $this->getDoctrine()->getEntityManager();
+
+$em->remove($cursus);
+$em->flush();
+return $this->redirectToRoute('homepage');
+
+
+
+/*
+    $em = $this->getDoctrine()->getManager();
+    $cursus = $em->getRepository('AppBundle:Cursus')->find($cursusid);
+
+   if (!$cursus) {
+       throw $this->createNotFoundException(
+           'Pas de cursus pour cette id'.$cursusid
+       );
+   }
+
+   $em->remove($product);
+   $em->flush();
+   return $this->redirectToRoute('homepage');
+
+
+
+   $em = $this->getDoctrine()->getEntityManager();
+      $em->remove($guest);
+      $em->flush();
+
+      return $this->redirect($this->generateUrl('GuestBundle:Page:viewGuests.html.twig'));
+   */
+
+}
+
+
 
 
     /**
@@ -101,12 +137,10 @@ class CursusController extends Controller
 
 
 
-      /*  // replace this example code with whatever you need
-        return $this->render('cursus/new.html.twig', array(
-            'currentPage' => "new",
-        ));
-        */
     }
+
+
+
 
 
     /**
