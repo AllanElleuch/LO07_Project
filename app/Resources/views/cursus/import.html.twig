@@ -1,11 +1,15 @@
 {% extends 'cursus/cursus-subnav.html.twig' %}
 
+{% block title %}
+    Cursus - Import
+{% endblock %}
+
 {% block content %}
     <div class="text-center">
         <h1>Importation de cursus</h1>
         <h1 class="display-1"><i class="fa fa-cloud-upload" aria-hidden="true"></i></h1>
         <p>Importer un fichier .csv contenant les cursus.</p>
 
-        <button class="btn btn-outline-success">Choisir un fichier</button>
+        <button class="btn btn-sm btn-outline-success">Choisir un fichier</button>
     </div>
 {% endblock %}

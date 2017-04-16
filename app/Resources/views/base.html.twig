@@ -20,7 +20,7 @@
     <body>
 
         <!-- Navigation -->
-        <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <nav class="navbar navbar-toggleable-md navbar-light bg-custom">
             <!-- Bouton pour afficher la navigation mobile -->
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -47,8 +47,9 @@
         </nav>
 
         <ul class="main-nav">
-            <a href="#" class="main-nav-item active">Cursus</a>
-            <a href="#" class="main-nav-item">Règlements</a>
+            <a href="/cursus/mes-cursus" class="main-nav-item {{ nav == 'cursus' ? 'active' : '' }}">Cursus</a>
+            <a href="/reglements/mes-reglements" class="main-nav-item {{ nav == 'reglements' ? 'active' : ''
+            }}">Règlements</a>
         </ul>
 
 
@@ -64,8 +65,14 @@
         <!-- Import jQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- Compiled and minified JavaScript -->
+        <script src="{{ asset('js/tether.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/theter.min.js') }}"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
 
         {% block javascripts %}{% endblock %}
     </body>
