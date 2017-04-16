@@ -18,7 +18,7 @@ class CursusController extends Controller
     public function mesCursusAction(Request $request)
     {
 
-      $cursus = $this->getDoctrine()
+      $cursus2 = $this->getDoctrine()
        ->getRepository('AppBundle:Cursus')
        ->findAll();
 /*
@@ -54,7 +54,7 @@ class CursusController extends Controller
         return $this->render('cursus/mes-cursus.html.twig', array(
             'nav' => "cursus",
             'subnav' => 'mes-cursus','cursus'=>$cursus,
-            'cursus' => $cursus,
+            'cursus2' => $cursus2,
         ));
 
   }
@@ -68,10 +68,10 @@ class CursusController extends Controller
 
       // create a cursus and give it some dummy data for this example
       $cursus = new Cursus();
-      $cursus->setLabel('Mon cursus de ...');
+      //$cursus->setLabel('Mon cursus de ...');
 
       $form = $this->createFormBuilder($cursus)
-          ->add('label', TextType::class, array('label' => 'Label du cursus'))
+          ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
           ->add('envoyer', SubmitType::class, array('label' => 'création cursus'))
           ->getForm();
 
