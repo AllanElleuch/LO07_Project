@@ -17,11 +17,54 @@ class ElementFormation
     private $id;
 
 
+    /**
+     * @ORM\Column(type="smallint", length=100)
+     */
+    private $sem_seq;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $label;
+    private $sem_label;
+
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $sigle;
+
+    /**
+     * @ORM\Column(type="boolean", length=100)
+     */
+    private $utt;
+
+    /**
+     * @ORM\Column(type="boolean", length=100)
+     */
+    private $profil;
+
+    /**
+     * @ORM\Column(type="smallint", length=100)
+     */
+    private $credit;
+
+    /**
+     * catégories : CS, TM, EC, CT, HT, ME, ST, SE, HP, NPML
+     * @ORM\Column(type="smallint", length=100)
+     */
+    private $categories;
+
+    /**
+     * $affectations :  TC, TCBR, FLBR
+     * @ORM\Column(type="smallint", length=100)
+     */
+    private $affectations;
+
+    /**
+     * résultats : A, B, C, D, E, F, FX, ABS, RES, ADM
+     * @ORM\Column(type="smallint", length=100)
+     */
+    private $resultats;
 
     /**
      * Plusieurs élément de formations appartiennent un seul cursus.
@@ -79,5 +122,221 @@ class ElementFormation
      */
     public function getCursus() {
         return $this->cursus;
+    }
+
+    /**
+     * Set semSeq
+     *
+     * @param \integer $semSeq
+     *
+     * @return ElementFormation
+     */
+    public function setSemSeq(\integer $semSeq)
+    {
+        $this->sem_seq = $semSeq;
+
+        return $this;
+    }
+
+    /**
+     * Get semSeq
+     *
+     * @return \integer
+     */
+    public function getSemSeq()
+    {
+        return $this->sem_seq;
+    }
+
+    /**
+     * Set semLabel
+     *
+     * @param string $semLabel
+     *
+     * @return ElementFormation
+     */
+    public function setSemLabel($semLabel)
+    {
+        $this->sem_label = $semLabel;
+
+        return $this;
+    }
+
+    /**
+     * Get semLabel
+     *
+     * @return string
+     */
+    public function getSemLabel()
+    {
+        return $this->sem_label;
+    }
+
+    /**
+     * Set sigle
+     *
+     * @param string $sigle
+     *
+     * @return ElementFormation
+     */
+    public function setSigle($sigle)
+    {
+        $this->sigle = $sigle;
+
+        return $this;
+    }
+
+    /**
+     * Get sigle
+     *
+     * @return string
+     */
+    public function getSigle()
+    {
+        return $this->sigle;
+    }
+
+    /**
+     * Set utt
+     *
+     * @param boolean $utt
+     *
+     * @return ElementFormation
+     */
+    public function setUtt($utt)
+    {
+        $this->utt = $utt;
+
+        return $this;
+    }
+
+    /**
+     * Get utt
+     *
+     * @return boolean
+     */
+    public function getUtt()
+    {
+        return $this->utt;
+    }
+
+    /**
+     * Set profil
+     *
+     * @param boolean $profil
+     *
+     * @return ElementFormation
+     */
+    public function setProfil($profil)
+    {
+        $this->profil = $profil;
+
+        return $this;
+    }
+
+    /**
+     * Get profil
+     *
+     * @return boolean
+     */
+    public function getProfil()
+    {
+        return $this->profil;
+    }
+
+    /**
+     * Set credit
+     *
+     * @param \integer $credit
+     *
+     * @return ElementFormation
+     */
+    public function setCredit(\integer $credit)
+    {
+        $this->credit = $credit;
+
+        return $this;
+    }
+
+    /**
+     * Get credit
+     *
+     * @return \integer
+     */
+    public function getCredit()
+    {
+        return $this->credit;
+    }
+
+    /**
+     * Set categories
+     *
+     * @param integer $categories
+     *
+     * @return ElementFormation
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Get categories
+     *
+     * @return integer
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Set affectations
+     *
+     * @param integer $affectations
+     *
+     * @return ElementFormation
+     */
+    public function setAffectations($affectations)
+    {
+        $this->affectations = $affectations;
+
+        return $this;
+    }
+
+    /**
+     * Get affectations
+     *
+     * @return integer
+     */
+    public function getAffectations()
+    {
+        return $this->affectations;
+    }
+
+    /**
+     * Set resultats
+     *
+     * @param integer $resultats
+     *
+     * @return ElementFormation
+     */
+    public function setResultats($resultats)
+    {
+        $this->resultats = $resultats;
+
+        return $this;
+    }
+
+    /**
+     * Get resultats
+     *
+     * @return integer
+     */
+    public function getResultats()
+    {
+        return $this->resultats;
     }
 }

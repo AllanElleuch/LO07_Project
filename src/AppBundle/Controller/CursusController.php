@@ -125,6 +125,31 @@ return $this->render('cursus/new.html.twig', array(
 }
 
 
+/**
+ * @Route("/cursus/duplicate/{id}")
+ */  public function duplicateCursus(Request $request,$id)
+{
+
+
+
+  // create a cursus and give it some dummy data for this example
+  $cursus = $this->getDoctrine()
+   ->getRepository('AppBundle:Cursus')
+   ->find($id);
+
+    $em = $this->getDoctrine()->getManager();
+    $new = clone $cursus;
+    $em->persist($new);
+    $em->flush();
+
+
+
+    return $this->redirectToRoute('homepage');
+
+
+
+
+}
 
 
 
@@ -139,6 +164,7 @@ return $this->render('cursus/new.html.twig', array(
       //$cursus->setLabel('Mon cursus de ...');
 
       $form = $this->createFormBuilder($cursus)
+          ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
           ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
           ->add('envoyer', SubmitType::class, array('label' => 'création cursus'))
           ->getForm();
