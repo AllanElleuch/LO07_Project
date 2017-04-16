@@ -20,37 +20,28 @@
     <body>
 
         <!-- Navigation -->
-        <nav class="navbar navbar-toggleable-md navbar-light bg-custom">
-            <!-- Bouton pour afficher la navigation mobile -->
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-light navbar-toggleable-sm bg-custom justify-content-center">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <a class="navbar-brand" href="#">EasyCursus</a>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <!-- Empty but allow to right align the ID of connected -->
+            <a href="/" class="navbar-brand d-flex w-50 mr-auto">EasyCursus</a>
+            <div class="navbar-collapse collapse" id="collapsingNavbar3">
+                <ul class="navbar-nav mx-auto w-100 justify-content-center">
+                    <li class="nav-item my-nav-item {{ nav == 'cursus' ? 'active' : '' }}">
+                        <a href="/cursus/mes-cursus" class="nav-link">Cursus</a>
+                    </li>
+                    <li class="nav-item my-nav-item {{ nav == 'reglements' ? 'active' : '' }}">
+                        <a href="/reglements/mes-reglements" class="nav-link ">Règlements</a>
+                    </li>
                 </ul>
-                <ul class="navbar-nav navbar-right">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Corentin Laithier
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Déconnexion</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Corentin Laithier</a>
                     </li>
                 </ul>
             </div>
         </nav>
 
-        <ul class="main-nav">
-            <a href="/cursus/mes-cursus" class="main-nav-item {{ nav == 'cursus' ? 'active' : '' }}">Cursus</a>
-            <a href="/reglements/mes-reglements" class="main-nav-item {{ nav == 'reglements' ? 'active' : ''
-            }}">Règlements</a>
-        </ul>
 
 
         {% block body %}
