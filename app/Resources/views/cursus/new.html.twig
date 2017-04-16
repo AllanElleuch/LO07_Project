@@ -6,7 +6,14 @@
 
 {% block content %}
 
-{{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+                <input type="submit" class="btn btn-sm btn-outline-success" value="Créer le cursus">
+            </div>
+        </div>
+    {{ form_end(form) }}
 
 
 

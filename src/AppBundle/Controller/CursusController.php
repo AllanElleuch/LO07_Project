@@ -166,7 +166,7 @@ return $this->render('cursus/new.html.twig', array(
       $form = $this->createFormBuilder($cursus)
           ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
           ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
-          ->add('envoyer', SubmitType::class, array('label' => 'création cursus'))
+//          ->add('envoyer', SubmitType::class, array('label' => 'création cursus', 'attr' => array('class'=>'btn btn-sm btn-outline-success')))
           ->getForm();
 
       $form->handleRequest($request);
