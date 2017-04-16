@@ -22,13 +22,17 @@
 
 
 HORIZONTAL Form
+{{ form_start(form) }}
+{{ form_end(form) }}
 
 <form class="form-horizontal">
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+  <label for="label" class="col-sm-2 control-label">Label</label>
+
+  <div class="col-sm-10">
+    {{ form_widget(form.label, {'attr': {'class': 'form-control'}}) }}
     </div>
+
   </div>
   <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
@@ -106,5 +110,6 @@ HORIZONTAL Form
     </div>
   </form>
 </div>
+
 
 {% endblock %}
