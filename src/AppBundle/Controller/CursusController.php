@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Cursus;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class CursusController extends Controller
 {
@@ -206,10 +207,34 @@ return $this->render('cursus/new.html.twig', array(
      */
     public function importCursusAction(Request $request)
     {
+
+        $form = $this->createFormBuilder()
+                ->add('submitFile', FileType::class, array('label' => 'File to Submit'))
+                ->add('envoyer', SubmitType::class, array('label' => 'Envoyer le fichier'))
+                ->getForm();
+
+        if ($request->getMethod('post') == 'POST') {
+            // Bind request to the form
+            $form->handleRequest($request);
+
+            // If form is valid
+            if ($form->isValid()) {
+                // Get file
+                $file = $form->get('submitFile');
+
+                // Your csv file here when you hit submit button
+                $file = $file->getData();
+
+                print_r($file);
+            }
+
+        }
+
         // replace this example code with whatever you need
         return $this->render('cursus/import.html.twig', array(
             'nav' => "cursus",
             'subnav' => "import",
+            'form' => $form->createView(),
         ));
     }
 

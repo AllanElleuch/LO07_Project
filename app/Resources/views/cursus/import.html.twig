@@ -10,8 +10,10 @@
         <h1 class="display-1"><i class="fa fa-cloud-upload" aria-hidden="true"></i></h1>
         <p>Importer un fichier .csv contenant les cursus.</p>
 
-        <input type="file" name="file" id="file" class="inputfile" />
-        <label for="file"><button class="btn btn-sm btn-outline-success">Choisir un fichier</button></label>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
 
     </div>
 {% endblock %}
