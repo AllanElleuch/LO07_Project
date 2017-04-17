@@ -44,6 +44,23 @@ class CursusController extends Controller {
         $em->flush();
         return $this->redirectToRoute('homepage');
 
+    }
+
+    /**
+     * @Route("/cursus/view/{id}")
+     */
+    public function viewOneCursus(Cursus $cursus, $id) {
+
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->find($id);
+
+
+        return $this->render('cursus/view.html.twig', array(
+            'nav' => "cursus",
+            'subnav' => 'mes-cursus',
+            'cursus' => $cursus,
+        ));
 
     }
 
