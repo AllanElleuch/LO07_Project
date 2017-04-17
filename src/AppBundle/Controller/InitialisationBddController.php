@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Affectations;
 use AppBundle\Entity\Resultats;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,6 +49,20 @@ class InitialisationBddController extends Controller {
                 $resObj->setLabel($resultat);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($resObj);
+                $em->flush();
+            }
+        }
+
+        $res = $this->getDoctrine()->getRepository('AppBundle:Affectations')->findAll();
+
+        if (empty($res)){
+            $affectations = array('TC', 'TCBR', 'FLBR');
+
+            foreach ($affectations as $aff){
+                $affObj = new Affectations();
+                $affObj->setLabel($aff);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($affObj);
                 $em->flush();
             }
         }
