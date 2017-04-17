@@ -16,3 +16,10 @@
 /web/bundles/
 .idea
 /app/config/parameters.yml
+Setup.md
+initResetBD.bat
+startServer.bat
+testObject.bd.bat
+updateBD.bat
+*.orig
+*.php~

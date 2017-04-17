@@ -50,21 +50,27 @@ class ElementFormation
 
     /**
      * catégories : CS, TM, EC, CT, HT, ME, ST, SE, HP, NPML
-     * @ORM\Column(type="smallint", length=100)
+     * plusieurs éléments de fomation on une Categories
+     * @ORM\ManyToOne(targetEntity="Categories", inversedBy="elementsFormation")
+     * @ORM\JoinColumn(name="categories_id", referencedColumnName="id")
      */
-    private $categories;
+       private $categories;
 
     /**
      * $affectations :  TC, TCBR, FLBR
-     * @ORM\Column(type="smallint", length=100)
+     * plusieurs éléments de fomation on une affectations
+     * @ORM\ManyToOne(targetEntity="Affectations", inversedBy="elementsFormation")
+     * @ORM\JoinColumn(name="affectations_id", referencedColumnName="id")
      */
     private $affectations;
 
     /**
      * résultats : A, B, C, D, E, F, FX, ABS, RES, ADM
-     * @ORM\Column(type="smallint", length=100)
+     * plusieurs éléments de fomation on un Resultats
+     * @ORM\ManyToOne(targetEntity="Resultats", inversedBy="elementsFormation")
+     * @ORM\JoinColumn(name="resultats_id", referencedColumnName="id")
      */
-    private $resultats;
+      private $resultats;
 
     /**
      * Plusieurs élément de formations appartiennent un seul cursus.
