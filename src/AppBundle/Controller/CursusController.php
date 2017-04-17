@@ -56,11 +56,16 @@ class CursusController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        $cursusElements =  $this->getDoctrine()
+            ->getRepository("AppBundle:ElementFormation")
+            ->findBy(array("cursus" => $id));
+
 
         return $this->render('cursus/view.html.twig', array(
             'nav' => "cursus",
             'subnav' => 'mes-cursus',
             'cursus' => $cursus,
+            'cursusElements' => $cursusElements,
         ));
 
     }
