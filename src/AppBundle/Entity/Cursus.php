@@ -27,6 +27,13 @@ class Cursus
     private $elementsFormations;
 
 
+    /**
+     * Plusieurs cursust un seul étudiant.
+     * @ORM\ManyToOne(targetEntity="Etudiants", inversedBy="cursus")
+     * @ORM\JoinColumn(name="etudiants_id", referencedColumnName="id")
+     */
+    private $etudiant;
+
     public function __construct() {
         $this->elementsFormations = new ArrayCollection();
     }
@@ -103,5 +110,29 @@ class Cursus
      */
     public function removeElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation) {
         $this->elementsFormations->removeElement($elementsFormation);
+    }
+
+    /**
+     * Set etudiant
+     *
+     * @param \AppBundle\Entity\Etudiants $etudiant
+     *
+     * @return Cursus
+     */
+    public function setEtudiant(\AppBundle\Entity\Etudiants $etudiant = null)
+    {
+        $this->etudiant = $etudiant;
+
+        return $this;
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return \AppBundle\Entity\Etudiants
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
     }
 }
