@@ -95,11 +95,16 @@
 
 .table td{
     font-size: .9em;
+    vertical-align: inherit;
     border-top: 1px solid #e2e2e2;
 }
 
 .grey{
     color: #777;
+}
+
+.note-UE {
+    font-size: 1.2em !important;
 }
 
 
