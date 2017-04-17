@@ -206,8 +206,15 @@ class CursusController extends Controller {
                       print_r($row);
                     }
 
+                    return $this->render('cursus/import.html.twig', array(
+                        'nav' => "cursus",
+                        'subnav' => "import",
+                        'notifClass' => 'success',
+                        'notif' => "Le fichier a été importé !",
+                        'form' => $form->createView(),
+                    ));
+
                 }
-              //  print_r($file);
             }
 
         }

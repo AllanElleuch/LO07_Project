@@ -5,14 +5,23 @@
 {% endblock %}
 
 {% block content %}
+        {% if notif is defined and notifClass is defined %}
+            <div class="alert alert-{{ notifClass }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ notif }}
+            </div>
+        {% endif %}
+
     <div class="text-center">
         <h1>Importation de cursus</h1>
         <h1 class="display-1"><i class="fa fa-cloud-upload" aria-hidden="true"></i></h1>
         <p>Importer un fichier .csv contenant les cursus.</p>
 
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
 
 
     </div>
