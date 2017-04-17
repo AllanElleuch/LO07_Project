@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Resultats;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +34,20 @@ class InitialisationBddController extends Controller {
                 $catObj->setLabel($cat);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($catObj);
+                $em->flush();
+            }
+        }
+
+        $res = $this->getDoctrine()->getRepository('AppBundle:Resultats')->findAll();
+
+        if (empty($res)){
+            $resultats = array('A', 'B', 'C', 'D', 'E', 'F', 'Fx', 'ABS', 'RES', 'ADM');
+
+            foreach ($resultats as $resultat){
+                $resObj = new Resultats();
+                $resObj->setLabel($resultat);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($resObj);
                 $em->flush();
             }
         }
