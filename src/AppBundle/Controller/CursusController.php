@@ -201,7 +201,13 @@ class CursusController extends Controller {
                 // Your csv file here when you hit submit button
                 $file = $file->getData();
 
-                print_r($file);
+                if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+                    while(($row = fgetcsv($handle)) !== FALSE) {
+                      print_r($row);
+                    }
+
+                }
+              //  print_r($file);
             }
 
         }
