@@ -210,13 +210,11 @@ class CursusController extends Controller {
             ->find($id);
 
 
-        // Maybe stay on export page ?
-        // Did redirect to check if it works.
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('exportCursusList');
     }
 
     /**
-     * @Route("/cursus/export/")
+     * @Route("/cursus/export/",  name="exportCursusList")
      */
     public function exportCursusListAction(Request $request) {
 
@@ -233,6 +231,15 @@ class CursusController extends Controller {
         ));
     }
 
+
+    /**
+     * @Route("/phpinfo")
+     */
+    public function phpInfoAction(Request $request) {
+
+        phpinfo();
+
+    }
 
 
 }
