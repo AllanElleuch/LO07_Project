@@ -10,208 +10,167 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class CursusController extends Controller
-{
+class CursusController extends Controller {
     /**
      * affiche les cursus d'un étudiant
      * @Route("/", name="homepage")
      * @Route("/cursus/mes-cursus/")
      */
-    public function mesCursusAction(Request $request)
-    {
+    public function mesCursusAction(Request $request) {
 
-      $cursus = $this->getDoctrine()
-       ->getRepository('AppBundle:Cursus')
-       ->findAll();
-
-/*
-        $cursus = array(
-            array(
-                'id' => 1,
-                'label' => 'Mon cursus',
-                'student' => 'Corentin Laithier - 36795',
-                'nbElements' => '3',
-            ),
-            array(
-                'id' => 2,
-                'label' => 'Parcours UTT',
-                'student' => 'Allan Elleuch - 39678',
-                'nbElements' => '5',
-            ),
-            array(
-                'id' => 3,
-                'label' => 'Parcours Test',
-                'student' => 'Corentin Laithier - 36795',
-                'nbElements' => '6',
-            ),
-        );
-*/
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->findAll();
 
         return $this->render('cursus/mes-cursus.html.twig', array(
             'nav' => "cursus",
-            'subnav' => 'mes-cursus','cursus'=>$cursus,
+            'subnav' => 'mes-cursus', 'cursus' => $cursus,
         ));
 
-  }
-
-
-
-
-  /**
-   * @Route("/cursus/delete/{id}")
-   */  public function deleteCursus(Cursus $cursus)
- {
-
-   if (!$cursus) {
-    throw $this->createNotFoundException('Cursus introuvable');
-}
-$em = $this->getDoctrine()->getEntityManager();
-
-$em->remove($cursus);
-$em->flush();
-return $this->redirectToRoute('homepage');
-
-
-}
-
-/**
- * @Route("/cursus/update/{id}")
- */  public function updateCursus(Request $request,$id)
-{
-
-
-
-  // create a cursus and give it some dummy data for this example
-  $cursus = $this->getDoctrine()
-   ->getRepository('AppBundle:Cursus')
-   ->find($id);
-
-   if (!$cursus) {
-        throw $this->createNotFoundException('Aucun cursus à édité.');
     }
 
 
-   $form = $this->createFormBuilder($cursus)
-       ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
-       ->add('envoyer', SubmitType::class, array('label' => 'Modifier cursus'))
-       ->getForm();
+    /**
+     * @Route("/cursus/delete/{id}")
+     */
+    public function deleteCursus(Cursus $cursus) {
+
+        if (!$cursus) {
+            throw $this->createNotFoundException('Cursus introuvable');
+        }
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $em->remove($cursus);
+        $em->flush();
+        return $this->redirectToRoute('homepage');
 
 
+    }
 
-  $form->handleRequest($request);
-
-  if ($form->isSubmitted() && $form->isValid()) {
-      // $form->getData() holds the submitted values
-      // but, the original `$task` variable has also been updated
-          $cursus = $form->getData();
-
-      // ... perform some action, such as saving the task to the database
-      // for example, if Task is a Doctrine entity, save it!
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($cursus);
-      $em->flush();
-
-    return $this->redirectToRoute('homepage');
+    /**
+     * @Route("/cursus/update/{id}")
+     */
+    public function updateCursus(Request $request, $id) {
 
 
-}
+        // create a cursus and give it some dummy data for this example
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->find($id);
 
-return $this->render('cursus/new.html.twig', array(
-    'form' => $form->createView(),
-    'nav' => "cursus",
-    'subnav' => "new",
-));
-
-
-}
+        if (!$cursus) {
+            throw $this->createNotFoundException('Aucun cursus à édité.');
+        }
 
 
-/**
- * @Route("/cursus/duplicate/{id}")
- */  public function duplicateCursus(Request $request,$id)
-{
+        $form = $this->createFormBuilder($cursus)
+            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+            ->add('envoyer', SubmitType::class, array('label' => 'Modifier cursus'))
+            ->getForm();
 
 
+        $form->handleRequest($request);
 
-  // create a cursus and give it some dummy data for this example
-  $cursus = $this->getDoctrine()
-   ->getRepository('AppBundle:Cursus')
-   ->find($id);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $cursus = $form->getData();
 
-    $em = $this->getDoctrine()->getManager();
-    $new = clone $cursus;
-    $em->persist($new);
-    $em->flush();
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cursus);
+            $em->flush();
 
-
-
-    return $this->redirectToRoute('homepage');
-
-
+            return $this->redirectToRoute('homepage');
 
 
-}
+        }
 
+        return $this->render('cursus/new.html.twig', array(
+            'form' => $form->createView(),
+            'nav' => "cursus",
+            'subnav' => "new",
+        ));
+
+
+    }
+
+
+    /**
+     * @Route("/cursus/duplicate/{id}")
+     */
+    public function duplicateCursus(Request $request, $id) {
+
+
+        // create a cursus and give it some dummy data for this example
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $new = clone $cursus;
+        $em->persist($new);
+        $em->flush();
+
+
+        return $this->redirectToRoute('homepage');
+
+
+    }
 
 
     /**
      * @Route("/cursus/new/")
      */
-    public function newCursusAction(Request $request)
-    {
+    public function newCursusAction(Request $request) {
 
-      // create a cursus and give it some dummy data for this example
-      $cursus = new Cursus();
-      //$cursus->setLabel('Mon cursus de ...');
+        // create a cursus and give it some dummy data for this example
+        $cursus = new Cursus();
+        //$cursus->setLabel('Mon cursus de ...');
 
-      $form = $this->createFormBuilder($cursus)
-          ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
-          ->add('label', TextType::class, array('label' => 'Nom du cursus','attr' => array('placeholder'=>'ISI/SRT Semestre X Branche Y','class'=>'form-control')))
-          ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
-          ->getForm();
+        $form = $this->createFormBuilder($cursus)
+            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+            ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
+            ->getForm();
 
-      $form->handleRequest($request);
+        $form->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid()) {
-          // $form->getData() holds the submitted values
-          // but, the original `$task` variable has also been updated
-              $cursus = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $cursus = $form->getData();
 
-          // ... perform some action, such as saving the task to the database
-          // for example, if Task is a Doctrine entity, save it!
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($cursus);
-          $em->flush();
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cursus);
+            $em->flush();
 
-        return $this->redirectToRoute('homepage');
-    }
-
+            return $this->redirectToRoute('homepage');
+        }
 
 
-      return $this->render('cursus/new.html.twig', array(
-          'form' => $form->createView(),
-          'nav' => "cursus",
-          'subnav' => "new",
-      ));
-
+        return $this->render('cursus/new.html.twig', array(
+            'form' => $form->createView(),
+            'nav' => "cursus",
+            'subnav' => "new",
+        ));
 
 
     }
-
-
-
 
 
     /**
      * @Route("/cursus/import/")
      */
-    public function importCursusAction(Request $request)
-    {
+    public function importCursusAction(Request $request) {
 
         $form = $this->createFormBuilder()
-                ->add('submitFile', FileType::class, array('label' => 'File to Submit'))
-                ->add('envoyer', SubmitType::class, array('label' => 'Envoyer le fichier'))
-                ->getForm();
+            ->add('submitFile', FileType::class, array('label' => 'File to Submit'))
+            ->add('envoyer', SubmitType::class, array('label' => 'Envoyer le fichier'))
+            ->getForm();
 
         if ($request->getMethod('post') == 'POST') {
             // Bind request to the form
@@ -240,14 +199,40 @@ return $this->render('cursus/new.html.twig', array(
 
 
     /**
+     * @Route("/cursus/export/{id}")
+     */
+    public function exportOneCursusAction(Request $request, $id) {
+
+        // Exportation d'un cursus au format csv
+
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->find($id);
+
+
+        // Maybe stay on export page ?
+        // Did redirect to check if it works.
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
      * @Route("/cursus/export/")
      */
-    public function exportCursusAction(Request $request)
-    {
+    public function exportCursusListAction(Request $request) {
+
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->findAll();
+
+
         // replace this example code with whatever you need
         return $this->render('cursus/export.html.twig', array(
             'nav' => "cursus",
             'subnav' => "export",
+            'cursus' => $cursus,
         ));
     }
+
+
+
 }
