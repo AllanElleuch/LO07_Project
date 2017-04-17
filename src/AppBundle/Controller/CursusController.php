@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Etudiants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -202,9 +203,36 @@ class CursusController extends Controller {
                 $file = $file->getData();
 
                 if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+
+
+                    /*
+                     * Premier parcours du fichier pour trouver l'ID de l'étudiant concerné
+                     * et créer l'objet cursus dans la BDD.
+                     */
                     while(($row = fgetcsv($handle)) !== FALSE) {
-                      print_r($row);
+                        $data = explode(";", $row[0]);
+                        if ($data[0] == "ID"){
+                            $studentId = $data[1];
+                            break;
+                        }
+
                     }
+
+
+                    $etudiant = $this->getDoctrine()
+                        ->getRepository('AppBundle:Etudiants')
+                        ->find($studentId);
+
+                    print_r($etudiant);
+
+                    $cursus = new Cursus();
+
+                    $cursus->setLabel("Importé");
+                    $cursus->setEtudiant($etudiant);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($cursus);
+                    $em->flush();
 
                     return $this->render('cursus/import.html.twig', array(
                         'nav' => "cursus",
@@ -213,7 +241,6 @@ class CursusController extends Controller {
                         'notif' => "Le fichier a été importé !",
                         'form' => $form->createView(),
                     ));
-
                 }
             }
 
