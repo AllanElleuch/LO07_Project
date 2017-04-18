@@ -8,7 +8,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Admissions;
 use AppBundle\Entity\Affectations;
+use AppBundle\Entity\Filieres;
 use AppBundle\Entity\Resultats;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -63,6 +65,34 @@ class InitialisationBddController extends Controller {
                 $affObj->setLabel($aff);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($affObj);
+                $em->flush();
+            }
+        }
+
+        $res = $this->getDoctrine()->getRepository('AppBundle:Admissions')->findAll();
+
+        if (empty($res)){
+            $adms = array('TC', 'BR');
+
+            foreach ($adms as $adm){
+                $admObj = new Admissions();
+                $admObj->setLabel($adm);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($admObj);
+                $em->flush();
+            }
+        }
+
+        $res = $this->getDoctrine()->getRepository('AppBundle:Filieres')->findAll();
+
+        if (empty($res)){
+            $filieres = array('MPL', 'MSI', 'MRI', 'LIB', '?');
+
+            foreach ($filieres as $fil){
+                $filObj = new Filieres();
+                $filObj->setLabel($fil);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($filObj);
                 $em->flush();
             }
         }
