@@ -5,43 +5,51 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table">
-        <thead class="thead-default">
-        <tr>
-            <th>Cursus</th>
-            <th></th>
-            <th></th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for oneCursus in cursus %}
+    {% if cursus is not empty %}
+        <table class="table">
+            <thead class="thead-default">
             <tr>
-                <td>{{ oneCursus.label|e }}</td>
-                <td class="grey"></td>
-                <td class="grey"> </td>
-                <td>
-                    <div class="btn-group btn-group-sm">
-                        <a href="/cursus/view/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Voir"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                        <a href="/cursus/update/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
-                           title="Modifier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <a href="/cursus/duplicate/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
-                           title="Dupliquer"><i class="fa fa-files-o" aria-hidden="true"></i></a>
-                        <a href="/cursus/delete/{{oneCursus.id}}" class="btn btn-secondary btn-sm text-danger" data-toggle="tooltip"
-                           data-placement="bottom"
-                           title="Supprimer"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                    </div>
-
-                    <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"
-                                                                    aria-hidden="true"></i> Appliquer un règlement</a>
-
-                </td>
+                <th>Cursus</th>
+                <th></th>
+                <th></th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for oneCursus in cursus %}
+                <tr>
+                    <td>{{ oneCursus.label|e }}</td>
+                    <td class="grey"></td>
+                    <td class="grey"> </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="/cursus/view/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Voir"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="/cursus/update/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
+                               title="Modifier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="/cursus/duplicate/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
+                               title="Dupliquer"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+                            <a href="/cursus/delete/{{oneCursus.id}}" class="btn btn-secondary btn-sm text-danger" data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Supprimer"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        </div>
+
+                        <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"
+                                                                        aria-hidden="true"></i> Appliquer un règlement</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="text-center grey">
+            <h1 class="display-4">Aucun cursus</h1>
+            <p class="lead">Créez un nouveau cursus ou importez un fichier au format csv.</p>
+        </div>
+    {% endif %}
+
 
 
 
