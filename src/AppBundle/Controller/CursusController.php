@@ -191,7 +191,14 @@ class CursusController extends Controller {
     public function importCursusAction(Request $request) {
 
         $form = $this->createFormBuilder()
-            ->add('submitFile', FileType::class, array('label' => 'File to Submit'))
+            ->add('nomCursus', TextType::class, array(
+                'label' => 'Nom du cursus',
+                'attr' => array(
+                    'placeholder' => 'Mon cursus UTT',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('submitFile', FileType::class, array('label' => 'Choix du fichier'))
             ->add('envoyer', SubmitType::class, array('label' => 'Envoyer le fichier'))
             ->getForm();
 
@@ -203,9 +210,10 @@ class CursusController extends Controller {
             if ($form->isValid()) {
                 // Get file
                 $file = $form->get('submitFile');
-
-                // Your csv file here when you hit submit button
                 $file = $file->getData();
+
+                $label = $form->get('nomCursus');
+                $label = $label->getData();
 
                 if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
 
@@ -232,7 +240,7 @@ class CursusController extends Controller {
 
                     $cursus = new Cursus();
 
-                    $cursus->setLabel("Importé");
+                    $cursus->setLabel($label);
                     $cursus->setEtudiant($etudiant);
 
                     $em = $this->getDoctrine()->getManager();
