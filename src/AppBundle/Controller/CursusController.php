@@ -189,9 +189,14 @@ class CursusController extends Controller {
             // but, the original `$task` variable has also been updated
             $cursus = $form->getData();
 
+            foreach($cursus->getelementsFormations() as $elemFormation){
+              $elemFormation->setCursus($cursus);
+            }
+
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($cursus);
             $em->flush();
 

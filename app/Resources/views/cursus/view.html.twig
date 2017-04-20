@@ -67,6 +67,8 @@
         </tbody>
     </table>
 
+
+
     <h4>Vrai tableau (BDD)</h4>
     <table class="table">
         <thead class="thead-default">
@@ -83,16 +85,16 @@
         </thead>
         <tbody>
         {% if cursusElements is defined %}
-            {% for element in cursusElements %}
+            {% for element in cursus.elementsFormations %}
                 <tr>
                     <td>{{ element.semLabel }}</td>
                     <td>{{ element.sigle }}</td>
-                    <td>{{ element.categories.label }}</td>
-                    <td>{{ element.affectations.label }}</td>
+                    {#<td>{{ element.categories.label }}</td>
+                    <td>{{ element.affectations.label }}</td>#}
                     <td>{{ element.profil == '1' ? 'Oui' : 'Non' }}</td>
                     <td>{{ element.utt == '1' ? 'Oui' : 'Non' }}</td>
                     <td>{{ element.credit }}</td>
-                    <td class="note-UE">
+                    {#<td class="note-UE">
                         {% if element.resultats.label == 'A' or element.resultats.label == 'B' or element.resultats
                         .label == 'C' %}
                             <span class="badge badge-pill badge-success">{{ element.resultats.label }}</span>
@@ -103,7 +105,7 @@
                         {% else %}
                             <span class="badge badge-pill badge-default">{{ element.resultats.label }}</span>
                         {% endif %}
-                    </td>
+                    </td>>#}
                 </tr>
             {% endfor %}
 
