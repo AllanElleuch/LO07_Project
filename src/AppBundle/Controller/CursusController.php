@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Etudiants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,11 +59,16 @@ class CursusController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        $cursusElements =  $this->getDoctrine()
+            ->getRepository("AppBundle:ElementFormation")
+            ->findBy(array("cursus" => $id));
+
 
         return $this->render('cursus/view.html.twig', array(
             'nav' => "cursus",
             'subnav' => 'mes-cursus',
             'cursus' => $cursus,
+            'cursusElements' => $cursusElements,
         ));
 
     }
@@ -209,7 +215,14 @@ class CursusController extends Controller {
     public function importCursusAction(Request $request) {
 
         $form = $this->createFormBuilder()
-            ->add('submitFile', FileType::class, array('label' => 'File to Submit'))
+            ->add('nomCursus', TextType::class, array(
+                'label' => 'Nom du cursus',
+                'attr' => array(
+                    'placeholder' => 'Mon cursus UTT',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('submitFile', FileType::class, array('label' => 'Choix du fichier'))
             ->add('envoyer', SubmitType::class, array('label' => 'Envoyer le fichier'))
             ->getForm();
 
@@ -221,17 +234,51 @@ class CursusController extends Controller {
             if ($form->isValid()) {
                 // Get file
                 $file = $form->get('submitFile');
-
-                // Your csv file here when you hit submit button
                 $file = $file->getData();
 
+                $label = $form->get('nomCursus');
+                $label = $label->getData();
+
                 if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+
+
+                    /*
+                     * Premier parcours du fichier pour trouver l'ID de l'étudiant concerné
+                     * et créer l'objet cursus dans la BDD.
+                     */
                     while(($row = fgetcsv($handle)) !== FALSE) {
-                      print_r($row);
+                        $data = explode(";", $row[0]);
+                        if ($data[0] == "ID"){
+                            $studentId = $data[1];
+                            break;
+                        }
+
                     }
 
+
+                    $etudiant = $this->getDoctrine()
+                        ->getRepository('AppBundle:Etudiants')
+                        ->find($studentId);
+
+                    print_r($etudiant);
+
+                    $cursus = new Cursus();
+
+                    $cursus->setLabel($label);
+                    $cursus->setEtudiant($etudiant);
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($cursus);
+                    $em->flush();
+
+                    return $this->render('cursus/import.html.twig', array(
+                        'nav' => "cursus",
+                        'subnav' => "import",
+                        'notifClass' => 'success',
+                        'notif' => "Le fichier a été importé !",
+                        'form' => $form->createView(),
+                    ));
                 }
-              //  print_r($file);
             }
 
         }

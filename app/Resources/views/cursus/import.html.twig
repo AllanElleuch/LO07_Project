@@ -1,19 +1,85 @@
 {% extends 'cursus/cursus-subnav.html.twig' %}
+{% form_theme form 'form/bootstrap_4_horizontal_layout.html.twig' %}
+
 
 {% block title %}
     Cursus - Import
 {% endblock %}
 
 {% block content %}
+        {% if notif is defined and notifClass is defined %}
+            <div class="alert alert-{{ notifClass }} alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ notif }}
+            </div>
+        {% endif %}
+
     <div class="text-center">
         <h1>Importation de cursus</h1>
         <h1 class="display-1"><i class="fa fa-cloud-upload" aria-hidden="true"></i></h1>
         <p>Importer un fichier .csv contenant les cursus.</p>
-
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-
-
     </div>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+    <br>
+
+    <div class="card">
+        <div class="card-header">
+            <b>Syntaxe des fichiers .csv</b> <br>
+            Remplacer les valeurs entre ‹ › par les données réelles.
+        </div>
+        <div class="card-block">
+            <pre>
+ID;‹num_étudiant›;;;;;;;;
+NO;‹Nom›;;;;;;;;
+PR;‹Prénom›;;;;;;;;
+AD;‹BR|TC›;;;;;;;;
+FI;‹MPL|PRI|MSI|LIB|?›;;;;;;;;
+==;s_seq;s_label;sigle;categorie;affectation;utt;profil;credit;resultat
+1*(EL;‹num_semestre›;‹label_semestre›;‹label_UE›;‹categorie_ue›;‹TC|TCBR|FLBR›;‹Y|N›;‹Y|N›;‹credits›;‹resultat›)
+END;;;;;;;;;</pre>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <div class="card-header">
+            <b>Exemple</b> <br>
+        </div>
+        <div class="card-block">
+            <pre class="grey">
+ID;12345;;;;;;;;
+NO;Nom;;;;;;;;
+PR;Prénom;;;;;;;;
+AD;BR;;;;;;;;
+FI;MPL;;;;;;;;
+==;s_seq;s_label;sigle;categorie;affectation;utt;profil;credit;resultat
+EL;1;ISI1;NF16;CS;TCBR;Y;Y;6;A
+EL;1;ISI1;NF20;CS;TCBR;Y;Y;6;A
+EL;1;ISI1;SY02;CS;TCBR;Y;Y;6;A
+EL;1;ISI1;IF14;TM;TCBR;Y;Y;6;A
+EL;1;ISI1;LE08;EC;BR;Y;Y;4;A
+EL;1;ISI1;GE04;ME;BR;Y;Y;4;B
+EL;1;ISI1;SC00;CT;TCBR;Y;Y;4;A
+EL;1;ISI1;BULE;NPML;TCBR;Y;Y;0;ADM
+EL;2;ISI2;AC10;CS;TCBR;Y;Y;6;A
+EL;2;ISI2;IF02;CS;TCBR;Y;Y;6;C
+EL;2;ISI2;LO12;CS;TCBR;Y;Y;6;A
+EL;2;ISI2;IF03;TM;TCBR;Y;Y;6;B
+EL;2;ISI2;LO07;TM;TCBR;Y;Y;6;C
+EL;2;ISI2;LC00;EC;BR;Y;Y;4;A
+EL;2;ISI2;HT05;CT;BR;Y;Y;4;A
+EL;2;ISI2;ATDOC1;HP;BR;Y;Y;0;ADM
+EL;2;ISI2;ATDOC2;HP;BR;Y;Y;0;ADM
+END;;;;;;;;;</pre>
+        </div>
+    </div>
+
+
 {% endblock %}

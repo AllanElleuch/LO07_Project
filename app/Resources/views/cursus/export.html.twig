@@ -5,30 +5,37 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table">
-        <thead class="thead-default">
-        <tr>
-            <th>Cursus</th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for oneCursus in cursus %}
+    {% if cursus is not empty %}
+        <table class="table">
+            <thead class="thead-default">
             <tr>
-                <td>{{ oneCursus.label|e }}</td>
-                <td class="grey"></td>
-                <td class="grey"> </td>
-                <td>
-                    <a href="/cursus/export/{{ oneCursus.id }}" class="btn btn-secondary btn-sm"><i class="fa
-                    fa-arrow-circle-o-right"
-                                                                    aria-hidden="true"></i> Exporter</a>
-                </td>
+                <th>Cursus</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for oneCursus in cursus %}
+                <tr>
+                    <td>{{ oneCursus.label|e }}</td>
+                    <td class="grey"></td>
+                    <td class="grey"> </td>
+                    <td>
+                        <a href="/cursus/export/{{ oneCursus.id }}" class="btn btn-secondary btn-sm"><i class="fa
+                        fa-arrow-circle-o-right"
+                                                                        aria-hidden="true"></i> Exporter</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="text-center grey">
+            <h1 class="display-4">Aucun cursus</h1>
+            <p class="lead">Créez un nouveau cursus ou importez un fichier au format csv.</p>
+        </div>
+    {% endif %}
 
 
 

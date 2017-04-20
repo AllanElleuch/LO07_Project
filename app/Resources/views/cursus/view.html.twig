@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ cursus.label }}</h1>
+    <h4>{{ cursus.label }}</h4>
+    <h6 class="grey">Corentin Laithier - 36795</h6>
+
+    {#Todo : Utiliser {{ cursusElement }} quand les cursus seront 'remplis' #}
+    <h4>Faux tableau (statique)</h4>
     <table class="table">
         <thead class="thead-default">
         <tr>
@@ -16,10 +20,20 @@
             <th>UTT</th>
             <th>Profil</th>
             <th>Crédits</th>
-            <th>Resultat</th>
+            <th>Résultat</th>
         </tr>
         </thead>
         <tbody>
+        <tr>
+            <td>TC2</td>
+            <td>GE21</td>
+            <td>ME</td>
+            <td>TC</td>
+            <td>Oui</td>
+            <td>Oui</td>
+            <td>4</td>
+            <td class="note-UE"><span class="badge badge-pill badge-warning">E</span></td>
+        </tr>
         <tr>
             <td>ISI1</td>
             <td>LO02</td>
@@ -28,8 +42,9 @@
             <td>Oui</td>
             <td>Oui</td>
             <td>6</td>
-            <td>A</td>
-        </tr><tr>
+            <td class="note-UE"><span class="badge badge-pill badge-success">A</span></td>
+        </tr>
+        <tr>
             <td>ISI1</td>
             <td>NF20</td>
             <td>CS</td>
@@ -37,11 +52,64 @@
             <td>Oui</td>
             <td>Oui</td>
             <td>6</td>
-            <td>C</td>
+            <td class="note-UE"><span class="badge badge-pill badge-success">C</span></td>
+        </tr>
+        <tr>
+            <td>ISI1</td>
+            <td>EV02</td>
+            <td>CT</td>
+            <td>TCBR</td>
+            <td>Oui</td>
+            <td>Oui</td>
+            <td>4</td>
+            <td class="note-UE"><span class="badge badge-pill badge-danger">Fx</span></td>
         </tr>
         </tbody>
     </table>
 
+    <h4>Vrai tableau (BDD)</h4>
+    <table class="table">
+        <thead class="thead-default">
+        <tr>
+            <th>Semestre</th>
+            <th>Label</th>
+            <th>Catégorie</th>
+            <th>Affectation</th>
+            <th>UTT</th>
+            <th>Profil</th>
+            <th>Crédits</th>
+            <th>Résultat</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if cursusElements is defined %}
+            {% for element in cursusElements %}
+                <tr>
+                    <td>{{ element.semLabel }}</td>
+                    <td>{{ element.sigle }}</td>
+                    <td>{{ element.categories.label }}</td>
+                    <td>{{ element.affectations.label }}</td>
+                    <td>{{ element.profil == '1' ? 'Oui' : 'Non' }}</td>
+                    <td>{{ element.utt == '1' ? 'Oui' : 'Non' }}</td>
+                    <td>{{ element.credit }}</td>
+                    <td class="note-UE">
+                        {% if element.resultats.label == 'A' or element.resultats.label == 'B' or element.resultats
+                        .label == 'C' %}
+                            <span class="badge badge-pill badge-success">{{ element.resultats.label }}</span>
+                        {% elseif element.resultats.label == 'D' or element.resultats.label == 'E' %}
+                            <span class="badge badge-pill badge-warning">{{ element.resultats.label }}</span>
+                        {% elseif element.resultats.label == 'F' or element.resultats.label == 'Fx'%}
+                            <span class="badge badge-pill badge-danger">{{ element.resultats.label }}</span>
+                        {% else %}
+                            <span class="badge badge-pill badge-default">{{ element.resultats.label }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        {% endif %}
+        </tbody>
+    </table>
 
 
 
