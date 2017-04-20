@@ -9,6 +9,9 @@ use AppBundle\Entity\Cursus;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use AppBundle\Entity\ElementFormation;
+use AppBundle\Form\Type\ElementFormationType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CursusController extends Controller {
     /**
@@ -146,10 +149,31 @@ class CursusController extends Controller {
         $cursus = new Cursus();
         //$cursus->setLabel('Mon cursus de ...');
 
+        // $e = new ElementFormation();
+        // $e->setCursus($cursus);
+        // $e->setSemLabel('a');
+        // $e->setSigle('a');
+        // $e->setUtt(true);
+        // $e->setProfil(true);
+        // $e->setSemSeq(2);
+        // $e->setCredit(1);
+        //
+        // $cursus->addElementsFormation($e);
+        //
+
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
-            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+            //->add('elementsFormations', TextType::class, array('label' => 'Créer un test'))
+            //->add('elementsFormations', 'collection', array('type' => new ElementFormationType()))
+            // ->add('elementsFormations', ElementFormationType::class, array(
+            //           'placeholder' => 'Choose a gender',
+            //       ))
+            ->add('elementsFormations', CollectionType::class, array(
+            'entry_type'   => ElementFormationType::class,
+            'allow_add'    => true,
+            ))
             ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
+
             ->getForm();
 
         $form->handleRequest($request);

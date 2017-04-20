@@ -1,0 +1,18 @@
+{% extends 'cursus/cursus-subnav.html.twig' %}
+{% form_theme form 'form/bootstrap_4_horizontal_layout.html.twig' %}
+{% block title %}
+  Nouveau cursus
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.label) }}
+    {{ form_widget(form) }}
+
+    {{ form_end(form) }}
+
+
+
+
+{% endblock %}

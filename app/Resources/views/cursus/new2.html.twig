@@ -8,19 +8,16 @@
 
 
 {{ form_start(form) }}
-{{ form_errors(form) }}
-{{ form_row(form._token) }}
-
     {{ form_row(form.label) }}
 
-    <h3>Élément de formations</h3>
+    <h3>Tags</h3>
     <ul class="elemFormation" data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
         {# iterate over each existing tag and render its only field: name #}
         {% for elemFormation in form.elementsFormations %}
             <li>{{ form_row(elemFormation.sigle) }}</li>
         {% endfor %}
     </ul>
-    {{ form_row(form.envoyer) }}
+{{ form_end(form) }}
 
 {% endblock %}
 

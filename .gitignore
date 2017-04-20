@@ -23,3 +23,4 @@ testObject.bd.bat
 updateBD.bat
 *.orig
 *.php~
+*~

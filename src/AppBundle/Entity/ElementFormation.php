@@ -74,10 +74,11 @@ class ElementFormation
 
     /**
      * Plusieurs élément de formations appartiennent un seul cursus.
-     * @ORM\ManyToOne(targetEntity="Cursus", inversedBy="elementsFormations")
+     * @ORM\ManyToOne(targetEntity="Cursus", inversedBy="elementsFormations",cascade={"all"})
      * @ORM\JoinColumn(name="cursus_id", referencedColumnName="id")
      */
     private $cursus;
+
 
 
     /**
@@ -85,59 +86,19 @@ class ElementFormation
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
-    }
-
-    /**
-     * Set label
-     *
-     * @param string $label
-     *
-     * @return ElementFormation
-     */
-    public function setLabel($label) {
-        $this->label = $label;
-        return $this;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel() {
-        return $this->label;
-    }
-
-    /**
-     * Set cursus
-     *
-     * @param \AppBundle\Entity\Cursus $cursus
-     * @return ElementFormation
-     */
-    public function setCursus(\AppBundle\Entity\Cursus $cursus = null) {
-        $this->cursus = $cursus;
-        return $this;
-    }
-
-    /**
-     * Get cursus
-     *
-     * @return \AppBundle\Entity\Cursus
-     */
-    public function getCursus() {
-        return $this->cursus;
     }
 
     /**
      * Set semSeq
      *
-     * @param \integer $semSeq
+     * @param integer $semSeq
      *
      * @return ElementFormation
      */
-    public function setSemSeq(\integer $semSeq)
+    public function setSemSeq($semSeq)
     {
         $this->sem_seq = $semSeq;
 
@@ -147,7 +108,7 @@ class ElementFormation
     /**
      * Get semSeq
      *
-     * @return \integer
+     * @return integer
      */
     public function getSemSeq()
     {
@@ -253,11 +214,11 @@ class ElementFormation
     /**
      * Set credit
      *
-     * @param \integer $credit
+     * @param integer $credit
      *
      * @return ElementFormation
      */
-    public function setCredit(\integer $credit)
+    public function setCredit($credit)
     {
         $this->credit = $credit;
 
@@ -267,7 +228,7 @@ class ElementFormation
     /**
      * Get credit
      *
-     * @return \integer
+     * @return integer
      */
     public function getCredit()
     {
@@ -277,11 +238,11 @@ class ElementFormation
     /**
      * Set categories
      *
-     * @param integer $categories
+     * @param \AppBundle\Entity\Categories $categories
      *
      * @return ElementFormation
      */
-    public function setCategories($categories)
+    public function setCategories(\AppBundle\Entity\Categories $categories = null)
     {
         $this->categories = $categories;
 
@@ -291,7 +252,7 @@ class ElementFormation
     /**
      * Get categories
      *
-     * @return integer
+     * @return \AppBundle\Entity\Categories
      */
     public function getCategories()
     {
@@ -301,11 +262,11 @@ class ElementFormation
     /**
      * Set affectations
      *
-     * @param integer $affectations
+     * @param \AppBundle\Entity\Affectations $affectations
      *
      * @return ElementFormation
      */
-    public function setAffectations($affectations)
+    public function setAffectations(\AppBundle\Entity\Affectations $affectations = null)
     {
         $this->affectations = $affectations;
 
@@ -315,7 +276,7 @@ class ElementFormation
     /**
      * Get affectations
      *
-     * @return integer
+     * @return \AppBundle\Entity\Affectations
      */
     public function getAffectations()
     {
@@ -325,11 +286,11 @@ class ElementFormation
     /**
      * Set resultats
      *
-     * @param integer $resultats
+     * @param \AppBundle\Entity\Resultats $resultats
      *
      * @return ElementFormation
      */
-    public function setResultats($resultats)
+    public function setResultats(\AppBundle\Entity\Resultats $resultats = null)
     {
         $this->resultats = $resultats;
 
@@ -339,10 +300,34 @@ class ElementFormation
     /**
      * Get resultats
      *
-     * @return integer
+     * @return \AppBundle\Entity\Resultats
      */
     public function getResultats()
     {
         return $this->resultats;
+    }
+
+    /**
+     * Set cursus
+     *
+     * @param \AppBundle\Entity\Cursus $cursus
+     *
+     * @return ElementFormation
+     */
+    public function setCursus(\AppBundle\Entity\Cursus $cursus = null)
+    {
+        $this->cursus = $cursus;
+
+        return $this;
+    }
+
+    /**
+     * Get cursus
+     *
+     * @return \AppBundle\Entity\Cursus
+     */
+    public function getCursus()
+    {
+        return $this->cursus;
     }
 }

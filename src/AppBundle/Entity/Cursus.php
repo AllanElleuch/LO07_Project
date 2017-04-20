@@ -22,7 +22,7 @@ class Cursus
 
     /**
      * Un cursus à plusieurs éléments de formations.
-     * @ORM\OneToMany(targetEntity="ElementFormation", mappedBy="cursus")
+     * @ORM\OneToMany(targetEntity="ElementFormation", mappedBy="cursus",cascade={"all"})
      */
     private $elementsFormations;
 
