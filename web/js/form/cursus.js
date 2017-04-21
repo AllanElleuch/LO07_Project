@@ -1,7 +1,7 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
+var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un cursus</a>');
 var $newLinkLi = $('<li></li>').append($addTagLink);
 
 jQuery(document).ready(function() {
