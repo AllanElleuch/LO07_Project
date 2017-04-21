@@ -12,8 +12,15 @@
 {% spaceless %}
     {% if label is same as(false) %}
         <div class="{{ block('form_label_class') }}"></div>
-    {% else %}
-        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ 'col-sm-2 control-label ' ~ block('form_label_class'))|trim}) %}
+
+
+    {% elseif label_attr['class'] is defined and label_attr['class'] =="no" %}
+
+    {% set label_attr = label_attr|merge({class: (label_attr.class|default(''))|trim}) %}
+    {{- parent() -}}
+
+{% else %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ 'control-label ' ~ block('form_label_class'))|trim}) %}
         {{- parent() -}}
     {% endif %}
 {% endspaceless %}
@@ -29,15 +36,16 @@ col-sm-2
     <div class="form-group row{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{- form_label(form) -}}
         <div class="{{ block('form_group_class') }}">
-            {{- form_widget(form) -}}
+            {{- form_widget(form, {'attr': {'class': 'form-control'}}) -}}
+
+
             {{- form_errors(form) -}}
         </div>
 {##}</div>
 {%- endblock form_row %}
 
 {% block checkbox_row -%}
-
-    {{- block('checkbox_radio_row') -}}
+     {{- block('checkbox_radio_row') -}}
 {%- endblock checkbox_row %}
 
 {% block radio_row -%}
@@ -48,10 +56,21 @@ col-sm-2
 
 {% spaceless %}
     <div class="form-group row{% if not valid %} has-error{% endif %}">
-    {{- form_label(form) -}}
+    <div class="col-sm-2"></div>
 
         <div class="{{ block('form_group_class') }}">
-            {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+
+        <div class="form-check">
+          <label class="form-check-label">
+          {{ form_widget(form, {'attr': {'class': 'form-check-input'}}) }}
+
+
+
+
+          {{ form_label(form, null, { 'label_attr': {'class': 'no'} }) }}
+
+          </label>
+        </div>
             {{ form_errors(form) }}
         </div>
     </div>
@@ -84,3 +103,24 @@ col-sm-2
 {% block form_group_class -%}
 col-sm-10
 {%- endblock form_group_class %}
+
+{% block choice_label -%}
+    {# remove the checkbox-inline and radio-inline class, it's only useful for embed labels #}
+    {%- set label_attr = label_attr|merge({class: label_attr.class|default('')|trim}) -%}
+    {%- set attr = attr|merge({class: 'custom-select'|default('custom-select')|trim}) -%}
+
+    {{- block('form_label') -}}
+{% endblock %}
+{# Errors #}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    <ul class="list-unstyled">
+        {%- for error in errors -%}
+            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+        {%- endfor -%}
+    </ul>
+    {% if form.parent %}</span>{% else %}</div>{% endif %}
+    {%- endif %}
+{%- endblock form_errors %}
