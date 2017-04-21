@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use AppBundle\Entity\ElementFormation;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class ElementFormationType extends AbstractType
 {
 
@@ -33,6 +33,12 @@ public function buildForm(FormBuilderInterface $builder, array $options)
   ->add('sem_seq', TextType::class, array('label' => 'numéro semestre ', 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control')))
   ->add('sem_label', TextType::class, array('label' => 'label du semestre ', 'attr' => array('TC1, ... TC6, ISI1 ... ISI8, SRT1,..., MTE, ....', 'class' => 'form-control')))
   ->add('utt', CheckboxType::class, array('label' => 'utt', 'attr' => array('TC1, ... TC6, ISI1 ... ISI8, SRT1,..., MTE, ....', 'class' => 'form-control')))
+  ->add('affectations', EntityType::class, array(    'class' => 'AppBundle:Affectations',    'choice_label' => 'label'))
+  ->add('categories', EntityType::class, array(    'class' => 'AppBundle:Categories',    'choice_label' => 'label'))
+  ->add('resultats', EntityType::class, array(    'class' => 'AppBundle:Resultats',    'choice_label' => 'label'))
+
+
+
   ->add('profil', CheckboxType::class, array('label' => 'profil', 'attr' => array('TC1, ... TC6, ISI1 ... ISI8, SRT1,..., MTE, ....', 'class' => 'form-control','title' => 'test')));
 
 

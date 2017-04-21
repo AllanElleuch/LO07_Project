@@ -87,14 +87,15 @@
         {% if cursusElements is defined %}
             {% for element in cursus.elementsFormations %}
                 <tr>
-                    <td>{{ element.semLabel }}</td>
-                    <td>{{ element.sigle }}</td>
-                    {#<td>{{ element.categories.label }}</td>
-                    <td>{{ element.affectations.label }}</td>#}
-                    <td>{{ element.profil == '1' ? 'Oui' : 'Non' }}</td>
-                    <td>{{ element.utt == '1' ? 'Oui' : 'Non' }}</td>
-                    <td>{{ element.credit }}</td>
-                    {#<td class="note-UE">
+                    <td>{% if element.semLabel is defined %} {{element.semLabel}} {% else %} vide   {% endif %}</td>
+                    <td>{% if element.sigle is defined %} {{element.sigle}} {% else %} vide   {% endif %}</td>
+                    <td>{% if element.categories.label is defined %} {{element.categories.label}} {% else %} vide   {% endif %}   </td>
+                    <td>{% if element.affectations.label is defined %} {{element.affectations.label}} {% else %} vide   {% endif %}  </td>
+                    <td>{% if element.profil is defined %} {{element.profil == '1' ? 'Oui' : 'Non'}} {% else %} vide   {% endif %}</td>
+                    <td>{% if element.utt is defined %} {{element.utt == '1' ? 'Oui' : 'Non'}} {% else %} vide   {% endif %}</td>
+                    <td>{% if element.credit is defined %} {{element.credit}} {% else %} vide   {% endif %}</td>
+                    <td class="note-UE">
+                    {% if element.resultats.label is defined %}
                         {% if element.resultats.label == 'A' or element.resultats.label == 'B' or element.resultats
                         .label == 'C' %}
                             <span class="badge badge-pill badge-success">{{ element.resultats.label }}</span>
@@ -105,7 +106,8 @@
                         {% else %}
                             <span class="badge badge-pill badge-default">{{ element.resultats.label }}</span>
                         {% endif %}
-                    </td>>#}
+                    {% else %} vide   {% endif %}
+                    </td>>
                 </tr>
             {% endfor %}
 
