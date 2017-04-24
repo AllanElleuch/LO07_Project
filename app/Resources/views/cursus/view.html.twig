@@ -7,9 +7,6 @@
 {% block content %}
     <h4>{{ cursus.label }}</h4>
     <h6 class="grey">Corentin Laithier - 36795</h6>
-
-    {#Todo : Utiliser {{ cursusElement }} quand les cursus seront 'remplis' #}
-
     <table class="table">
         <thead class="thead-default">
         <tr>
@@ -53,10 +50,9 @@
                     {% else %}
                         ---
                     {% endif %}
-                    </td>>
+                    </td>
                 </tr>
             {% endfor %}
-
         {% endif %}
         </tbody>
     </table>
