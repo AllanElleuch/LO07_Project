@@ -110,6 +110,16 @@
 
 
 /*
+ * List customisation
+ * ==================
+ */
+.elemFormation{
+    padding: 0;
+    list-style-type: none;
+}
+
+
+/*
  * Hide input type file
  */
 
