@@ -248,22 +248,57 @@ class CursusController extends Controller {
 
 
                     /*
-                     * Premier parcours du fichier pour trouver l'ID de l'étudiant concerné
-                     * et créer l'objet cursus dans la BDD.
+                     * Premier parcours du fichier pour récupérer les données concernant l'étudiant.
+                     * On vérifiera ensuite s'il existe dans la BDD.
+                     *
+                     * !! Seul l'en-tête est lu, la boucle de lecture s'arrête avant la description du cursus.
                      */
                     while(($row = fgetcsv($handle)) !== FALSE) {
                         $data = explode(";", $row[0]);
-                        if ($data[0] == "ID"){
-                            $studentId = $data[1];
+
+                        if ($data[0] != "=="){
+                            switch ($data[0]){
+                                case "ID":
+                                    $stdId = $data[1];
+                                    break;
+                                case "NO":
+                                    $stdName = $data[1];
+                                    break;
+                                case "PR":
+                                    $stdFirstName = $data[1];
+                                    break;
+                                case "AD":
+                                    $possibleValues = array("BR", 'TC');
+                                    if (in_array($data[1], $possibleValues)){
+                                        $stdAdmin = $data[1];
+                                    } else {
+                                        echo "Le champ AD doit être BR ou TC.";
+                                    }
+                                    break;
+                                case "FI":
+                                    $possibleValues = array("MPL", "MRI", "MSI", "LIB", "?");
+                                    if (in_array($data[1], $possibleValues)){
+                                        $stdFiliere = $data[1];
+                                    } else {
+                                        echo "Le champ FIL doit être MPL, MRI, MSI, LIB ou ?.";
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } else {
+                            /* Si la ligne commence par "==", c'est que l'en-tête est terminé.
+                             * La suite du fichier contient la description des cursus. */
                             break;
                         }
+                        
 
                     }
 
 
                     $etudiant = $this->getDoctrine()
                         ->getRepository('AppBundle:Etudiants')
-                        ->find($studentId);
+                        ->find($stdId);
 
                     print_r($etudiant);
 
