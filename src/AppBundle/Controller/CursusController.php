@@ -219,6 +219,10 @@ class CursusController extends Controller {
      */
     public function importCursusAction(Request $request) {
 
+        /*Initialisation de variables utilisées pour la vue */
+        $notifClass = 'success';
+        $notifBody  = 'Le fichier a été importé.';
+
         $form = $this->createFormBuilder()
             ->add('nomCursus', TextType::class, array(
                 'label' => 'Nom du cursus',
@@ -272,7 +276,8 @@ class CursusController extends Controller {
                                     if (in_array($data[1], $possibleValues)){
                                         $stdAdmin = $data[1];
                                     } else {
-                                        echo "Le champ AD doit être BR ou TC.";
+                                        $notifClass = 'danger';
+                                        $notifBody = "Le champ AD doit être BR ou TC.";
                                     }
                                     break;
                                 case "FI":
@@ -280,7 +285,8 @@ class CursusController extends Controller {
                                     if (in_array($data[1], $possibleValues)){
                                         $stdFiliere = $data[1];
                                     } else {
-                                        echo "Le champ FIL doit être MPL, MRI, MSI, LIB ou ?.";
+                                        $notifClass = 'danger';
+                                        $notifBody = "Le champ FI doit être MPL, MRI, MSI, LIB ou ?.";
                                     }
                                     break;
                                 default:
@@ -291,7 +297,7 @@ class CursusController extends Controller {
                              * La suite du fichier contient la description des cursus. */
                             break;
                         }
-                        
+
 
                     }
 
@@ -314,8 +320,8 @@ class CursusController extends Controller {
                     return $this->render('cursus/import.html.twig', array(
                         'nav' => "cursus",
                         'subnav' => "import",
-                        'notifClass' => 'success',
-                        'notif' => "Le fichier a été importé !",
+                        'notifClass' => $notifClass,
+                        'notif' => $notifBody,
                         'form' => $form->createView(),
                     ));
                 }
