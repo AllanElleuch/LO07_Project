@@ -9,67 +9,7 @@
     <h6 class="grey">Corentin Laithier - 36795</h6>
 
     {#Todo : Utiliser {{ cursusElement }} quand les cursus seront 'remplis' #}
-    <h4>Faux tableau (statique)</h4>
-    <table class="table">
-        <thead class="thead-default">
-        <tr>
-            <th>Semestre</th>
-            <th>Label</th>
-            <th>Catégorie</th>
-            <th>Affectation</th>
-            <th>UTT</th>
-            <th>Profil</th>
-            <th>Crédits</th>
-            <th>Résultat</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>TC2</td>
-            <td>GE21</td>
-            <td>ME</td>
-            <td>TC</td>
-            <td>Oui</td>
-            <td>Oui</td>
-            <td>4</td>
-            <td class="note-UE"><span class="badge badge-pill badge-warning">E</span></td>
-        </tr>
-        <tr>
-            <td>ISI1</td>
-            <td>LO02</td>
-            <td>TM</td>
-            <td>TCBR</td>
-            <td>Oui</td>
-            <td>Oui</td>
-            <td>6</td>
-            <td class="note-UE"><span class="badge badge-pill badge-success">A</span></td>
-        </tr>
-        <tr>
-            <td>ISI1</td>
-            <td>NF20</td>
-            <td>CS</td>
-            <td>TCBR</td>
-            <td>Oui</td>
-            <td>Oui</td>
-            <td>6</td>
-            <td class="note-UE"><span class="badge badge-pill badge-success">C</span></td>
-        </tr>
-        <tr>
-            <td>ISI1</td>
-            <td>EV02</td>
-            <td>CT</td>
-            <td>TCBR</td>
-            <td>Oui</td>
-            <td>Oui</td>
-            <td>4</td>
-            <td class="note-UE"><span class="badge badge-pill badge-danger">Fx</span></td>
-        </tr>
-        </tbody>
-    </table>
 
-
-
-    <h4>Vrai tableau (BDD)</h4>
     <table class="table">
         <thead class="thead-default">
         <tr>
@@ -87,13 +27,17 @@
         {% if cursusElements is defined %}
             {% for element in cursus.elementsFormations %}
                 <tr>
-                    <td>{% if element.semLabel is defined %} {{element.semLabel}} {% else %} vide   {% endif %}</td>
-                    <td>{% if element.sigle is defined %} {{element.sigle}} {% else %} vide   {% endif %}</td>
-                    <td>{% if element.categories.label is defined %} {{element.categories.label}} {% else %} vide   {% endif %}   </td>
-                    <td>{% if element.affectations.label is defined %} {{element.affectations.label}} {% else %} vide   {% endif %}  </td>
-                    <td>{% if element.profil is defined %} {{element.profil == '1' ? 'Oui' : 'Non'}} {% else %} vide   {% endif %}</td>
-                    <td>{% if element.utt is defined %} {{element.utt == '1' ? 'Oui' : 'Non'}} {% else %} vide   {% endif %}</td>
-                    <td>{% if element.credit is defined %} {{element.credit}} {% else %} vide   {% endif %}</td>
+                    <td>{% if element.semLabel is defined %} {{element.semLabel}} {% else %} ---   {% endif %}</td>
+                    <td>{% if element.sigle is defined %} {{element.sigle}} {% else %} ---   {% endif %}</td>
+                    <td>{% if element.categories.label is defined %} {{element.categories.label}} {% else %} ---   {%
+                        endif %}   </td>
+                    <td>{% if element.affectations.label is defined %} {{element.affectations.label}} {% else %} ---
+                        {% endif %}  </td>
+                    <td>{% if element.profil is defined %} {{element.profil == '1' ? 'Oui' : 'Non'}} {% else %} ---
+                        {% endif %}</td>
+                    <td>{% if element.utt is defined %} {{element.utt == '1' ? 'Oui' : 'Non'}} {% else %} vi---de   {%
+                        endif %}</td>
+                    <td>{% if element.credit is defined %} {{element.credit}} {% else %} ---   {% endif %}</td>
                     <td class="note-UE">
                     {% if element.resultats.label is defined %}
                         {% if element.resultats.label == 'A' or element.resultats.label == 'B' or element.resultats
@@ -106,7 +50,9 @@
                         {% else %}
                             <span class="badge badge-pill badge-default">{{ element.resultats.label }}</span>
                         {% endif %}
-                    {% else %} vide   {% endif %}
+                    {% else %}
+                        ---
+                    {% endif %}
                     </td>>
                 </tr>
             {% endfor %}
