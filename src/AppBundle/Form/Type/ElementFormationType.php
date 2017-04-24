@@ -29,15 +29,31 @@ class ElementFormationType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
-  ->add('sigle', TextType::class, array('label' => 'Sigle ', 'attr' => array('placeholder' => 'sigle d’une UE, label d’un stage,', 'class' => 'form-control')))
-  ->add('credit', IntegerType ::class, array('label' => 'credit ', 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
-  ->add('sem_seq', IntegerType ::class, array('label' => 'numéro semestre ', 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control', 'min' => '0')))
-  ->add('sem_label', TextType::class, array('label' => 'label du semestre ', 'attr' => array('placeholder' =>'TC1, ... TC6, ISI1 ... ISI8, SRT1,..., MTE, ....', 'class' => 'form-control ')))
-  ->add('affectations', EntityType::class, array(    'class' => 'AppBundle:Affectations',    'choice_label' => 'label'))
-  ->add('categories', EntityType::class, array(    'class' => 'AppBundle:Categories',    'choice_label' => 'label'))
-  ->add('resultats', EntityType::class, array(    'class' => 'AppBundle:Resultats',    'choice_label' => 'label'))
-  ->add('utt', CheckboxType::class, array('label' => "UV prise à l'utt",'required' => false, 'attr' => array( 'class' => 'form-control')))
-  ->add('profil', CheckboxType::class, array('label' => 'UV de profil','required' => false, 'attr' => array('class' => 'form-control','title' => 'test')));
+  ->add('sigle', TextType::class, array('label' => 'Sigle ', 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control')))
+  ->add('credit', IntegerType ::class, array('label' => 'Crédits ', 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
+  ->add('sem_seq', IntegerType ::class, array('label' => 'Numéro du semestre ', 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control', 'min' => '0')))
+  ->add('sem_label', TextType::class, array('label' => 'Label du semestre', 'attr' => array('placeholder' => 'ISIx',
+      'class' => 'form-control ')))
+  ->add('affectations', EntityType::class, array(
+      'class' => 'AppBundle:Affectations',
+      'choice_label' => 'label',
+      'label' => 'Affectation'))
+  ->add('categories', EntityType::class, array(
+      'class' => 'AppBundle:Categories',
+      'choice_label' => 'label',
+      'label' => 'Catégorie'))
+  ->add('resultats', EntityType::class, array(
+      'class' => 'AppBundle:Resultats',
+      'choice_label' => 'label',
+      'label' => 'Résultat'))
+  ->add('utt', CheckboxType::class, array('label' => "UE suivie à l'UTT",'required' => false, 'attr' => array(
+      'class' => 'form-control',
+      'checked' => 'checked',
+      )))
+  ->add('profil', CheckboxType::class, array('label' => 'UE de profil','required' => false, 'attr' => array(
+      'class' => 'form-control',
+      'checked' => 'checked')
+  ));
 
 
 }

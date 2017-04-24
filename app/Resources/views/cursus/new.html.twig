@@ -7,6 +7,7 @@
 {% block content %}
 
 <h3>Cursus</h3>
+    <h5>Intitulé</h5>
 
 {{ form_start(form) }}
 {{ form_errors(form) }}
@@ -14,7 +15,7 @@
 
     {{ form_row(form.label) }}
 
-    <h3>Élément de formations</h3>
+    <h5>Éléments de formations</h5>
     <ul class="elemFormation" data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
         {# iterate over each existing tag and render its only field: name #}
         {% for elemFormation in form.elementsFormations %}
