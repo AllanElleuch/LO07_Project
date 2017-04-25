@@ -103,8 +103,26 @@
     color: #777;
 }
 
-.note-UE {
-    font-size: 1.2em !important;
+.badge {
+    font-size: 100%;
+}
+
+.badge-tc{
+    color: #000;
+    font-weight: 400;
+    background-color: #B3E5FC;
+}
+
+.badge-tcbr{
+    color: #000;
+    font-weight: 400;
+    background-color: #C8E6C9;
+}
+
+.badge-flbr{
+    color: #000;
+    font-weight: 400;
+    background-color: #E1BEE7;
 }
 
 
