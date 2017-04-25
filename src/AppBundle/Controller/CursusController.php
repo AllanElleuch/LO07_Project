@@ -316,7 +316,28 @@ class CursusController extends Controller {
                         ->getRepository('AppBundle:Etudiants')
                         ->find($stdId);
 
-                    print_r($etudiant);
+                    if (empty($etudiant)){
+                        $newStudent = new Etudiants();
+                        $newStudent->setNom($stdName);
+                        $newStudent->setPrenom($stdFirstName);
+                        $newStudent->setId($stdId);
+
+                        $filiere = $this->getDoctrine()
+                            ->getRepository('AppBundle:Filieres')
+                            ->findOneBy(array('label' => $stdFiliere));
+                        $newStudent->setFilieres($filiere);
+
+                        $admission = $this->getDoctrine()
+                            ->getRepository('AppBundle:Admissions')
+                            ->findOneBy(array('label' => $stdAdmin));
+                        $newStudent->setAdmissions($admission);
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($newStudent);
+
+                        $etudiant = $newStudent;
+                    }
+
 
                     $cursus = new Cursus();
 
