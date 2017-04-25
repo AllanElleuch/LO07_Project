@@ -91,7 +91,17 @@ class CursusController extends Controller {
 
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
-            ->add('envoyer', SubmitType::class, array('label' => 'Modifier cursus'))
+            //->add('elementsFormations', TextType::class, array('label' => 'Créer un test'))
+            //->add('elementsFormations', 'collection', array('type' => new ElementFormationType()))
+            // ->add('elementsFormations', ElementFormationType::class, array(
+            //           'placeholder' => 'Choose a gender',
+            //       ))
+            ->add('elementsFormations', CollectionType::class, array(
+            'entry_type'   => ElementFormationType::class,
+            'allow_add'    => true,
+            ))
+            ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
+
             ->getForm();
 
 
