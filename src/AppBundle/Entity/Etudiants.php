@@ -2,19 +2,17 @@
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="etudiants")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Etudiants  implements UserInterface, \Serializable
+class Etudiants
 {
   /**
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -53,78 +51,26 @@ class Etudiants  implements UserInterface, \Serializable
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * Constructor
      */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
     public function __construct()
     {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
+        $this->cursus = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getUsername()
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Etudiants
+     */
+    public function setId($id)
     {
-        return $this->username;
+        $this->id = $id;
+
+        return $this;
     }
-
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized);
-    }
-
-
 
     /**
      * Get id
@@ -185,65 +131,37 @@ class Etudiants  implements UserInterface, \Serializable
     }
 
     /**
-     * Set password
+     * Add cursus
      *
-     * @param string $password
+     * @param \AppBundle\Entity\Cursus $cursus
      *
      * @return Etudiants
      */
-    public function setPassword($password)
+    public function addCursus(\AppBundle\Entity\Cursus $cursus)
     {
-        $this->password = $password;
+        $this->cursus[] = $cursus;
 
         return $this;
     }
 
     /**
-     * Set email
+     * Remove cursus
      *
-     * @param string $email
-     *
-     * @return Etudiants
+     * @param \AppBundle\Entity\Cursus $cursus
      */
-    public function setEmail($email)
+    public function removeCursus(\AppBundle\Entity\Cursus $cursus)
     {
-        $this->email = $email;
-
-        return $this;
+        $this->cursus->removeElement($cursus);
     }
 
     /**
-     * Get email
+     * Get cursus
      *
-     * @return string
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEmail()
+    public function getCursus()
     {
-        return $this->email;
-    }
-
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return Etudiants
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
+        return $this->cursus;
     }
 
     /**
@@ -292,39 +210,5 @@ class Etudiants  implements UserInterface, \Serializable
     public function getAdmissions()
     {
         return $this->admissions;
-    }
-
-    /**
-     * Add cursus
-     *
-     * @param \AppBundle\Entity\Cursus $cursus
-     *
-     * @return Etudiants
-     */
-    public function addCursus(\AppBundle\Entity\Cursus $cursus)
-    {
-        $this->cursus[] = $cursus;
-
-        return $this;
-    }
-
-    /**
-     * Remove cursus
-     *
-     * @param \AppBundle\Entity\Cursus $cursus
-     */
-    public function removeCursus(\AppBundle\Entity\Cursus $cursus)
-    {
-        $this->cursus->removeElement($cursus);
-    }
-
-    /**
-     * Get cursus
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCursus()
-    {
-        return $this->cursus;
     }
 }
