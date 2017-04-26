@@ -22,19 +22,27 @@
         <p>Importer un fichier .csv contenant les cursus.</p>
     </div>
 
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}
-
-    <br>
-
-    <div class="card">
-        <div class="card-header">
-            <b>Syntaxe des fichiers .csv</b> <br>
-            Remplacer les valeurs entre ‹ › par les données réelles.
         </div>
-        <div class="card-block">
-            <pre>
+        <div class="col-md-6 col-sm-12">
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingOne">
+                        <b>Syntaxe des fichiers .csv</b>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                           aria-controls="collapseOne" class="btn btn-sm btn-secondary">Afficher</a>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="card-block">
+                            Remplacer les valeurs entre ‹ › par les données réelles.
+                            <br><hr>
+
+                            <pre>
 ID;‹num_étudiant›;;;;;;;;
 NO;‹Nom›;;;;;;;;
 PR;‹Prénom›;;;;;;;;
@@ -43,17 +51,19 @@ FI;‹MPL|PRI|MSI|LIB|?›;;;;;;;;
 ==;s_seq;s_label;sigle;categorie;affectation;utt;profil;credit;resultat
 1*(EL;‹num_semestre›;‹label_semestre›;‹label_UE›;‹categorie_ue›;‹TC|TCBR|FLBR›;‹Y|N›;‹Y|N›;‹credits›;‹resultat›)
 END;;;;;;;;;</pre>
-        </div>
-    </div>
-
-    <br>
-
-    <div class="card">
-        <div class="card-header">
-            <b>Exemple</b> <br>
-        </div>
-        <div class="card-block">
-            <pre class="grey">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingTwo">
+                        <b>Exemple</b>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true"
+                           aria-controls="collapseTwo" class="btn btn-sm btn-secondary">Afficher</a>
+                    </div>
+                    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="card-block">
+<pre class="grey">
 ID;12345;;;;;;;;
 NO;Nom;;;;;;;;
 PR;Prénom;;;;;;;;
@@ -78,6 +88,10 @@ EL;2;ISI2;HT05;CT;BR;Y;Y;4;A
 EL;2;ISI2;ATDOC1;HP;BR;Y;Y;0;ADM
 EL;2;ISI2;ATDOC2;HP;BR;Y;Y;0;ADM
 END;;;;;;;;;</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
