@@ -44,7 +44,7 @@ class InitialisationBddController extends Controller {
         $res = $this->getDoctrine()->getRepository('AppBundle:Resultats')->findAll();
 
         if (empty($res)){
-            $resultats = array('A', 'B', 'C', 'D', 'E', 'F', 'Fx', 'ABS', 'RES', 'ADM');
+            $resultats = array('A', 'B', 'C', 'D', 'E', 'F', 'Fx', 'ABS', 'RES', 'ADM', 'EQU');
 
             foreach ($resultats as $resultat){
                 $resObj = new Resultats();
