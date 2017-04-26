@@ -259,8 +259,6 @@ class CursusController extends Controller {
                 $label = $label->getData();
 
                 if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
-
-
                     /*
                      * Premier parcours du fichier pour récupérer les données concernant l'étudiant.
                      * On vérifiera ensuite s'il existe dans la BDD.
@@ -270,52 +268,87 @@ class CursusController extends Controller {
                     while(($row = fgetcsv($handle)) !== FALSE) {
                         $data = explode(";", $row[0]);
 
-                        if ($data[0] != "=="){
-                            switch ($data[0]){
-                                case "ID":
-                                    $stdId = $data[1];
-                                    break;
-                                case "NO":
-                                    $stdName = $data[1];
-                                    break;
-                                case "PR":
-                                    $stdFirstName = $data[1];
-                                    break;
-                                case "AD":
-                                    $possibleValues = array("BR", 'TC');
-                                    if (in_array($data[1], $possibleValues)){
-                                        $stdAdmin = $data[1];
-                                    } else {
-                                        $notifClass = 'danger';
-                                        $notifBody = "Le champ AD doit être BR ou TC.";
-                                    }
-                                    break;
-                                case "FI":
-                                    $possibleValues = array("MPL", "MRI", "MSI", "LIB", "?");
-                                    if (in_array($data[1], $possibleValues)){
-                                        $stdFiliere = $data[1];
-                                    } else {
-                                        $notifClass = 'danger';
-                                        $notifBody = "Le champ FI doit être MPL, MRI, MSI, LIB ou ?.";
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        } else {
-                            /* Si la ligne commence par "==", c'est que l'en-tête est terminé.
-                             * La suite du fichier contient la description des cursus. */
-                            break;
+                        switch ($data[0]){
+                            case "ID":
+                                $stdId = $data[1];
+                                break;
+                            case "NO":
+                                $stdName = ucfirst(strtolower($data[1]));
+                                break;
+                            case "PR":
+                                $stdFirstName = ucfirst(strtolower($data[1]));
+                                break;
+                            case "AD":
+                                $possibleValues = array("BR", 'TC');
+                                if (in_array($data[1], $possibleValues)){
+                                    $stdAdmin = $data[1];
+                                } else {
+                                    $notifClass = 'danger';
+                                    $notifBody = "Le champ AD doit être BR ou TC.";
+                                }
+                                break;
+                            case "FI":
+                                $possibleValues = array("MPL", "MRI", "MSI", "LIB", "?");
+                                if (in_array($data[1], $possibleValues)){
+                                    $stdFiliere = $data[1];
+                                } else {
+                                    $notifClass = 'danger';
+                                    $notifBody = "Le champ FI doit être MPL, MRI, MSI, LIB ou ?.";
+                                }
+                                break;
+                            case "==":
+                                break;
+
+                            /* Lecture d'un nouvel élément de formation
+                             * + Append à la collection d'elements de formation */
+                            case "EL":
+                                $eltFormation = new ElementFormation();
+                                $eltFormation->setSemSeq($data[1]);
+                                $eltFormation->setSemLabel(strtoupper($data[2]));
+                                $eltFormation->setSigle(strtoupper($data[3]));
+
+                                $categorie = $this->getDoctrine()
+                                    ->getRepository('AppBundle:Categories')
+                                    ->findOneBy(array('label' => $data[4]));
+                                $eltFormation->setCategories($categorie);
+
+                                $affectation = $this->getDoctrine()
+                                    ->getRepository('AppBundle:Affectations')
+                                    ->findOneBy(array('label' => $data[5]));
+                                $eltFormation->setAffectations($affectation);
+
+                                if ($data[6] == 'Y'){
+                                    $utt = true;
+                                } else {
+                                    $utt = false;
+                                }
+                                $eltFormation->setUtt($utt);
+
+                                if ($data[7] == 'Y'){
+                                    $profil = true;
+                                } else {
+                                    $profil = false;
+                                }
+                                $eltFormation->setProfil($profil);
+
+                                $eltFormation->setCredit($data[8]);
+
+                                $resultat = $this->getDoctrine()
+                                    ->getRepository('AppBundle:Resultats')
+                                    ->findOneBy(array('label' => $data[9]));
+                                $eltFormation->setResultats($resultat);
+
+                                $eltsFormation[] = $eltFormation;
+                                break;
+                            default:
+                                break;
                         }
-
-
                     }
-
-
+                    /* Recherche de l'étudiant dans la base de données à partir des informations lues dans le fichier. */
                     $etudiant = $this->getDoctrine()
                         ->getRepository('AppBundle:Etudiants')
                         ->find($stdId);
-
+                    /* Si l'étudiant n'existe pas, il est créé. */
                     if (empty($etudiant)){
                         $newStudent = new Etudiants();
                         $newStudent->setNom($stdName);
@@ -334,15 +367,21 @@ class CursusController extends Controller {
 
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newStudent);
-
                         $etudiant = $newStudent;
                     }
 
 
                     $cursus = new Cursus();
 
+
                     $cursus->setLabel($label);
                     $cursus->setEtudiant($etudiant);
+                    foreach ($eltsFormation as $element){
+                        $element->setCursus($cursus);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($element);
+                        $em->flush();
+                    }
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($cursus);

@@ -6,7 +6,7 @@
 
 {% block content %}
     <h4>{{ cursus.label }}</h4>
-    <h6 class="grey">Corentin Laithier - 36795</h6>
+    <h6 class="grey">{{ cursus.etudiant.prenom }} {{ cursus.etudiant.nom }} - {{ cursus.etudiant.id }}</h6>
     {% if cursusElements is defined %}
         {% set previousSemSeq = 0 %}
         {% for element in cursus.elementsFormations %}
