@@ -7,8 +7,11 @@
 {% block content %}
     <div class="row">
         <div class="col-md-10">
+
             <h3>{{ cursus.label }}</h3>
-            <h6 class="grey">{{ cursus.etudiant.prenom }} {{ cursus.etudiant.nom }} - {{ cursus.etudiant.id }}</h6>
+            <h6 class="grey"><i class="fa fa-address-card" aria-hidden="true"></i> {{ cursus.etudiant.prenom }} {{
+                cursus.etudiant.nom }} - {{ cursus.etudiant.id }}</h6>
+            <hr class="jumbotron-hr mb-5">
 
             {% if cursusElements is defined %}
                 {% set previousSemSeq = 0 %}
@@ -20,11 +23,12 @@
                     {% else %}
                         </tbody>
                         </table>
-                        <h4 class="grey" id="sem{{ semSeq }}">Semestre {{ semSeq }}</h4>
+                        <h5 id="sem{{ semSeq }}"><i class="fa fa-book pr-2" aria-hidden="true"></i> {% if element
+                            .semLabel is defined %}
+                            {{element.semLabel}} {% else %} ---   {% endif %}</h5>
                         <table class="table mb-5">
                         <thead class="thead-default">
                         <tr>
-                            <th>Semestre</th>
                             <th>Label</th>
                             <th>Catégorie</th>
                             <th>Affectation</th>

@@ -1,10 +1,12 @@
 <tr>
-    <td>{% if element.semLabel is defined %} {{element.semLabel}} {% else %} ---   {% endif %}</td>
-
     <td>{% if element.sigle is defined %} {{element.sigle}} {% else %} ---   {% endif %}</td>
 
     <td>{% if element.categories.label is defined %}
-            {{ element.categories.label }}
+            {% if element.categories.label == "NPML" %}
+                <span class="badge badge-success">NPML <i class="fa fa-check-circle" aria-hidden="true"></i></span>
+            {% else %}
+                {{ element.categories.label }}
+            {% endif %}
         {% else %}
             ---
         {% endif %}</td>
