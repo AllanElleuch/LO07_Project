@@ -5,41 +5,71 @@
 {% endblock %}
 
 {% block content %}
-    <h4>{{ cursus.label }}</h4>
+    <h3>{{ cursus.label }}</h3>
     <h6 class="grey">{{ cursus.etudiant.prenom }} {{ cursus.etudiant.nom }} - {{ cursus.etudiant.id }}</h6>
-    {% if cursusElements is defined %}
-        {% set previousSemSeq = 0 %}
-        {% for element in cursus.elementsFormations %}
-            {% set semSeq = element.semSeq %}
-            {% if semSeq == previousSemSeq %}
-                {% include('cursus/table-cursus-view.html.twig') %}
-                {% set previousSemSeq = semSeq %}
-            {% else %}
+
+    <div class="row">
+        <div class="col-md-10">
+            {% if cursusElements is defined %}
+                {% set previousSemSeq = 0 %}
+                {% for element in cursus.elementsFormations %}
+                    {% set semSeq = element.semSeq %}
+                    {% if semSeq == previousSemSeq %}
+                        {% include('cursus/table-cursus-view.html.twig') %}
+                        {% set previousSemSeq = semSeq %}
+                    {% else %}
+                        </tbody>
+                        </table>
+                        <h4 class="grey" id="sem{{ semSeq }}">Semestre {{ semSeq }}</h4>
+                        <table class="table mb-5">
+                        <thead class="thead-default">
+                        <tr>
+                            <th>Semestre</th>
+                            <th>Label</th>
+                            <th>Catégorie</th>
+                            <th>Affectation</th>
+                            <th>UTT</th>
+                            <th>Profil</th>
+                            <th>Crédits</th>
+                            <th>Résultat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% include('cursus/table-cursus-view.html.twig') %}
+                        {% set previousSemSeq = semSeq %}
+                    {% endif %}
+                {% endfor %}
                 </tbody>
                 </table>
-                <table class="table mb-5">
-                <thead class="thead-default">
-                <tr>
-                    <th>Semestre</th>
-                    <th>Label</th>
-                    <th>Catégorie</th>
-                    <th>Affectation</th>
-                    <th>UTT</th>
-                    <th>Profil</th>
-                    <th>Crédits</th>
-                    <th>Résultat</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% include('cursus/table-cursus-view.html.twig') %}
-                {% set previousSemSeq = semSeq %}
             {% endif %}
-        {% endfor %}
-        </tbody>
-    {% endif %}
-    </table>
+        </div>
+        <div class="col-md-2">
+                    {% if cursusElements is defined %}
+                        <nav class="navbar" id="scrollspyToC">
+                            <ul class="nav flex-column">
+                                {% set previousSemSeq = 0 %}
+                                {% for element in cursus.elementsFormations %}
+                                    {% set semSeq = element.semSeq %}
+                                    {% if semSeq != previousSemSeq %}
+                                        <li class="nav-item">
+                                            <a href="#sem{{ semSeq }}" class="nav-link">Semestre {{ semSeq }}</a>
+                                        </li>
+                                        {% set previousSemSeq = semSeq %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+        </div>
+    </div>
+
 
 
 
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        $('body').scrollspy()
+    </script>
+{% endblock %}

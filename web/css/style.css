@@ -6,6 +6,9 @@
  *
  */
 
+body {
+    position: relative;
+}
 
 
 /* Barre de navigation principale
@@ -129,6 +132,31 @@
     color: #000;
     font-weight: 400;
     background-color: #E0F7FA;
+}
+
+
+#scrollspyToC{
+    position: fixed;
+    border-left: 1px solid #cecece;
+    padding-left: 0;
+}
+
+#scrollspyToC li {
+    margin: 0;
+    padding: 0;
+}
+
+#scrollspyToC .nav-link{
+    color: #777;
+}
+
+#scrollspyToC .nav-link:hover{
+    color: #000;
+}
+
+#scrollspyToC .nav-link.active{
+    color: #5cb85c;
+    font-weight: 500;
 }
 
 
