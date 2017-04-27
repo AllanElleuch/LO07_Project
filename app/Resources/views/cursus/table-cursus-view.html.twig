@@ -13,10 +13,12 @@
         {% if element.affectations.label is defined %}
             {% if element.affectations.label == "TC" %}
                 <span class="badge badge-tc">TC</span>
-            {% elseif element.affectations.label == "TCBR" %}
+            {% elseif element.affectations.label == "TCBR"%}
                 <span class="badge badge-tcbr">TCBR</span>
             {% elseif element.affectations.label == "FLBR" %}
                 <span class="badge badge-flbr">FLBR</span>
+            {% elseif element.affectations.label == "BR" %}
+                <span class="badge badge-br">BR</span>
             {% endif %}
         {% else %}
             ---

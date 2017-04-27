@@ -58,7 +58,7 @@ class InitialisationBddController extends Controller {
         $res = $this->getDoctrine()->getRepository('AppBundle:Affectations')->findAll();
 
         if (empty($res)){
-            $affectations = array('TC', 'TCBR', 'FLBR');
+            $affectations = array('TC', 'BR', 'TCBR', 'FLBR');
 
             foreach ($affectations as $aff){
                 $affObj = new Affectations();
