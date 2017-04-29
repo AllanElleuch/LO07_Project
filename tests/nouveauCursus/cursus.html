@@ -1,78 +1,160 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title></title>
-    <link type="text/css" rel="stylesheet" href="myccss.css">
+    <link rel="stylesheet" href="mycss.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
   </head>
   <body>
 
 
 
-    <div class="container">
-      <h3> Click any date field to see dyamic tabs with bootstrap slider </h3>
-    <div class="well-block">
-      <ul id="main_tab" class="nav nav-tabs">
-        <li class="active">
-          <a href="#form_tab_01" data-toggle="tab">tab 1</a>
-          <span>x</span>
-        </li>
-        <li>
-          <a href="#" id="main_add" class="add-tab" data-toggle="tab"><i class="fa fa-plus"></i> Add Form</a>
-        </li>
-      </ul>
-      <div id="main_content" class="tab-content">
-        <div class="tab-pane active" id="form_tab_01">
-          <div class="primary-form1">
-            <div class="form-group hidden">
-              <label> Ad Name </label>
-              <input class="form-control" type="text"> </div>
-            <div class="form-group hidden">
-              <label> Total Time </label>
-              <input class="form-control" type="text">
-            </div>
-            <div class="form-group hidden">
-              <label> Time Slot </label>
-              <input class="form-control" type="text"> </div>
-            <div class="form-group ">
-              <div class=" btn btn-default show-cal hidden">show calender</div>
-              <div class="f-cal"></div>
-            </div>
-          </div>
-          <ul id="sub_tab" class="nav nav-tabs">
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Dashboard</a>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Analytics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Export</a>
+            </li>
           </ul>
-          <div id="sub_content" class="tab-content"> </div>
-          <div class="col-md-12 clearfix">
-            <button class="btn btn-default" id="sendEmail">submit <i class="fa fa-arrow-circle-right"></i></button>
-          </div>
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nav item</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nav item again</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">One more nav</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Another nav item</a>
+            </li>
+          </ul>
+
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nav item again</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">One more nav</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Another nav item</a>
+            </li>
+          </ul>
+        </nav>
+
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+          <h1> Ajouter des semestres et ajouter y vos UE </h3>
+
+          <section class="row text-center placeholders">
+            <div class="container ">
+            <div class="well-block">
+
+
+
+              <div id="main_content">
+
+
+              <!-- Nav tabs -->
+                <ul  class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" >
+                    <a class="nav-link active" data-toggle="tab" href="#form_tab_01" role="tab">Sem1</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="add-tab" data-toggle="tab" href="#" role="tab" id="main_add"><i class="fa fa-plus"></i> Ajouter Semestre</a>
+                  </li>
+                </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div class="tab-pane active" id="form_tab_01" role="tabpanel">...</div>
+              </div>
         </div>
+
+        </div>
+          </div>
+
+          </section>
+
+
+        </main>
       </div>
     </div>
-      </div>
 
 
 
-  <script
-          src="https://code.jquery.com/jquery-3.2.1.js"
-          integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-          crossorigin="anonymous"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <script async=false defer=false
-  			  src="https://code.jquery.com/jquery-3.2.1.js"
-  			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  			  crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+<script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script async=false defer=false
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
 
 
 <script src="myjs.js" ></script>
-
-<script  type="text/javascript">
-$( document ).ready(function() {
-  $('#myTab a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
-});
-</script>
+</html>

@@ -2,25 +2,37 @@ $( document ).ready(function() {
 
 
 
-$(".slider").slider();
+//$(".slider").slider();
 ///new tab with remove
-$("#main_tab.nav-tabs").on("click", "a", function(e) {
+
+
+$("#main_tab.nav-pills").on("click", "a", function(e) {
     e.preventDefault();
     $(this).tab('show');
+    $()
   })
   .on("click", "span", function() {
     var anchor = $(this).siblings('a');
     console.log(anchor);
     $(anchor.attr('href')).remove();
     $(this).parent().remove();
-    $("#main_tab.nav-tabs li").children('a').first().click();
+    $("#main_tab.nav-pills li").children('a').first().click();
   });
+
+  $("#main_content > .nav-pills").on("click", "span", function() {
+      var anchor = $(this).siblings('a');
+      console.log(anchor);
+      $(anchor.attr('href')).remove();
+      $(this).parent().remove();
+      $("#sub_tab.nav-pills li").children('a').first().click();
+    });
+
 
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();
-  var id = $("#main_tab.nav-tabs").children().length;
-  $(this).closest('li').before('<li><a data-toggle="tab" href="#form_tab_' + id + '">Ad Tab' + id + '</a><span>x</span></li>');
-  $('#main_content.tab-content').append('<div class="tab-pane" id="form_tab_' + id + '">content' + id + '</div>');
+  var id = $("#main_content > .nav-pills").children().length;
+  $(this).closest('li').before('<li data-toggle="tab" class="nav-item "><a class="nav-link"  href="#form_tab_' + id + '">Sem' + id + ' <span ><i class="fa fa-times" aria-hidden="true"></i></span></a></li>');
+  $('#main_content > .tab-content').append('<div class="tab-pane" id="form_tab_' + id + '">content' + id + '</div>');
 
   /* to show particular tab content
   var prvone = $('#main_tab a').length;
@@ -31,6 +43,7 @@ $('#main_add.add-tab').click(function(e) {
 
 });
 ///end of new tab
+/*
 $('.f-cal').fullCalendar({
   dayClick: function(date, jsEvent, view) {
     var dateuse = "2016/02/06"; //$.fullCalendar.formatDate(date, 'yyyy-MM-dd');
@@ -38,10 +51,10 @@ $('.f-cal').fullCalendar({
     $(this).append('<i class="fa icon fa-user"></i>');
 
     //intialize sub form tab
-    var sub_id = $("#sub_tab.nav-tabs").children().length;
+    var sub_id = $("#sub_tab.nav-pills").children().length;
     var subfromhtml = ' <div class="subform' + sub_id + '"> <div class="row"> <div class="col-md-12"> <div class="form-group"> <label> Required no of views </label> <input type="text" value="" class="slider form-control" data-slider-max="100" data-slider-step="5" data-slider-value="[70]" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="red"> </div><div class="col-md-12 clearfix" style="margin:10px 0" data-toggle="collapse" data-target="#advanced"> <button type="button" id="ads" class="btn btn-default btn-sm">Target Audience</button> </div></div></div><div id="advanced" class="advanced"> <div class="box "> <div class="box-body clearfix"> <div class="row"> <div class="col-md-12"> <div class="form-group"> <label> Age </label> <input type="text"/><input type="text" value="" class="slider" form-control " data-slider-max="100" data-slider-step="5" data-slider-value="[70]" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show" data-slider-id="green"> </div><div class="form-group"> <label> Sex</label> <div class="checkbox"> <label class="checkbox-inline"> <input type="radio" name="sex" value="">Male</label> <label class="checkbox-inline"> <input type="Radio" name="sex" value="">Female</label> </div></div><div class="form-group"> <label> Geography</label> <input id="autocomplete" class=" form-control autocomplete" placeholder="Enter your address" type="text" name="geography"> </div></div></div></div></div></div></div>';
 
-    $("#sub_tab.nav-tabs").append('<li><a data-toggle="tab" href="#form_sub_tab_' + sub_id + '">' + dateuse + '</a><span>x</span></li>');
+    $("#sub_tab.nav-pills").append('<li><a data-toggle="tab" href="#form_sub_tab_' + sub_id + '">' + dateuse + '</a><span>x</span></li>');
     $('#sub_content.tab-content').append('<div class="tab-pane fade" id="form_sub_tab_' + sub_id + '">' + subfromhtml + '</div>');
     $('#sub_tab a:last').tab('show');
     $(".slider").slider();
@@ -49,7 +62,7 @@ $('.f-cal').fullCalendar({
       $(".slider").slider();
     });
 
-    $("#sub_tab.nav-tabs").on("click", "a", function(e) {
+    $("#sub_tab.nav-pills").on("click", "a", function(e) {
         e.preventDefault();
         $(this).tab('show');
       })
@@ -58,10 +71,10 @@ $('.f-cal').fullCalendar({
         console.log(anchor);
         $(anchor.attr('href')).remove();
         $(this).parent().remove();
-        $("#sub_tab.nav-tabs li").children('a').first().click();
+        $("#sub_tab.nav-pills li").children('a').first().click();
       });
 
   }
 });
-
+*/
 });
