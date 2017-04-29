@@ -58,7 +58,7 @@ class Cursus
      * @param array $elementsFormations
      * @return Cursus
      */
-    public function setelementsFormations($elementsFormations) {
+    public function setElementsFormations($elementsFormations) {
         $this->elementsFormations = $elementsFormations;
         return $this;
     }
@@ -68,7 +68,7 @@ class Cursus
      *
      * @return array
      */
-    public function getelementsFormations() {
+    public function getElementsFormations() {
         return $this->elementsFormations;
     }
 

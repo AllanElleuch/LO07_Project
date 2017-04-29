@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Etudiants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Cursus;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -331,7 +333,7 @@ class CursusController extends Controller {
                                 }
                                 $eltFormation->setProfil($profil);
 
-                                $eltFormation->setCredit($data[8]);
+                                $eltFormation->setCredits($data[8]);
 
                                 $resultat = $this->getDoctrine()
                                     ->getRepository('AppBundle:Resultats')
@@ -413,14 +415,85 @@ class CursusController extends Controller {
      */
     public function exportOneCursusAction(Request $request, $id) {
 
-        // Exportation d'un cursus au format csv
-
+        /* Récupération de l'objet cursus */
         $cursus = $this->getDoctrine()
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        /* Récupération de l'étudiant associé au cursus pour créer l'en-tête */
+        $etudiant = $cursus->getEtudiant();
 
-        return $this->redirectToRoute('exportCursusList');
+        /* Variables d'accès et d'ouverture du fichier csv */
+        $csvFilePath = "export.csv";
+        $csvFile = fopen($csvFilePath, 'w');
+
+        /* Construction de l'en-tête */
+        $headerLines = array(
+            "lineId" => array("ID", $etudiant->getId(), "", "", "", "", "", "", "", ""),
+            "lineNom" => array("NO", $etudiant->getNom(), "", "", "", "", "", "", "", ""),
+            "linePrenom" => array("PR", $etudiant->getPrenom(), "", "", "", "", "", "", "", ""),
+            "lineAdm"    => array("AD",
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Admissions')
+                    ->find($etudiant->getAdmissions())->getLabel(),
+                "", "", "", "", "", "", "", ""),
+            "lineFil"    => array("FI",
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Filieres')
+                    ->find($etudiant->getFilieres())->getLabel(),
+                "", "", "", "", "", "", "", ""),
+        );
+
+        /* Écriture de l'en-tête dans le fichier csv */
+        foreach ($headerLines as $headLine){
+            fputcsv($csvFile, $headLine, ";");
+        }
+
+        /* Écriture de la ligne intermédiaire */
+        $transitionLine = array(
+            "==", "s_seq", "s_label", "sigle", "categorie", "affectation", "utt", "profil", "credit", "resultat"
+        );
+        fputcsv($csvFile, $transitionLine, ";");
+
+        $elements = $cursus->getElementsFormations();
+
+        foreach ($elements as $elt){
+            $utt = $elt->getUtt() == 1 ? 'Y' : 'N';
+            $profil = $elt->getProfil() == 1 ? 'Y' : 'N';
+            $line = array(
+                "EL",
+                $elt->getSemSeq(),
+                $elt->getSemLabel(),
+                $elt->getSigle(),
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Categories')
+                    ->find($elt->getCategories())->getLabel(),
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Affectations')
+                    ->find($elt->getAffectations())->getLabel(),
+                $utt,
+                $profil,
+                $elt->getCredits(),
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Resultats')
+                    ->find($elt->getResultats())->getLabel(),
+
+            );
+            fputcsv($csvFile, $line, ";");
+        }
+        fclose($csvFile);
+
+
+        // Téléchargement automatique du fichier
+        $response = new BinaryFileResponse('export.csv');
+        $response->headers->set('Content-Type', 'text/plain');
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'export.csv'
+        );
+
+        return $response;
+
     }
 
     /**
