@@ -212,7 +212,7 @@ class ElementFormation
     }
 
     /**
-     * Set credit
+     * Set credits
      *
      * @param integer $credits
      *
@@ -226,7 +226,7 @@ class ElementFormation
     }
 
     /**
-     * Get credit
+     * Get credits
      *
      * @return integer
      */

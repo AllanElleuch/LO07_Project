@@ -30,7 +30,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
   ->add('sigle', TextType::class, array('label' => 'Sigle ', 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control')))
-  ->add('credit', IntegerType ::class, array('label' => 'Crédits ', 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
+  ->add('credits', IntegerType ::class, array('label' => 'Crédits ', 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
   ->add('sem_seq', IntegerType ::class, array('label' => 'Numéro du semestre ', 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control', 'min' => '0')))
   ->add('sem_label', TextType::class, array('label' => 'Label du semestre', 'attr' => array('placeholder' => 'ISIx',
       'class' => 'form-control ')))
