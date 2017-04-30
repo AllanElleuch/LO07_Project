@@ -14,11 +14,6 @@
 }
 
 
-body {
-  padding : 10px ;
-
-}
-
 #main_content .active, #main_content .active a.nav-link {
   color : white;
   border-color: #428bca;
