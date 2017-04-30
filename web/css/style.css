@@ -135,6 +135,10 @@ body {
 }
 
 
+/* ScrollSpy sur l'affichage d'un cursus
+ * =====================================
+ */
+
 #scrollspyToC{
     position: fixed;
     padding-left: 0;
@@ -179,14 +183,12 @@ body {
 
 
 /*
- * Hide input type file
+ * Pre, Code
  */
-
-/*input[type="file"]{*/
-    /*width: 0.1px;*/
-    /*height: 0.1px;*/
-    /*opacity: 0;*/
-    /*overflow: hidden;*/
-    /*position: absolute;*/
-    /*z-index: -1;*/
-/*}*/
+pre {
+    white-space: pre-line;
+    padding-left: 1em;
+    border-radius: .2em;
+    border-left: 4px solid #777;
+    background-color: #efefef;
+}
