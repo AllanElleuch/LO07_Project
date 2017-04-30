@@ -46,7 +46,7 @@ class ElementFormation
     /**
      * @ORM\Column(type="smallint", length=100)
      */
-    private $credit;
+    private $credits;
 
     /**
      * catégories : CS, TM, EC, CT, HT, ME, ST, SE, HP, NPML
@@ -214,13 +214,13 @@ class ElementFormation
     /**
      * Set credit
      *
-     * @param integer $credit
+     * @param integer $credits
      *
      * @return ElementFormation
      */
-    public function setCredit($credit)
+    public function setCredits($credits)
     {
-        $this->credit = $credit;
+        $this->credits = $credits;
 
         return $this;
     }
@@ -230,9 +230,9 @@ class ElementFormation
      *
      * @return integer
      */
-    public function getCredit()
+    public function getCredits()
     {
-        return $this->credit;
+        return $this->credits;
     }
 
     /**
