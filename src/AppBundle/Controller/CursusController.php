@@ -423,8 +423,24 @@ class CursusController extends Controller {
         /* Récupération de l'étudiant associé au cursus pour créer l'en-tête */
         $etudiant = $cursus->getEtudiant();
 
+        /* Si le chemin d'exportation n'existe pas, on le crée.
+         * S'il existe déjà, on le vide pour ne pas stocker sur le serveur tous les fichiers exportés.
+         * Seul le dernier fichier exporté est gardé sur le serveur.
+         */
+        if (!is_dir('./export_cursus')){
+            mkdir('./export_cursus');
+        } else {
+            $files = glob('./export_cursus/*');
+            foreach ($files as $file) {
+                if (is_file($file)){
+                    unlink($file);
+                }
+            }
+        }
+
         /* Variables d'accès et d'ouverture du fichier csv */
-        $csvFilePath = "export.csv";
+        $filename = $etudiant->getId() . "_" . $etudiant->getNom() . "-" . $etudiant->getPrenom() . ".csv";
+        $csvFilePath = "./export_cursus/" . $filename;
         $csvFile = fopen($csvFilePath, 'w');
 
         /* Construction de l'en-tête */
@@ -485,11 +501,10 @@ class CursusController extends Controller {
 
 
         // Téléchargement automatique du fichier
-        $response = new BinaryFileResponse('export.csv');
+        $response = new BinaryFileResponse($csvFilePath);
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'export.csv'
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT
         );
 
         return $response;
