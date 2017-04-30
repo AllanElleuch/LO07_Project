@@ -6,6 +6,7 @@ var $newLinkLi = $('<li></li>').append($addTagLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
+    //$collectionHolder = $('div#prototypeContainer')
     $collectionHolder = $('ul.elemFormation');
 
     // add the "add a tag" anchor and li to the tags ul
