@@ -9,8 +9,10 @@
         <div class="col-md-10">
 
             <h3>{{ cursus.label }}</h3>
-            <h6 class="grey"><i class="fa fa-address-card" aria-hidden="true"></i> {{ cursus.etudiant.prenom }} {{
-                cursus.etudiant.nom }} - {{ cursus.etudiant.id }}</h6>
+            <h6 class="grey"><i class="fa fa-address-card" aria-hidden="true"></i>{% if cursus.etudiant.prenom is defined %}
+
+                 {{ cursus.etudiant.prenom }} {{
+                cursus.etudiant.nom }} - {{ cursus.etudiant.id }}{% else %} ---   {% endif %}</h6>
             <hr class="jumbotron-hr mb-5">
 
             {% if cursusElements is defined %}
