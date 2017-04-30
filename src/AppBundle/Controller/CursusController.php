@@ -424,7 +424,8 @@ class CursusController extends Controller {
         $etudiant = $cursus->getEtudiant();
 
         /* Variables d'accès et d'ouverture du fichier csv */
-        $csvFilePath = "export.csv";
+        $filename = $etudiant->getId() . "_" . $etudiant->getNom() . "-" . $etudiant->getPrenom() . ".csv";
+        $csvFilePath = $filename;
         $csvFile = fopen($csvFilePath, 'w');
 
         /* Construction de l'en-tête */
@@ -485,11 +486,11 @@ class CursusController extends Controller {
 
 
         // Téléchargement automatique du fichier
-        $response = new BinaryFileResponse('export.csv');
+        $response = new BinaryFileResponse($filename);
         $response->headers->set('Content-Type', 'text/plain');
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'export.csv'
+            $filename
         );
 
         return $response;
