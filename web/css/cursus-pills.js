@@ -6,36 +6,34 @@ $( document ).ready(function() {
 ///new tab with remove
 
 
-$("#main_tab.nav-pills").on("click", "a", function(e) {
+$("#main_content .nav-pills").on("click", "a", function(e) {
+  console.log("yo");
     e.preventDefault();
     $(this).tab('show');
     $()
-  })
+  });
   /*.on("click", "span", function() {
     var anchor = $(this).siblings('a');
-    //console.log(anchor);
+    console.log(anchor);
     $(anchor.attr('href')).remove();
-    console.log( $(this).parent().parent().html());
-    console.log("yo");
-    $(this).parent().parent().remove();
-
+    $(this).parent().remove();
     $("#main_tab.nav-pills li").children('a').first().click();
   });*/
 
-  $("#main_content  .nav-pills").on("click", "span", function() {
+  $("#main_content > .nav-pills").on("click", "span", function() {
       var anchor = $(this).siblings('a');
       console.log(anchor);
       $(anchor.attr('href')).remove();
-      $(this).parent().parent().remove();
+      $(this).parent().remove();
       $("#sub_tab.nav-pills li").children('a').first().click();
     });
 
 
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();
-  var id = $("#main_content  .nav-pills").children().length;
+  var id = $("#main_content > .nav-pills").children().length;
   $(this).closest('li').before('<li data-toggle="tab" class="nav-item "><a class="nav-link"  href="#form_tab_' + id + '">Sem' + id + ' <span ><i class="fa fa-times" aria-hidden="true"></i></span></a></li>');
-  $('#main_content  .tab-content').append('<div class="tab-pane" id="form_tab_' + id + '">content' + id + '</div>');
+  $('#main_content > .tab-content').append('<div class="tab-pane" id="form_tab_' + id + '">content' + id + '</div>');
 
   /* to show particular tab content
   var prvone = $('#main_tab a').length;

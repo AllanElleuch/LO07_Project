@@ -16,7 +16,7 @@ Nouveau cursus
   <h5>Éléments de formations</h5>
 
   <ul class="nav nav-pills flex-column">
-    <ul class="elemFormation" data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
+    <ul id="elemFormationSidebar" class="elemFormation" data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
       {# iterate over each existing tag and render its only field: name #}
       {% for elemFormation in form.elementsFormations %}
       <li>{{ form_row(elemFormation.sigle) }}</li>
@@ -48,6 +48,12 @@ Nouveau cursus
         <div class="well-block">
           <div id="main_content">
             <!-- Nav tabs -->
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+
+
             <ul  class="nav nav-pills" role="tablist">
               <li class="nav-item" role="tab" data-toggle="tab"  >
                 <a class="nav-link active"   href="#form_tab_01" >Sem1 <span ><i class="fa fa-times" aria-hidden="true"></i></span></a>
@@ -57,13 +63,22 @@ Nouveau cursus
               </li>
             </ul>
             <!-- Tab panes -->
-            <div class="tab-content">
+
+
+
+            <div class="tab-content container-fluid">
               <div class="tab-pane active" id="form_tab_01" role="tabpanel">
                 test ...
                 <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
                 </div>
               </div>
             </div>
+
+          </div>
+        </div>
+      </div>
+
+
           </div>
         </div>
       </section>
