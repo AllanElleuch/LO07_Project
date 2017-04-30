@@ -4,136 +4,138 @@
  * EasyCursus, projet LO07
  * Allan Elleuch, Corentin Laithier
  *
+ * GENERAL RULES
+ * NAVIGATION
+ *    Navigation principale
+ *    Navigation secondaire
+ * TABLES
+ * BADGES
+ * SCROLLSPY
+ * MISC (Dev)
  */
 
+/* GENERAL RULES */
+/* ============= */
 body {
+    padding: 0;
     position: relative;
-}
-
-
-/* Barre de navigation principale
- * ==============================
- */
-.bg-custom {
-    background-color: #f5f5f5 !important;
-}
-
-.navbar {
-    padding-bottom: 0;
-}
-
-/*.main-nav{*/
-    /*text-align: center;*/
-    /*padding: .8em;*/
-    /*margin-bottom: 0;*/
-    /*background-color: #f5f5f5;*/
-/*}*/
-
-.nav-item{
-    padding-left: .5em;
-    padding-right: .5em;
-    margin-left: .5em;
-    margin-right: .5em;
-    border-bottom: 2px solid transparent;
-    color: #777;
-}
-
-.my-nav-item:hover{
-    border-bottom: 2px solid rgb(193, 193, 193);
-    text-decoration: none;
-    color: #000;
-}
-.my-nav-item.active{
-    border-bottom: 2px solid #5cb85c;
-    text-decoration: none;
-    color: #000;
-    font-weight: 600;
-}
-
-
-
-
-
-
-/* Barre de navigation secondaire
- * ==============================
- */
-.sub-nav{
-    display: block;
-    text-align: center;
-    padding: .8em;
-    font-size: 0.9em;
-    background-color: #ebebeb;
-    border-bottom: 1px solid #cecece;
-    border-top: 1px solid #cecece;
-}
-.sub-nav-item{
-    padding-bottom: .9em;
-    padding-left: .9em;
-    padding-right: .9em;
-    color: #777;
-}
-.sub-nav-item:hover{
-    /*border-bottom: 2px solid rgb(193, 193, 193);*/
-    text-decoration: none;
-    color: black;
-}
-.sub-nav-item.active{
-    /*border-bottom: 2px solid #5cb85c;*/
-    text-decoration: none;
-    color: #5cb85c;
-    font-weight: 500;
-}
-
-
-/* Tableaux
- * ========
- */
-.thead-default th{
-    background-color: #fafafa;
-    font-weight: 500;
-    border-top: 1px solid #e2e2e2;
-    border-bottom: 1px solid #e2e2e2 !important;
-}
-
-.table td{
-    font-size: .9em;
-    vertical-align: inherit;
-    border-top: 1px solid #e2e2e2;
 }
 
 .grey{
     color: #777;
 }
 
+/* Pre, Code */
+pre {
+    white-space: pre-line;
+    padding-left: 1em;
+    border-radius: .2em;
+    border-left: 4px solid #777;
+    background-color: #efefef;
+}
+
+
+
+
+
+/* NAVIGATION */
+/* ========== */
+
+/* Navigation principale */
+.bg-custom {
+    background-color: #f5f5f5 !important;
+}
+.navbar {
+    padding-bottom: 0;
+}
+.nav-item{
+    margin: 0 .5em 0 .5em;
+    padding: 0 .5em 0 .5em;
+    border-bottom: 2px solid transparent;
+    color: #777;
+}
+.my-nav-item:hover{
+    text-decoration: none;
+    border-bottom: 2px solid rgb(193, 193, 193);
+    color: #000;
+}
+.my-nav-item.active{
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid #5cb85c;
+    color: #000;
+}
+
+/* Navigation secondaire */
+.sub-nav{
+    display: block;
+    padding: .8em;
+    text-align: center;
+    font-size: 0.9em;
+    border-bottom: 1px solid #cecece;
+    border-top: 1px solid #cecece;
+    background-color: #ebebeb;
+}
+.sub-nav-item{
+    padding: 0 .9em .9em .9em;
+    color: #777;
+}
+.sub-nav-item:hover{
+    text-decoration: none;
+    color: black;
+}
+.sub-nav-item.active{
+    font-weight: 500;
+    text-decoration: none;
+    color: #5cb85c;
+}
+
+
+
+/* TABLES */
+/* ====== */
+.thead-default th{
+    font-weight: 500;
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2 !important;
+    background-color: #fafafa;
+}
+
+.table td{
+    vertical-align: inherit;
+    font-size: .9em;
+    border-top: 1px solid #e2e2e2;
+}
+
+
+
+
+/* BADGES */
+/* ====== */
 .badge {
     font-size: 100%;
 }
-
-.badge-tc{
-    color: #000;
+.badge-tc, .badge-tcbr, .badge-flbr, .badge-br{
     font-weight: 400;
+    color: #000;
+}
+.badge-tc{
     background-color: #F3E5F5;
 }
-
 .badge-tcbr{
-    color: #000;
-    font-weight: 400;
     background-color: #E8F5E9;
 }
-
 .badge-flbr{
-    color: #000;
-    font-weight: 400;
     background-color: #FFF3E0;
 }
-
 .badge-br{
-    color: #000;
-    font-weight: 400;
     background-color: #E0F7FA;
 }
 
+
+/* ScrollSpy sur l'affichage d'un cursus
+ * =====================================
+ */
 
 #scrollspyToC{
     position: fixed;
@@ -146,24 +148,21 @@ body {
 }
 
 #scrollspyToC .nav-link{
-    color: #777;
     margin: .2em;
-    padding: .2em;
-    padding-left: .5em;
+    padding: .2em .2em .2em .5em;
     border-left: 2px solid transparent;
-
+    color: #777;
 }
 
 #scrollspyToC .nav-link:hover{
-    color: #000;
     border-left: 2px solid #000;
-
+    color: #000;
 }
 
 #scrollspyToC .nav-link.active{
-    color: #5cb85c;
     font-weight: 500;
     border-left: 2px solid #5cb85c;
+    color: #5cb85c;
 }
 
 
@@ -176,17 +175,3 @@ body {
     padding: 0;
     list-style-type: none;
 }
-
-
-/*
- * Hide input type file
- */
-
-/*input[type="file"]{*/
-    /*width: 0.1px;*/
-    /*height: 0.1px;*/
-    /*opacity: 0;*/
-    /*overflow: hidden;*/
-    /*position: absolute;*/
-    /*z-index: -1;*/
-/*}*/
