@@ -19,8 +19,11 @@
             {% for oneCursus in cursus %}
                 <tr>
                     <td>{{ oneCursus.label|e }}</td>
-                    <td class="grey">{% if cursus.etudiant.prenom is defined %}{{ oneCursus.etudiant.nom }} {{ oneCursus.etudiant.prenom }}{% else %} ---   {% endif %} </td>
-                    <td class="grey"> {% if cursus.etudiant.prenom is defined %}{{ oneCursus.etudiant.id }}{% else %} ---   {% endif %} </td>
+                    <td class="grey">{% if oneCursus.etudiant.nom is defined and oneCursus.etudiant.prenom is defined
+                        %}{{ oneCursus.etudiant.nom }} {{
+                        oneCursus.etudiant.prenom }}{% else %} ---   {% endif %} </td>
+                    <td class="grey"> {% if oneCursus.etudiant.id is defined %}{{ oneCursus.etudiant.id }}{% else
+                        %} ---   {% endif %} </td>
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a href="/cursus/view/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip"
