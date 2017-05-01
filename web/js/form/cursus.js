@@ -102,6 +102,7 @@ function ajouterCours($collectionHolder, $newLinkLi){
     */
     description+=list[0].value +" : "+list.find("option:selected").get(1).text
     var card= `
+    <div class="row">
       <div class="card">
         <div class="card-header" role="tab" id=`+"headingOne"+$id+`>
           <h5 class="mb-0">
@@ -114,6 +115,7 @@ function ajouterCours($collectionHolder, $newLinkLi){
           <div class="card-block">`+
           `
           </div>
+        </div>
         </div>`
         $("#main_content .tab-pane.active .accordion").append(card);
         var $id2="#collapseOne"+$id;
