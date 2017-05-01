@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="author" content="Allan Elleuch, Corentin Laithier">
+    <meta name="description" content="Outil de gestion de cursus pour les étudiants ISI de l'UTT.">
+    <meta name="keywords" content="ISI, UTT, Cursus, gestion">
+
+    <title>EasyCursus - Nouveau</title>
+
+    <!--Import Bootstrap-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="../web/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../web/css/style.css">
+
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-light navbar-toggleable-sm bg-custom justify-content-center">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a href="/" class="navbar-brand d-flex w-50 mr-auto">EasyCursus</a>
+    <div class="navbar-collapse collapse" id="collapsingNavbar3">
+        <ul class="navbar-nav mx-auto w-100 justify-content-center">
+            <li class="nav-item my-nav-item active">
+                <a href="/cursus/mes-cursus" class="nav-link">Cursus</a>
+            </li>
+            <li class="nav-item my-nav-item">
+                <a href="/reglements/mes-reglements" class="nav-link ">Règlements</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dev Tools
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/init_base">Initialiser BDD</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- L'opérateur ternaire ajoute la classe 'active' à l'item s'il sagit de la page courante -->
+<ul class="sub-nav">
+    <a class="sub-nav-item" href="/cursus/mes-cursus/">Mes cursus</a>
+    <a class="sub-nav-item active" href="/cursus/new/">Nouveau cursus</a>
+    <a class="sub-nav-item" href="/cursus/import/">Importer</a>
+    <a class="sub-nav-item" href="/cursus/export/">Exporter</a>
+</ul>
+
+<div class="container">
+    <h1>Nouveau cursus</h1>
+    <h4>Cursus et étudiant</h4>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Nom du cursus</label>
+        <div class="col-10">
+            <input class="form-control" type="text" value="Mon super cursus">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Numéro d'étudiant</label>
+        <div class="col-10">
+            <input class="form-control" type="text" value="Mon super cursus">
+        </div>
+    </div>
+    <br>
+    <h4>Éléments de formation</h4>
+
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Semestre 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Semestre 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau
+                        semestre</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-block">
+            <table class="table mb-5">
+                <thead class="thead-default">
+                <tr>
+                    <th>Label</th>
+                    <th>Catégorie</th>
+                    <th>Affectation</th>
+                    <th>UTT</th>
+                    <th>Profil</th>
+                    <th>Crédits</th>
+                    <th>Résultat</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" size="10"></td>
+                    <td><input type="text" size="5"></td>
+                    <td><input type="text" size="10"></td>
+                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td>
+                    <td><input type="text" size="5"></td>
+                    <td><input type="text" size="5"></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-sm btn-outline-primary"><i class="fa fa-plus-circle"
+                                                                          aria-hidden="true"></i> Nouvelle
+                        ligne</button></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Import jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="../web/js/tether.min.js"></script>
+<script src="../web/js/bootstrap.min.js"></script>
+</body>
+</html>
