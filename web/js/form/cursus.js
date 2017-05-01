@@ -32,9 +32,9 @@ jQuery(document).ready(function() {
         // add a new tag form (see next code block)
         ajouterCours($collectionHolder, $newLinkLi);
     });
-    addTagForm($collectionHolder, $newLinkLi);
+    addTagForm2($collectionHolder, $newLinkLi);
 });
-
+/*
 function addTagForm($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
@@ -54,6 +54,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
     $newLinkLi.before($newFormLi);
 }
 
+*/
 function addTagForm2($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
@@ -70,25 +71,26 @@ function addTagForm2($collectionHolder, $newLinkLi) {
 
     // Display the form in the page in an li, before the "Add a tag" link li
     //var $newFormLi = $('<li></li>').append(newForm);
-    var $newFormLi = $('<li></li>').append(newForm); 
+    var $newFormLi = $('<li></li>').append(newForm);
     $newLinkLi.before($newFormLi);
 }
-
 
 
 
 function ajouterCours($collectionHolder, $newLinkLi){
     //var $form=document.createElement("div");
     var list=$(".elemFormation li div .form-control");
-
     //$(".elemFormation li div ").appendTo($form)
-    var $form=$(".elemFormation li div ").clone();
-    console.log($(".elemFormation li div .form-control"));
-    console.log("_________");
-      console.log($form);
+    //var $form=$(".elemFormation li div ").clone();
+    //var $id=$(".elemFormation li div").get(0).id
+    var $id=$collectionHolder.find("li div").get(0).id
+    var $form=$collectionHolder.find("#"+$id).clone()
+    //$(".elemFormation li #form_elementsFormations_0").clone().appendTo("#main_content .tab-pane.active .accordion")
+    $(".elemFormation li "+$id).clone().appendTo("#main_content .tab-pane.active .accordion")
+    $(".elemFormation li div ").detach();
+      var $html=$form;
     //$(".elemFormation li div ").remove();
     //var $id=$form[0].attr('id')
-    var $id=$($form).get(0).id
 
     //$(".elemFormation li div ").detach().appendTo($("#main_content .tab-pane.active"))
 
@@ -108,7 +110,7 @@ function ajouterCours($collectionHolder, $newLinkLi){
             </a>
           </h5>
         </div>
-        <div id=`+"collapseOne"+$id+` class="collapse show" role="tabpanel" aria-labelledby="`+"headingOne"+$id+`>
+        <div id=`+"collapseOne"+$id+` class="collapse" role="tabpanel" aria-labelledby="`+"headingOne"+$id+`>
           <div class="card-block">`+
           `
           </div>
@@ -116,7 +118,8 @@ function ajouterCours($collectionHolder, $newLinkLi){
         $("#main_content .tab-pane.active .accordion").append(card);
         var $id2="#collapseOne"+$id;
         //$($id2).append($form);
-        $(".elemFormation li").detach().appendTo($($id2))
+        //$(".elemFormation li").detach().appendTo($($id2))
+        $($html).appendTo($($id2))
 
         addTagForm2($collectionHolder, $newLinkLi);
 

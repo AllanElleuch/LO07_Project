@@ -11,6 +11,8 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
     $(this).tab('show');
     $()
   })
+
+
   /*.on("click", "span", function() {
     var anchor = $(this).siblings('a');
     //console.log(anchor);
@@ -34,8 +36,8 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();
   var id = $("#main_content  .nav-pills").children().length;
-  $(this).closest('li').before('<li data-toggle="tab" class="nav-item "><a class="nav-link"  href="#form_tab_' + id + '">Sem' + id + ' <span ><i class="fa fa-times" aria-hidden="true"></i></span></a></li>');
-  $('#main_content  .tab-content').append('<div class="tab-pane" id="form_tab_' + id + '">content' + id + '</div>');
+  $(this).closest('li').before('<li  class="nav-item "><a  data-toggle="tab" role="tab" class="nav-link" aria-controls=form_tab_' + id + '"  href="#form_tab_' + id + '">Sem' + id + ' <span ><i class="fa fa-times" aria-hidden="true"></i></span></a></li>');
+  $('#main_content  .tab-content').append('<div class="tab-pane" id="form_tab_' + id + '"role="tabpanel" ">content' + id + '</div>');
 
   /* to show particular tab content
   var prvone = $('#main_tab a').length;
