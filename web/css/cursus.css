@@ -24,6 +24,46 @@ h1 {
 
 }*/
 
+#main_content .nav-tabs {
+  border-bottom: none; */
+}
+#main_content .nav-tabs .nav-link:after {
+    /* position: absolute; */
+    /* top: 0; */
+    /* left: 0; */
+    /* height: 100%; */
+    /* width: 0; */
+    /* z-index: 1; */
+    /* background-color: #2a2a2a; */
+    /* -webkit-transition: all .3s; */
+    /* transition: all .3s; */
+    /* opacity: .5; */
+}
+
+#main_content .nav-tabs .nav-link.active  {
+    /* color: #464a4c; */
+    /* background-color: #fff; */
+    /* border-color: #ddd #ddd #fff; */
+    /*border-left-color: rgba(51,51,51,1);*/
+    background-color: rgba(51,51,51,1);
+    border-color: rgba(51,51,51,1);
+}
+
+#main_content .nav-tabs .nav-link  {
+    /* color: #464a4c; */
+    /* background-color: #fff; */
+    /* border-color: #ddd #ddd #fff; */
+    /*border-left-color: rgba(51,51,51,1);*/
+    background-color: #222;
+    border-color: rgba(51,51,51,1);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #464a4c;
+    /* background-color: #fff; */
+    /* border-color: #ddd #ddd #fff; */
+}
+
 .sidebar {
   position: fixed;
   top: 51px;
@@ -34,7 +74,7 @@ h1 {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-right: 1px solid #eee;
-background-color: rgba(51,51,51,1);
+background-color: #222 ;
 }
 
 

@@ -15,16 +15,7 @@
 
 
 
-/*#main_content .active, */
- #main_content a.nav-link.active {
-  color : white;
-  /*border-color: #428bca;
-  //background-color: #039BE5;*/
-
-      border-left-color: red;
-
-}
-
+  
 .pusher ul li {
     font-family: HelveticaNeueLT-Bold,"Helvetica Neue",Helvetica,Arial,sans-serif;
     margin: 0;
