@@ -48,7 +48,7 @@ pre {
 .navbar {
     padding-bottom: 0;
 }
-.nav-item{
+.my-nav-item{
     margin: 0 .5em 0 .5em;
     padding: 0 .5em 0 .5em;
     border-bottom: 2px solid transparent;
