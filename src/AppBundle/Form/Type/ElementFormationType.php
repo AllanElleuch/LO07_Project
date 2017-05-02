@@ -29,6 +29,34 @@ class ElementFormationType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
+  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control')))
+  ->add('credits', IntegerType ::class, array('label' => false, 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
+  ->add('sem_seq', IntegerType ::class, array('label' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control', 'min' => '0')))
+  ->add('sem_label', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'ISIx',
+      'class' => 'form-control ')))
+  ->add('affectations', EntityType::class, array(
+      'class' => 'AppBundle:Affectations',
+      'choice_label' => 'label',
+      'label' => false))
+  ->add('categories', EntityType::class, array(
+      'class' => 'AppBundle:Categories',
+      'choice_label' => 'label',
+      'label' => false))
+  ->add('resultats', EntityType::class, array(
+      'class' => 'AppBundle:Resultats',
+      'choice_label' => 'label',
+      'label' => false))
+  ->add('utt', CheckboxType::class, array('label' => false,'required' => false, 'attr' => array(
+      'class' => 'form-control',
+      'checked' => 'checked',
+      )))
+  ->add('profil', CheckboxType::class, array('label' => false,'required' => false, 'attr' => array(
+      'class' => 'form-control',
+      'checked' => 'checked')
+  ));
+
+
+  /*$builder
   ->add('sigle', TextType::class, array('label' => 'Sigle ', 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control')))
   ->add('credits', IntegerType ::class, array('label' => 'Crédits ', 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
   ->add('sem_seq', IntegerType ::class, array('label' => 'Numéro du semestre ', 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control', 'min' => '0')))
@@ -54,7 +82,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
       'class' => 'form-control',
       'checked' => 'checked')
   ));
-
+*/
 
 }
 

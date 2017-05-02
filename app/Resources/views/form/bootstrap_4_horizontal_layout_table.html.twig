@@ -1,0 +1,51 @@
+{% use "form_div_layout.html.twig" %}
+
+{%- block form_row -%}
+    <div class="col">
+        <div>
+            {{- form_label(form) -}}
+        </div>
+        <div>
+            {{- form_errors(form) -}}
+            {{- form_widget(form) -}}
+        </div>
+    </div >
+{%- endblock form_row -%}
+
+{%- block button_row -%}
+    <div class="col">
+            {{- form_widget(form) -}}
+
+    </div>
+{%- endblock button_row -%}
+
+{%- block hidden_row -%}
+    <div style="display: none">
+        <div colspan="2">
+            {{- form_widget(form) -}}
+        </div>
+    </div>
+{%- endblock hidden_row -%}
+
+{%- block form_widget_compound -%}
+    <div class="form" {{ block('widget_container_attributes')  }}>
+      <div class="row">
+
+
+        {%- if form.parent is empty and errors|length > 0 -%}
+        <div>
+            <div colspan="2">
+                {{- form_errors(form) -}}
+            </div>
+        </div>
+        {%- endif -%}
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
+        </div>
+    </div>
+{%- endblock form_widget_compound -%}
+
+{% block form_start -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ '')|trim}) %}
+    {{- parent() -}}
+{%- endblock form_start %}

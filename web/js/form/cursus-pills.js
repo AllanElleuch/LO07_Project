@@ -12,7 +12,6 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
     $()
   })
 
-
   /*.on("click", "span", function() {
     var anchor = $(this).siblings('a');
     //console.log(anchor);
@@ -24,7 +23,7 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
     $("#main_tab.nav-pills li").children('a').first().click();
   });*/
 
-  $("#main_content  .nav-pills").on("click", "span", function() {
+  $("#main_content  .nav-tabs").on("click", "span", function() {
       var anchor = $(this).siblings('a');
       console.log(anchor);
       $(anchor.attr('href')).remove();
@@ -35,10 +34,57 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();
-  var id = $("#main_content  .nav-pills").children().length;
-  $(this).closest('li').before('<li  class="nav-item "><a  data-toggle="tab" role="tab" class="nav-link" aria-controls=form_tab_' + id + '"  href="#form_tab_' + id + '">Sem' + id + ' <span ><i class="fa fa-times" aria-hidden="true"></i></span></a></li>');
-  $('#main_content  .tab-content').append('<div class="tab-pane" id="form_tab_' + id + '"role="tabpanel" "> <div id="accordion" class="accordion" role="tablist"></div></div>');
+  var id = $("#main_content  .nav-tabs").children().length;
+  $(this).closest('li').before('<li  class="nav-item "><a  id="tab_'+id+'" data-toggle="tab" role="tab" class="nav-link" aria-controls=form_tab_' + id + '"  href="#form_tab_' + id + '">  <div class="row"> <input class="form-control col-md-5" size="7" type="text" name="_sem_seq" placeholder="N° Sem" value=""><input class="form-control col-md-5" size="7" type="text" name="_sem_label" placeholder="Sem X" value="">  <span class=" col-md-2"><i class="fa fa-times" aria-hidden="true"></i></span></div></a></li>');
+  $('#main_content  .tab-content').append(`<div class="tab-pane" id="form_tab_` + id + `" role="tabpanel" ">  ` +` <div class="container table-responsive table">
+    <div class="thead">
+      <div class="row target" >
 
+
+        <div class="col th">
+          Sigle
+        </div>
+        <div class="col th">
+          Crédits
+        </div>
+
+        <div class="col th">
+          N° Sem
+        </div>
+        <div class="col th">
+          Label Sem
+        </div>
+        <div class="col th">
+          Affectation
+        </div>
+        <div class="col th">
+          Catégories
+        </div>
+        <div class="col th">
+          Résultats
+        </div>
+        <div class="col th">
+          UTT
+        </div>
+        <div class="col th">
+                profil
+              </div>
+
+      </div>
+      <div class="col th">
+          <button type="submit"  name="form[envoyer]" class="btn btn-sm btn-outline-success bouttonAjouterCours">Ajouter cours</button>
+      </div>
+      <div class="tbody row">
+
+
+      </div>
+
+    </div>
+  </div>` + `</div>`)
+
+
+  $('#tab_'+id+' ').trigger('click');
+  $('#form_tab_'+id+' .bouttonAjouterCours').trigger('click');
   /* to show particular tab content
   var prvone = $('#main_tab a').length;
   var tabt = $("#main_tab li").eq(prvone - 2).children('a').attr("href");//.tab('show')

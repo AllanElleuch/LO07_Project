@@ -14,24 +14,71 @@
 }
 
 
-#main_content .active, #main_content .active a.nav-link {
+
+/*#main_content .active, */
+ #main_content a.nav-link.active {
   color : white;
-  border-color: #428bca;
-  background-color: #428bca;
+  /*border-color: #428bca;
+  //background-color: #039BE5;*/
+
+      border-left-color: red;
 
 }
 
+.pusher ul li {
+    font-family: HelveticaNeueLT-Bold,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    padding: 0;
+}
+* {
+    box-sizing: border-box;
+}
 
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
 
+nav ol, nav ul {
+    list-style: none;
+    list-style-image: none;
+}
+
+.pusher ul li a.active {
+    border-left-color: red;
+}
+.pusher ul li a.active-trail {
+    border-left-color: #444;
+}
+
+.pusher ul li a {
+    display: block;
+    position: relative;
+    padding: .9230769231em 60px .9230769231em 20px;
+    border-left: 10px #2b2b2b solid;
+    color: #ccc;
+    text-decoration: none;
+    font-size: .8125em;
+    line-height: 1.3846153846em;
+    transition: all .25s ease;
+}
+/*
+#main_content  a.nav-link {
+ color : white;
+ border-color: #428bca;
+ background-color: #0277BD;
+
+}*/
+/*
 
 /* remove border radius for the tab */
-
+/*
 #main_content .nav-pills > li > a {
   border-radius: 0;
 }
 
 /* change border radius for the tab , apply corners on top*/
-
+/*
 #main_content .nav-pills > li > a {
   border-radius: 4px 4px 0 0 ;
 }

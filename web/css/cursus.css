@@ -7,6 +7,7 @@
  * Typography
  */
 
+
 h1 {
   margin-bottom: 20px;
   padding-bottom: 9px;
@@ -16,6 +17,12 @@ h1 {
 /*
  * Sidebar
  */
+/*.sidebar input{
+
+  background-color:rgba(0,0,0,0) !important;
+  border:none !important;
+
+}*/
 
 .sidebar {
   position: fixed;
@@ -27,8 +34,9 @@ h1 {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-right: 1px solid #eee;
-  background-color:grey;
+background-color: rgba(51,51,51,1);
 }
+
 
 /* Sidebar navigation */
 .sidebar {
