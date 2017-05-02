@@ -31,6 +31,13 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
       $("#sub_tab.nav-pills li").children('a').first().click();
     });
 
+    $(".tab-pane").on("click", "span", function() {
+        var anchor = $(this).siblings('a');
+        console.log(anchor);
+        $(anchor.attr('href')).remove();
+        $(this).parent().parent().remove();
+        $("#sub_tab.nav-pills li").children('a').first().click();
+      });
 
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();

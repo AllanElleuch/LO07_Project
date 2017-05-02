@@ -1,18 +1,19 @@
 {% use "form_div_layout.html.twig" %}
 
 {%- block form_row -%}
+    <div class="col">
         <div>
-
             {{- form_label(form) -}}
         </div>
         <div>
             {{- form_errors(form) -}}
             {{- form_widget(form) -}}
         </div>
+    </div >
 {%- endblock form_row -%}
 
 {%- block button_row -%}
-    <div class=" ">
+    <div class="col">
             {{- form_widget(form) -}}
 
     </div>
@@ -40,8 +41,12 @@
         {%- endif -%}
         {{- block('form_rows') -}}
         {{- form_rest(form) -}}
+        <div class="col">
+
+                             <span class=""><i class="fa fa-times deleteRow" aria-hidden="true"></i></span>
+
         </div>
-        
+        </div>
     </div>
 {%- endblock form_widget_compound -%}
 
