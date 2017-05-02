@@ -18,7 +18,8 @@ Nouveau cursus
 {{ form_start(form) }}
 
 
-
+<div id="container-fluid col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+  <div class="row">
 
 
 
@@ -64,8 +65,7 @@ Nouveau cursus
               </ul>
                 </div>
               <!-- Tab panes -->
-              <div id="container-fluid col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                <div class="row">
+
               <main class="">
                 <h3>Cursus </h3>
                 <div class="">
@@ -124,12 +124,16 @@ Nouveau cursus
                         </div>
 
                       </div>
-                      <div class=" th">
-                          <button type="submit"    name="form[envoyer]" class="btn btn-sm btn-outline-success bouttonAjouterCours">Ajouter cours</button>
-                      </div>
+
                       <div class="tbody row">
+                        {% for elem in form.elementsFormations %}
+                              {{ form_row(elem) }}
+                          {% endfor %}
 
+                      </div>
+                      <div class=" ">
 
+                          <button type="submit"    name="form[envoyer]" class="btn btn-sm btn-outline-success bouttonAjouterCours">Ajouter cours</button>
                       </div>
 
                     </div>
