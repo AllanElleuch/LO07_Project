@@ -6,5 +6,76 @@
 {% endblock %}
 
 {% block content %}
-    <h2>TODO</h2>
+    {% if etudiants is not empty %}
+        <table class="table" id="myTable" cellspacing="0">
+            <thead class="thead-default">
+                <tr>
+                    <th>Numéro</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Filière</th>
+                    <th>Admission</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for etudiant in etudiants %}
+                    <tr>
+                        <td>{{ etudiant.id }}</td>
+                        <td>{{ etudiant.nom }}</td>
+                        <td>{{ etudiant.prenom }}</td>
+                        <td>{{ etudiant.filieres.label }}</td>
+                        <td>{{ etudiant.admissions.label }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="text-center grey">
+            <h1 class="display-4">Aucun étudiant</h1>
+            <p class="lead">Créez un nouvel étudiant ou importez un fichier au format csv contenant un étudiant.</p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+    {% if etudiants is not empty %}
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#myTable').DataTable(
+                    {
+                        language: {
+                            processing:     "Traitement en cours...",
+                            search:         "Rechercher&nbsp;:",
+                            lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+                            info:           "Affichage des éléments _START_ &agrave; _END_ sur _TOTAL_ &eacute;" +
+                            "l&eacute;ments",
+                            infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                            infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                            infoPostFix:    "",
+                            loadingRecords: "Chargement en cours...",
+                            zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                            emptyTable:     "Aucune donnée disponible dans le tableau",
+                            paginate: {
+                                first:      "Premier",
+                                previous:   "Pr&eacute;c&eacute;dent",
+                                next:       "Suivant",
+                                last:       "Dernier"
+                            },
+                            aria: {
+                                sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                                sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                            }
+                        },
+                    }
+
+                );
+            });
+        </script>
+    {% endif %}
 {% endblock %}

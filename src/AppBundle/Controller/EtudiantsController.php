@@ -18,9 +18,14 @@ class EtudiantsController extends Controller{
      */
     public function viewStudentsAction(Request $request) {
 
+        $students = $this->getDoctrine()
+                    ->getRepository('AppBundle:Etudiants')
+                    ->findAll();
+
         return $this->render('etudiants/etudiants.html.twig', array(
             'nav' => "etudiants",
             'subnav' => 'etudiants',
+            'etudiants' => $students
         ));
 
     }
@@ -31,7 +36,7 @@ class EtudiantsController extends Controller{
      */
     public function newStudentAction(Request $request) {
 
-        return $this->render('etudiants/etudiants.html.twig', array(
+        return $this->render('etudiants/new.html.twig', array(
             'nav' => "etudiants",
             'subnav' => 'new',
         ));
