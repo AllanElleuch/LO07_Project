@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- L'opérateur ternaire ajoute la classe 'active' à l'item s'il sagit de la page courante -->
+    <ul class="sub-nav">
+        <a class="sub-nav-item {{ subnav == 'etudiants' ? 'active' : '' }}" href="/etudiants/etudiants/">Étudiants</a>
+        <a class="sub-nav-item {{ subnav == 'new' ? 'active' : '' }}" href="/etudiants/new/">Nouvel étudiant</a>
+    </ul>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+{% endblock %}
