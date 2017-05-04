@@ -1,21 +1,20 @@
 {% use "form_div_layout.html.twig" %}
 
 {%- block form_row -%}
-    <div class="col">
-        <div>
-            {{- form_label(form) -}}
-        </div>
-        <div>
-            {{- form_errors(form) -}}
-            {{- form_widget(form) -}}
-        </div>
-    </div >
+    <td >
+            <div>
+                {{- form_label(form) -}}
+            </div>
+            <div>
+                {{- form_errors(form) -}}
+                {{- form_widget(form) -}}
+            </div>
+    </td>
 {%- endblock form_row -%}
 
 {%- block button_row -%}
     <div class="col">
             {{- form_widget(form) -}}
-
     </div>
 {%- endblock button_row -%}
 
@@ -28,8 +27,9 @@
 {%- endblock hidden_row -%}
 
 {%- block form_widget_compound -%}
+    <tr>
+
     <div class="form" {{ block('widget_container_attributes')  }}>
-      <div class="row">
 
 
         {%- if form.parent is empty and errors|length > 0 -%}
@@ -41,16 +41,51 @@
         {%- endif -%}
         {{- block('form_rows') -}}
         {{- form_rest(form) -}}
-        <div class="col">
+        <td>
 
-                             <span class=""><i class="fa fa-times deleteRow" aria-hidden="true"></i></span>
+                             <a href="#"><i class="fa fa-trash-o text-danger deleteRow" aria-hidden="true"></i></a>
 
+        </td>
         </div>
-        </div>
-    </div>
+    </tr>
 {%- endblock form_widget_compound -%}
 
 {% block form_start -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ '')|trim}) %}
     {{- parent() -}}
 {%- endblock form_start %}
+
+
+
+{% block checkbox_row -%}
+    {{- block('checkbox_radio_row') -}}
+{%- endblock checkbox_row %}
+
+{% block radio_row -%}
+    {{- block('checkbox_radio_row') -}}
+{%- endblock radio_row %}
+
+{% block checkbox_radio_row -%}
+
+    {% spaceless %}
+
+
+
+
+
+            <td >
+
+                <div class="{{ block('form_group_class') }}">
+
+                    <div class="form-check">
+                            {{ form_widget(form, {'attr': {'class': 'form-check-input'}}) }}
+
+
+
+
+                    </div>
+                {{ form_errors(form) }}
+                </div>
+            </td>
+    {% endspaceless %}
+{%- endblock checkbox_radio_row %}

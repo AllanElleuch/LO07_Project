@@ -28,7 +28,7 @@ class ElementFormationType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
-  ->add('label', TextType::class, array('label' => 'Sigle ', 'attr' => array('placeholder' => 'sigle d’une UE, label d’un stage,', 'class' => 'form-control')));
+  ->add('label', ChoiceType::class, array('label' => 'Sigle ', 'attr' => array('placeholder' => 'sigle d’une UE, label d’un stage,', 'class' => 'form-control')));
 
 }
 

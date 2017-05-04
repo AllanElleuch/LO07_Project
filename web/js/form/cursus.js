@@ -32,7 +32,6 @@ jQuery(document).ready(function() {
         // add a new tag form (see next code block)
         ajouterCours($collectionHolder, $newLinkLi);
     });
-    $('.bouttonAjouterCours').trigger('click');
 
     $('.nav-tabs ').on('input', 'input', function() {
         var input= $(this).val()

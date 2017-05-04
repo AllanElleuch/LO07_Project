@@ -39,10 +39,70 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
         $("#sub_tab.nav-pills li").children('a').first().click();
       });
 
+
+
+/** Ajout d'un nouveau semestre
+ *  ===========================
+ */
+$('#newSemesterButton').on('click', function() {
+    /* Création du semestre dans la sidebar*/
+    var id = $("#semestresNav").children().length;
+    var newSemesterContent = `
+    <li class="row nav-item" id="form_tab_0` + id + `">
+        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="_sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="_sem_label" placeholder="" value="ISI` + id + `">
+        <div class="col-sm-3 btn-group">
+            <a class="btn btn-sm btn-secondary" href="#tab_` + id + `">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-sm btn-secondary text-danger removeCursus" href="#">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </a>
+        </div>
+    </li>`
+    $(this).closest('li').before(newSemesterContent);
+
+    /* Création d'un tableau contenant le cursus*/
+    var tableHeading = `
+        <table class="table" id="tab_` + id + `">
+            <thead class="thead-default">
+                <tr>
+                    <th>Sigle</th>
+                    <th>Crédits</th>
+                    <th>Affectation</th>
+                    <th>Catégorie</th>
+                    <th>Résultat</th>
+                    <th>UTT</th>
+                    <th>Profil</th>
+                    <th>Action</th>
+                </tr>
+            </thead>`
+    $('#cursusTableContainer').append(tableHeading)
+});
+
+/** Suppression d'un semestre de la sidebar
+ *  =======================================
+ *  Récupération de l'ID du semestre supprimé puis
+ *      - suppression du semestre dans la sidebar
+ *      - suppression du tableau contenant le détail du cursus
+ */
+$(document).on('click', '.removeCursus', function() {
+    var id = $(this).closest('li').attr('id'); /* 'tab_3' */
+    id = id.substr(id.length - 1) /* '3' */
+    $(this).closest('li').remove()
+    $('#cursusTableContainer > #tab_' + id).remove();
+});
+
+
+
+
+
+
+
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();
   var id = $("#main_content  .nav-tabs").children().length;
   $(this).closest('li').before('<li  class="nav-item "><a  id="tab_'+id+'" data-toggle="tab" role="tab" class="nav-link" aria-controls=form_tab_' + id + '"  href="#form_tab_' + id + '">  <div class="row"> <input class="form-control col-md-5" size="7" type="text" name="_sem_seq" placeholder="N° Sem" value=""><input class="form-control col-md-5" size="7" type="text" name="_sem_label" placeholder="Sem X" value="">  <span class=" col-md-2"><i class="fa fa-times" aria-hidden="true"></i></span></div></a></li>');
+
   $('#main_content  .tab-content').append(`<div class="tab-pane" id="form_tab_` + id + `" role="tabpanel" ">  ` +` <div class="container table-responsive table">
     <div class="thead">
       <div class="row target" >
@@ -86,8 +146,7 @@ $('#main_add.add-tab').click(function(e) {
 
       </div>
 
-    </div>
-  </div>` + `</div>`)
+    </div></div>` + `</div>`)
 
 
   $('#tab_'+id+' ').trigger('click');

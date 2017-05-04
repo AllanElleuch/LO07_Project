@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,11 +30,10 @@ class ElementFormationType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
-  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control')))
-  ->add('credits', IntegerType ::class, array('label' => false, 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control', 'min' => '0')))
-  ->add('sem_seq', IntegerType ::class, array('label' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control', 'min' => '0')))
+  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control form-control-sm')))
+
   ->add('sem_label', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'ISIx',
-      'class' => 'form-control ')))
+      'class' => 'form-control form-control-sm')))
   ->add('affectations', EntityType::class, array(
       'class' => 'AppBundle:Affectations',
       'choice_label' => 'label',
@@ -47,13 +47,15 @@ public function buildForm(FormBuilderInterface $builder, array $options)
       'choice_label' => 'label',
       'label' => false))
   ->add('utt', CheckboxType::class, array('label' => false,'required' => false, 'attr' => array(
-      'class' => 'form-control',
+      'class' => 'form-control form-control-sm',
       'checked' => 'checked',
       )))
   ->add('profil', CheckboxType::class, array('label' => false,'required' => false, 'attr' => array(
-      'class' => 'form-control',
+      'class' => 'form-control form-control-sm',
       'checked' => 'checked')
-  ));
+  ))
+      ->add('credits', HiddenType ::class, array('label' => false, 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control form-control-sm form-control form-control-sm-sm', 'min' => '0')))
+      ->add('sem_seq', HiddenType ::class, array('label' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control form-control-sm', 'min' => '0')));
 
 
   /*$builder

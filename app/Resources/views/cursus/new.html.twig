@@ -13,44 +13,51 @@ Nouveau cursus
 
 {{ form_start(form) }}
 
-
+<!-- CONTENU PRINCIPAL
+     ================= -->
 <div class="row">
+
+    <!-- Sidebar contenant les semestres -->
     <div class="col-md-3">
         <nav class="navbar semesters-list">
-            <ul class="nav flex-column">
-                <li class="row nav-item">
-                    <input class="form-control form-control-sm col-md-3"  type="number" min="0" max="8"
-                           name="_sem_seq" placeholder="1" value="">
-                    <input class="form-control form-control-sm col-md-3"  type="text" name="_sem_label"
-                           placeholder="ISI1" value="">
-                    <div class="col-md-5 btn-group">
-                        <a class="btn btn-sm btn-secondary" href="#form_tab_01">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                        </a>
-                        <a class="btn btn-sm btn-secondary text-danger" href="#form_tab_01">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </li>
+            <ul class="nav flex-column" id='semestresNav'>
                 <li class="add_item">
-                    <button class="add-tab btn btn-sm btn-outline-success"  href="#"  id="main_add"><i class="fa fa-plus"></i> Ajouter Semestre</button>
+                    <a class="btn btn-sm btn-outline-success" href="#" id="newSemesterButton"><i class="fa fa-plus"></i> Ajouter un semestre</a>
                 </li>
             </ul>
         </nav>
     </div>
+
+    <!-- Contenu des cursus -->
     <div class="col-md-9">
+        <!-- Saisie du label du cursus -->
         <h3>Cursus</h3>
-        <div class="">
-            <div class="row">
-                <div class="col-sm-2">
-                    {{ form_label(form.label) }}
-                </div>
-                <div class="col-sm-10">
-                    {{ form_widget(form.label) }}
-                </div>
+        <div class="row">
+            <div class="col-sm-2">
+                {{ form_label(form.label) }}
+            </div>
+            <div class="col-sm-10">
+                {{ form_widget(form.label) }}
             </div>
         </div>
+
+        <!-- Tableau contenant le contenu des cursus -->
         <h5>Créez des semestres et ajoutez-y vos UE</h5>
+        <div id="cursusTableContainer">
+            <!-- Container rempli en JS -->
+        </div>
+        <p>
+            <button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Ajouter un cours</button>
+        </p>
+
+        <p>
+            <button type="submit" name="form[envoyer]" class="btn btn-sm btn-success bouttonAjouterCours"><i class="fa fa-check"></i> Enregistrer le cursus</button>
+        </p>
+
+
+
+
+
 
         <div class="tab-content">
             <div class="tab-pane active" id="form_tab_01" role="tabpanel">
@@ -63,12 +70,6 @@ Nouveau cursus
                                 </div>
                                 <div class="col th">
                                     Crédits
-                                </div>
-                                <div class="col th">
-                                    N°
-                                </div>
-                                <div class="col th">
-                                    Label
                                 </div>
                                 <div class="col th">
                                     Aff.
@@ -100,12 +101,52 @@ Nouveau cursus
 
                 <div class=" ">
 
-                    <button type="submit"    name="form[envoyer]" class="btn btn-sm btn-outline-success bouttonAjouterCours">Ajouter cours</button>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+    <table class="table">
+        <thead class="thead-default">
+            <th>Test</th>
+            <th>Test</th>
+            <th>Test</th>
+                <div class="form" id="form_elementsFormations_3">
+
+                            <td><input type="text" id="form_elementsFormations_3_sigle"
+                                      name="form[elementsFormations][3][sigle]" required="required" placeholder="Ex.
+                                      LO07" class="form-control form-control-sm"></td>
+                            <td><input type="text" id="form_elementsFormations_3_sem_label"
+                                      name="form[elementsFormations][3][sem_label]" required="required"
+                                       placeholder="ISIx" class="form-control form-control-sm"></td>
+                <div class="col-sm-2 td">
+                            <div></div>
+                            <div><select id="form_elementsFormations_3_affectations" name="form[elementsFormations][3][affectations]"><option value="1">TC</option><option value="2">BR</option><option value="3">TCBR</option><option value="4">FLBR</option></select></div>
+                        </div><div class="col-sm-2 td">
+                            <div></div>
+                            <div><select id="form_elementsFormations_3_categories" name="form[elementsFormations][3][categories]"><option value="1">CS</option><option value="2">TM</option><option value="3">EC</option><option value="4">CT</option><option value="5">HT</option><option value="6">ME</option><option value="7">ST</option><option value="8">SE</option><option value="9">HP</option><option value="10">NPML</option></select></div>
+                        </div><div class="col-sm-1 td">
+                            <div></div>
+                            <div><select id="form_elementsFormations_3_resultats" name="form[elementsFormations][3][resultats]"><option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">D</option><option value="5">E</option><option value="6">F</option><option value="7">Fx</option><option value="8">ABS</option><option value="9">RES</option><option value="10">ADM</option><option value="11">EQU</option></select></div>
+                        </div><div class="col-sm-1 td"><div class=""><div class="form-check"><input type="checkbox" id="form_elementsFormations_3_utt" name="form[elementsFormations][3][utt]" class="form-check-input" checked="checked" value="1"></div></div></div><div class="col-sm-1 td"><div class=""><div class="form-check"><input type="checkbox" id="form_elementsFormations_3_profil" name="form[elementsFormations][3][profil]" class="form-check-input" checked="checked" value="1"></div></div></div><div style="display: none">
+                            <div colspan="2"><input type="hidden" id="form_elementsFormations_3_credits" name="form[elementsFormations][3][credits]" placeholder="nombre de crédits obtenus" class="form-control form-control-sm form-control form-control-sm-sm" min="0"></div>
+                        </div><div style="display: none">
+                            <div colspan="2"><input type="hidden" id="form_elementsFormations_3_sem_seq" name="form[elementsFormations][3][sem_seq]" placeholder="numéro de semestre à l’UTT" class="form-control form-control-sm" min="0"></div>
+                        </div><div class="col-sm-1">
+
+                            <a href="#"><i class="fa fa-trash-o text-danger deleteRow" aria-hidden="true"></i></a>
+
+                        </div>
+                </div>
+            </tr>
+        </tbody>
+    </table>
 
 
 
