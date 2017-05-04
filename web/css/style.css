@@ -49,17 +49,23 @@ pre {
     padding-bottom: 0;
 }
 .my-nav-item{
-    margin: 0 .5em 0 .5em;
-    padding: 0 .5em 0 .5em;
+    margin: 0 .9em 0 .9em;
+    padding: 0 0 0 0;
     border-bottom: 2px solid transparent;
     color: #777;
+    -webkit-transition: all 0.2s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
 }
 .my-nav-item:hover{
+    margin: 0 .5em 0 .5em;
+    padding: 0 .4em 0 .4em;
     text-decoration: none;
     border-bottom: 2px solid rgb(193, 193, 193);
     color: #000;
 }
 .my-nav-item.active{
+    margin: 0 .5em 0 .5em;
+    padding: 0 .4em 0 .4em;
     font-weight: 600;
     text-decoration: none;
     border-bottom: 2px solid #5cb85c;
