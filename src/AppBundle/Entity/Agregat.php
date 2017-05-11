@@ -5,9 +5,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="affectations")
+ * @ORM\Table(name="agregat")
  */
-class Affectations
+class Agregat
 {
     /**
      * @ORM\Column(type="integer")
@@ -21,14 +21,6 @@ class Affectations
      * @ORM\Column(type="string", length=100)
      */
     private $label;
-
-
-    /**
-     * Une affectation à plusieurs elements de formations
-     * @ORM\OneToMany(targetEntity="ElementFormation", mappedBy="affectations")
-     */
-    //private $elementsFormation;
-
 
 
     /**
@@ -46,7 +38,7 @@ class Affectations
      *
      * @param string $label
      *
-     * @return Affectations
+     * @return Agregat
      */
     public function setLabel($label)
     {
