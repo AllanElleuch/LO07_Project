@@ -48,7 +48,6 @@ $('#newSemesterButton').on('click', function() {
     /* Création du semestre dans la sidebar */
     var id = $("#semestresNav").children().length;
     var lastSemester = $("#semestresNav input[name=_sem_label]").last().val()
-    console.log(lastSemester);
     if (lastSemester != undefined) {
         var lastSemesterLabel = lastSemester.match(/([a-zA-Z]+)/gu) /* /gu : /global, /unicode */
         var lastSemesterInt   = lastSemester.match(/([0-9]+)/gu)
@@ -59,9 +58,6 @@ $('#newSemesterButton').on('click', function() {
         var lastSemesterInt   = 0
         var lastSemesterLabel = "ISI"
     }
-    console.log("Création du input avec :");
-    console.log("lastSemesterLabel = " + lastSemesterLabel)
-    console.log("lastSemesterInt = " + lastSemesterInt)
     var newSemesterContent = `
     <li class="row nav-item" id="form_tab_0` + id + `">
         <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="_sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="_sem_label" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
