@@ -19,9 +19,11 @@
             {% for oneCursus in cursus %}
                 <tr>
                     <td>{{ oneCursus.label|e }}</td>
-                    <td class="grey">{% if oneCursus.etudiant.nom is defined and oneCursus.etudiant.prenom is defined
-                        %}{{ oneCursus.etudiant.nom }} {{
-                        oneCursus.etudiant.prenom }}{% else %} ---   {% endif %} </td>
+                    <td class="grey">
+                        {% if oneCursus.etudiant.nom is defined and oneCursus.etudiant.prenom is defined %}
+                            {{ oneCursus.etudiant.nom }} {{ oneCursus.etudiant.prenom }}
+                        {% else %} --- {% endif %}
+                    </td>
                     <td class="grey"> {% if oneCursus.etudiant.id is defined %}{{ oneCursus.etudiant.id }}{% else
                         %} ---   {% endif %} </td>
                     <td>
@@ -33,9 +35,8 @@
                                title="Modifier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a href="/cursus/duplicate/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
                                title="Dupliquer"><i class="fa fa-files-o" aria-hidden="true"></i></a>
-                            <a href="/cursus/delete/{{oneCursus.id}}" class="btn btn-secondary btn-sm text-danger" data-toggle="tooltip"
-                               data-placement="bottom"
-                               title="Supprimer"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            <a href="#" id="deleteButton" class="btn btn-secondary btn-sm text-danger" data-toggle="modal"
+                               data-target="#confirmDelete" data-id="{{ oneCursus.id }}" data-firstname="{{ oneCursus.etudiant.prenom }}" data-lastname="{{ oneCursus.etudiant.nom }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         </div>
 
                         <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"
@@ -46,6 +47,32 @@
             {% endfor %}
             </tbody>
         </table>
+
+
+        <div class="modal hide fade" id="confirmDelete">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Suppression de cursus</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Voulez-vous vraiment supprimer le cursus de
+                            <span id="toDeleteFirstname"></span>
+                            <span id="toDeleteName"></span>
+                            ?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="deleteConfirmedButton" class="btn btn-danger">Supprimer</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% else %}
         <div class="text-center grey">
             <h1 class="display-4">Aucun cursus</h1>
@@ -94,6 +121,18 @@
                     }
 
                 );
+            });
+
+            $(document).on('click', '#deleteButton', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var firstname = $(this).data('firstname')
+                var lastname = $(this).data('lastname')
+                var toDeleteId = $(this).data('id')
+                console.log(firstname + lastname);
+                $('#toDeleteFirstname').text(firstname)
+                $('#toDeleteName').text(lastname)
+                $('#deleteConfirmedButton').attr("href", "/cursus/delete/" + toDeleteId)
             });
         </script>
     {% endif %}
