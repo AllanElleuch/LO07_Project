@@ -19,9 +19,14 @@ class ReglementsController extends Controller {
      */
     public function mesReglementsAction(Request $request)
     {
+        $reglements = $this->getDoctrine()
+            ->getRepository('AppBundle:Reglement')
+            ->findAll();
+
         return $this->render('reglements/mes-reglements.html.twig', array(
             'nav' => "reglements",
             'subnav' => "mes-reglements",
+            'reglements' => $reglements
         ));
     }
     /**

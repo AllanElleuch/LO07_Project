@@ -10,8 +10,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Admissions;
 use AppBundle\Entity\Affectations;
+use AppBundle\Entity\Agregat;
 use AppBundle\Entity\Filieres;
+use AppBundle\Entity\Regle;
 use AppBundle\Entity\Resultats;
+use AppBundle\Entity\Reglement;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +29,17 @@ class InitialisationBddController extends Controller {
      */
     public function initBaseAction() {
 
+        /**
+         * PART 1
+         * ======
+         * Insertion des données de base dans la BDD
+         *     - Catégories d'UE
+         *     - Résultats possibles au UE
+         *     - Affectations possibles d'une UE
+         *     - Admissions possibles d'un étudiant
+         *     - Filières possibles
+         *     - Agrégats possibles pour les règlements
+         */
 
         $res = $this->getDoctrine()->getRepository('AppBundle:Categories')->findAll();
 
@@ -103,13 +117,74 @@ class InitialisationBddController extends Controller {
             $agregats = array('SUM', 'EXIST');
 
             foreach ($agregats as $agreg){
-                $agregObj = new Filieres();
+                $agregObj = new Agregat();
                 $agregObj->setLabel($agreg);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($agregObj);
                 $em->flush();
             }
         }
+
+
+
+
+
+        /**
+         * PART 2
+         * ======
+         * Création des règlements des études proposés par défaut.
+         *     - R_ACTUEL_BR : règlement actuel (P17 et antérieur)
+         *     - R_FUTUR_BR  : règlement futur  (A17?)
+         */
+
+        $res = $this->getDoctrine()->getRepository('AppBundle:Reglement')->findAll();
+
+        if (empty($res)){
+            /*
+             * Création du règlement R_ACTUEL_BR
+             * ---------------------------------
+             */
+            $regActuel = new Reglement();
+            $regActuel->setLabel("R_ACTUEL_BR");
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($regActuel);
+            $em->flush();
+
+            $R01 = new Regle();
+            $R01->setAgregat(
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Agregat')
+                    ->findOneBy(array('label' => 'SUM'))
+            );
+            $R01->setCibleAgregat("CS+TM");
+            $R01->setAffectations(
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Affectations')
+                    ->findOneBy(array('label' => 'TCBR'))
+            );
+            $R01->setSeuil(54);
+            $R01->setReglement(
+                $this->getDoctrine()
+                    ->getRepository('AppBundle:Reglement')
+                    ->findOneBy(array('label' => 'R_ACTUEL_BR'))
+            );
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($R01);
+            $em->flush();
+
+
+            /*
+             * Création du règlement R_FUTUR_BR
+             * --------------------------------
+             */
+            $regActuel = new Reglement();
+            $regActuel->setLabel("R_FUTUR_BR");
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($regActuel);
+            $em->flush();
+        }
+
+
 
         return $this->redirectToRoute('homepage');
 

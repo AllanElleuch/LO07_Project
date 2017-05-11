@@ -6,5 +6,28 @@
 {% endblock %}
 
 {% block content %}
-    Mes règlements
+    {% if reglements is not empty %}
+        <div class="card-columns">
+            {% for reglement in reglements %}
+                <div class="card">
+                    <div class="card-header">
+                        {{ reglement.label }}
+                    </div>
+                    <div class="card-block">
+                        <ul class="list-group list-group-flush">
+                            {% for regle in reglement.regles %}
+                                <li class="list-group-item">{{ regle.agregat.label }} {{ regle.cibleAgregat }} {{ regle
+                                    .affectations.label }} {{ regle.seuil }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center grey">
+            <h1 class="display-4">Aucun règlement</h1>
+            <p class="lead">Importez un fichier de règlement au format csv.</p>
+        </div>
+    {% endif %}
 {% endblock %}

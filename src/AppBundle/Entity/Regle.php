@@ -40,8 +40,8 @@ class Regle
     /**
      * Agregat :  SUM, EXIST
      * plusieurs règle on un agregat
-     * @ORM\ManyToOne(targetEntity="Affectations")
-     * @ORM\JoinColumn(name="affectations_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Agregat")
+     * @ORM\JoinColumn(name="agregat_id", referencedColumnName="id")
      */
     private $agregat;
 
@@ -139,11 +139,11 @@ class Regle
     /**
      * Set agregat
      *
-     * @param \AppBundle\Entity\Affectations $agregat
+     * @param \AppBundle\Entity\Agregat $agregat
      *
      * @return Regle
      */
-    public function setAgregat(\AppBundle\Entity\Affectations $agregat = null)
+    public function setAgregat(\AppBundle\Entity\Agregat $agregat = null)
     {
         $this->agregat = $agregat;
 
@@ -153,7 +153,7 @@ class Regle
     /**
      * Get agregat
      *
-     * @return \AppBundle\Entity\Affectations
+     * @return \AppBundle\Entity\Agregat
      */
     public function getAgregat()
     {

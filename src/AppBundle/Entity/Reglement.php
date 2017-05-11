@@ -19,9 +19,13 @@ class Reglement
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $label;
 
     /**
-     * Un cursus à plusieurs éléments de formations.
+     * Un règlemet est composé de règles
      * @ORM\OneToMany(targetEntity="Regle", mappedBy="reglement",cascade={"all"})
      */
     private $regles;
@@ -78,5 +82,29 @@ class Reglement
     public function getRegles()
     {
         return $this->regles;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     *
+     * @return Reglement
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 }
