@@ -97,6 +97,20 @@ class InitialisationBddController extends Controller {
             }
         }
 
+        $res = $this->getDoctrine()->getRepository('AppBundle:Agregat')->findAll();
+
+        if (empty($res)){
+            $agregats = array('SUM', 'EXIST');
+
+            foreach ($agregats as $agreg){
+                $agregObj = new Filieres();
+                $agregObj->setLabel($agreg);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($agregObj);
+                $em->flush();
+            }
+        }
+
         return $this->redirectToRoute('homepage');
 
     }
