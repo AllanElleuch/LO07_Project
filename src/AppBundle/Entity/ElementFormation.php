@@ -59,7 +59,7 @@ class ElementFormation
     /**
      * $affectations :  TC, TCBR, FLBR
      * plusieurs éléments de fomation on une affectations
-     * @ORM\ManyToOne(targetEntity="Affectations", inversedBy="elementsFormation")
+     * @ORM\ManyToOne(targetEntity="Affectations")
      * @ORM\JoinColumn(name="affectations_id", referencedColumnName="id")
      */
     private $affectations;
