@@ -45,11 +45,26 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
  *  ===========================
  */
 $('#newSemesterButton').on('click', function() {
-    /* Création du semestre dans la sidebar*/
+    /* Création du semestre dans la sidebar */
     var id = $("#semestresNav").children().length;
+    var lastSemester = $("#semestresNav input[name=_sem_label]").last().val()
+    console.log(lastSemester);
+    if (lastSemester != undefined) {
+        var lastSemesterLabel = lastSemester.match(/([a-zA-Z]+)/gu) /* /gu : /global, /unicode */
+        var lastSemesterInt   = lastSemester.match(/([0-9]+)/gu)
+        lastSemesterInt = parseInt(lastSemesterInt)
+        console.log("lastSemesterLabel = " + lastSemesterLabel)
+        console.log("lastSemesterInt = " + lastSemesterInt)
+    } else {
+        var lastSemesterInt   = 0
+        var lastSemesterLabel = "ISI"
+    }
+    console.log("Création du input avec :");
+    console.log("lastSemesterLabel = " + lastSemesterLabel)
+    console.log("lastSemesterInt = " + lastSemesterInt)
     var newSemesterContent = `
     <li class="row nav-item" id="form_tab_0` + id + `">
-        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="_sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="_sem_label" placeholder="" value="ISI` + id + `">
+        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="_sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="_sem_label" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
         <div class="col-sm-3 btn-group">
             <a class="btn btn-sm btn-secondary" href="#tab_` + id + `">
                 <i class="fa fa-eye" aria-hidden="true"></i>
@@ -61,7 +76,7 @@ $('#newSemesterButton').on('click', function() {
     </li>`
     $(this).closest('li').before(newSemesterContent);
 
-    /* Création d'un tableau contenant le cursus*/
+    /* Création d'un tableau contenant le cursus */
     var tableHeading = `
         <table class="table" id="tab_` + id + `">
             <thead class="thead-default">
@@ -87,7 +102,7 @@ $('#newSemesterButton').on('click', function() {
  */
 $(document).on('click', '.removeCursus', function() {
     var id = $(this).closest('li').attr('id'); /* 'tab_3' */
-    id = id.substr(id.length - 1) /* '3' */
+    id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
     $(this).closest('li').remove()
     $('#cursusTableContainer > #tab_' + id).remove();
 });
