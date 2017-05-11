@@ -150,26 +150,175 @@ class InitialisationBddController extends Controller {
             $em->persist($regActuel);
             $em->flush();
 
+            /*
+             * Récupération d'instances d'éléments de la base de données
+             * Permet de centraliser et de limiter le nombre de requêtes.
+             */
+            $agregatSum = $this->getDoctrine()
+                ->getRepository('AppBundle:Agregat')
+                ->findOneBy(array('label' => 'SUM'));
+
+            $agregatExist = $this->getDoctrine()
+                ->getRepository('AppBundle:Agregat')
+                ->findOneBy(array('label' => 'EXIST'));
+
+            $affBR = $this->getDoctrine()
+                ->getRepository('AppBundle:Affectations')
+                ->findOneBy(array('label' => 'BR'));
+
+            $affTCBR = $this->getDoctrine()
+                ->getRepository('AppBundle:Affectations')
+                ->findOneBy(array('label' => 'TCBR'));
+
+            $affFLBR = $this->getDoctrine()
+                ->getRepository('AppBundle:Affectations')
+                ->findOneBy(array('label' => 'FLBR'));
+
+            $reglementActuel = $this->getDoctrine()
+                ->getRepository('AppBundle:Reglement')
+                ->findOneBy(array('label' => 'R_ACTUEL_BR'));
+
+            $rules = array();
+
+            /*
+             * Définition des règles
+             */
+            // R01;SUM;CS+TM;TCBR;54
             $R01 = new Regle();
-            $R01->setAgregat(
-                $this->getDoctrine()
-                    ->getRepository('AppBundle:Agregat')
-                    ->findOneBy(array('label' => 'SUM'))
-            );
+            $R01->setAgregat($agregatSum);
             $R01->setCibleAgregat("CS+TM");
-            $R01->setAffectations(
-                $this->getDoctrine()
-                    ->getRepository('AppBundle:Affectations')
-                    ->findOneBy(array('label' => 'TCBR'))
-            );
+            $R01->setAffectations($affTCBR);
             $R01->setSeuil(54);
-            $R01->setReglement(
-                $this->getDoctrine()
-                    ->getRepository('AppBundle:Reglement')
-                    ->findOneBy(array('label' => 'R_ACTUEL_BR'))
-            );
+            $R01->setReglement($reglementActuel);
+            $rules[] = $R01;
+
+
+            // R02;SUM;CS+TM;FLBR;30
+            $R02 = new Regle();
+            $R02->setAgregat($agregatSum);
+            $R02->setCibleAgregat("CS+TM");
+            $R02->setAffectations($affFLBR);
+            $R02->setSeuil(30);
+            $R02->setReglement($reglementActuel);
+            $rules[] = $R02;
+
+            // R03;SUM;CS;BR;30
+            $R03 = new Regle();
+            $R03->setAgregat($agregatSum);
+            $R03->setCibleAgregat("CS");
+            $R03->setAffectations($affBR);
+            $R03->setSeuil(30);
+            $R03->setReglement($reglementActuel);
+            $rules[] = $R03;
+
+            // R04;SUM;TM;BR;30
+            $R04 = new Regle();
+            $R04->setAgregat($agregatSum);
+            $R04->setCibleAgregat("TM");
+            $R04->setAffectations($affBR);
+            $R04->setSeuil(30);
+            $R04->setReglement($reglementActuel);
+            $rules[] = $R04;
+
+            // R05;SUM;ST;TCBR;30
+            $R05 = new Regle();
+            $R05->setAgregat($agregatSum);
+            $R05->setCibleAgregat("ST");
+            $R05->setAffectations($affTCBR);
+            $R05->setSeuil(30);
+            $R05->setReglement($reglementActuel);
+            $rules[] = $R05;
+
+            // R06;SUM;ST;FLBR;30
+            $R06 = new Regle();
+            $R06->setAgregat($agregatSum);
+            $R06->setCibleAgregat("ST");
+            $R06->setAffectations($affFLBR);
+            $R06->setSeuil(30);
+            $R06->setReglement($reglementActuel);
+            $rules[] = $R06;
+
+            // R07;SUM;EC;BR;12
+            $R07 = new Regle();
+            $R07->setAgregat($agregatSum);
+            $R07->setCibleAgregat("EC");
+            $R07->setAffectations($affBR);
+            $R07->setSeuil(12);
+            $R07->setReglement($reglementActuel);
+            $rules[] = $R07;
+
+            // R08;SUM;ME;BR;4
+            $R08 = new Regle();
+            $R08->setAgregat($agregatSum);
+            $R08->setCibleAgregat("ME");
+            $R08->setAffectations($affBR);
+            $R08->setSeuil(4);
+            $R08->setReglement($reglementActuel);
+            $rules[] = $R08;
+
+            // R09;SUM;CT;BR;4
+            $R09 = new Regle();
+            $R09->setAgregat($agregatSum);
+            $R09->setCibleAgregat("CT");
+            $R09->setAffectations($affBR);
+            $R09->setSeuil(4);
+            $R09->setReglement($reglementActuel);
+            $rules[] = $R09;
+
+            // R10;SUM;ME+CT;BR;16
+            $R10 = new Regle();
+            $R10->setAgregat($agregatSum);
+            $R10->setCibleAgregat("ME+CT");
+            $R10->setAffectations($affBR);
+            $R10->setSeuil(16);
+            $R10->setReglement($reglementActuel);
+            $rules[] = $R10;
+
+            // R11;SUM;UTT(CS+TM);BR;60
+            $R11 = new Regle();
+            $R11->setAgregat($agregatSum);
+            $R11->setCibleAgregat("UTT(CS+TM)");
+            $R11->setAffectations($affBR);
+            $R11->setSeuil(60);
+            $R11->setReglement($reglementActuel);
+            $rules[] = $R11;
+
+            // R12;EXIST;SE;UTT;0
+            $R12 = new Regle();
+            $R12->setAgregat($agregatExist);
+            $R12->setCibleAgregat("SE");
+            $R12->setAffectations(null);
+            $R12->setSeuil(0);
+            $R12->setReglement($reglementActuel);
+            $rules[] = $R12;
+
+            // R13;EXIST;NPML;UTT;0
+            $R13 = new Regle();
+            $R13->setAgregat($agregatExist);
+            $R13->setCibleAgregat("NPML");
+            $R13->setAffectations(null);
+            $R13->setSeuil(0);
+            $R13->setReglement($reglementActuel);
+            $rules[] = $R13;
+
+            // R14;SUM;ALL;180
+            $R14 = new Regle();
+            $R14->setAgregat($agregatSum);
+            $R14->setCibleAgregat("ALL");
+            $R14->setAffectations(null);
+            $R14->setSeuil(180);
+            $R14->setReglement($reglementActuel);
+            $rules[] = $R14;
+
+
+
+            /*
+             * Enregistrement dans la BDD
+             */
             $em = $this->getDoctrine()->getManager();
-            $em->persist($R01);
+            foreach ($rules as $rule) {
+                $em->persist($rule);
+            }
             $em->flush();
 
 

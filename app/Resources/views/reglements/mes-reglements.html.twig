@@ -15,9 +15,22 @@
                     </div>
                     <div class="card-block">
                         <ul class="list-group list-group-flush">
+                            <li class="list-group-item"></li>
                             {% for regle in reglement.regles %}
-                                <li class="list-group-item">{{ regle.agregat.label }} {{ regle.cibleAgregat }} {{ regle
-                                    .affectations.label }} {{ regle.seuil }}</li>
+                                <li class="list-group-item">
+                                {% if regle.agregat.label is defined %}
+                                    {{ regle.agregat.label }}
+                                {% endif %}
+                                {% if regle.cibleAgregat is defined %}
+                                    {{ regle.cibleAgregat }}
+                                {% endif %}
+                                {% if regle.affectations.label is defined %}
+                                    {{ regle.affectations.label }}
+                                {% endif %}
+                                {% if regle.seuil is defined %}
+                                    {{ regle.seuil }}
+                                {% endif %}
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
