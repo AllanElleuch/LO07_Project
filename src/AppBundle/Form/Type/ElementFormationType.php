@@ -54,8 +54,8 @@ public function buildForm(FormBuilderInterface $builder, array $options)
       'class' => 'form-control form-control-sm',
       'checked' => 'checked')
   ))
-      ->add('credits', HiddenType ::class, array('label' => false, 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control form-control-sm form-control form-control-sm-sm', 'min' => '0')))
-      ->add('sem_seq', HiddenType ::class, array('label' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control form-control-sm', 'min' => '0')));
+      ->add('credits', TextType ::class, array('label' => false, 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control form-control-sm form-control form-control-sm-sm hidden', 'min' => '0', "hidden"=>"")))
+      ->add('sem_seq', TextType ::class, array('label' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control form-control-sm', 'min' => '0',"style"=>"display:none", "hidden"=>"")));
 
 
   /*$builder

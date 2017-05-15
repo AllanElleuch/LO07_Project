@@ -24,13 +24,17 @@ jQuery(document).ready(function() {
         // add a new tag form (see next code block)
         addTagForm($collectionHolder, $newLinkLi);
     });*/
-
-    $('.tab-content').on('click', '.bouttonAjouterCours', function(e) {
+    $('body').on('click', '#newCoursButton', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
+        console.log(
+         $(event.target).parent().parent().parent()
+     );
+     $collectionHolder=$("#cursusTableContainer");
+     $target=$(event.target).parent().parent().parent();
 
         // add a new tag form (see next code block)
-        ajouterCours($collectionHolder, $newLinkLi);
+        ajouterCours($collectionHolder, $target);
     });
 
     $('.nav-tabs ').on('input', 'input', function() {
@@ -68,11 +72,12 @@ function addTagForm($collectionHolder, $newLinkLi) {
 }
 
 */
-function addTagForm2($collectionHolder, $newLinkLi) {
+function addTagForm2($collectionHolder, $target) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
 
     // get the new index
+
     var index = $collectionHolder.data('index');
 
     // Replace '__name__' in the prototype's HTML to
@@ -86,12 +91,12 @@ function addTagForm2($collectionHolder, $newLinkLi) {
     //var $newFormLi = $('<li></li>').append(newForm);
     //var $newFormLi = $('<tr></tr>').append(newForm);
     //$newLinkLi.before($newFormLi);
-    $(".active .target").append(newForm);
+    $target.append(newForm);
 }
 
 
 
-function ajouterCours($collectionHolder, $newLinkLi){
+function ajouterCours($collectionHolder, $target){
 
   /*
     var list=$(".elemFormation li div .form-control");
@@ -140,7 +145,7 @@ function ajouterCours($collectionHolder, $newLinkLi){
 
 */
 
-addTagForm2($collectionHolder, $newLinkLi);
+addTagForm2($collectionHolder, $target);
 $('.nav-tabs .active input').trigger('input');
 }
 

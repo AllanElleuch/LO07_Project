@@ -41,282 +41,28 @@ Nouveau cursus
             </div>
         </div>
 
+        {{ form_errors(form) }}
+        {{ form_row(form._token) }}
+
+
         <!-- Tableau contenant le contenu des cursus -->
         <h5>Créez des semestres et ajoutez-y vos UE</h5>
-        <div id="cursusTableContainer">
+        <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
             <!-- Container rempli en JS -->
         </div>
-        <p>
-            <button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Ajouter un cours</button>
-        </p>
+        {{ form_row(form.envoyer) }}
 
-        <p>
-            <button type="submit" name="form[envoyer]" class="btn btn-sm btn-success bouttonAjouterCours"><i class="fa fa-check"></i> Enregistrer le cursus</button>
-        </p>
 
 
 
 
 
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="form_tab_01" role="tabpanel">
-                <div class="table-responsive table tab-content">
-                    <div class="tab-pane active " id="form_tab_01" role="tabpanel">
-                        <div class="container table-responsive table">
-                            <div class="row target thead-default">
-                                <div class="col th">
-                                    Sigle
-                                </div>
-                                <div class="col th">
-                                    Crédits
-                                </div>
-                                <div class="col th">
-                                    Aff.
-                                </div>
-                                <div class="col th">
-                                    Cat.
-                                </div>
-                                <div class="col th">
-                                    Rés.
-                                </div>
-                                <div class="col th">
-                                    UTT
-                                </div>
-                                <div class="col th">
-                                    Profil
-                                </div>
-                                <div class="col th">
-                                    Action
-                                </div>
-                            </div>
-                            <div class="tbody row">
-                                {% for elem in form.elementsFormations %}
-                                    {{ form_row(elem) }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class=" ">
 
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-
-
-
-    <table class="table">
-        <thead class="thead-default">
-            <th>Test</th>
-            <th>Test</th>
-            <th>Test</th>
-                <div class="form" id="form_elementsFormations_3">
-
-                            <td><input type="text" id="form_elementsFormations_3_sigle"
-                                      name="form[elementsFormations][3][sigle]" required="required" placeholder="Ex.
-                                      LO07" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="form_elementsFormations_3_sem_label"
-                                      name="form[elementsFormations][3][sem_label]" required="required"
-                                       placeholder="ISIx" class="form-control form-control-sm"></td>
-                <div class="col-sm-2 td">
-                            <div></div>
-                            <div><select id="form_elementsFormations_3_affectations" name="form[elementsFormations][3][affectations]"><option value="1">TC</option><option value="2">BR</option><option value="3">TCBR</option><option value="4">FLBR</option></select></div>
-                        </div><div class="col-sm-2 td">
-                            <div></div>
-                            <div><select id="form_elementsFormations_3_categories" name="form[elementsFormations][3][categories]"><option value="1">CS</option><option value="2">TM</option><option value="3">EC</option><option value="4">CT</option><option value="5">HT</option><option value="6">ME</option><option value="7">ST</option><option value="8">SE</option><option value="9">HP</option><option value="10">NPML</option></select></div>
-                        </div><div class="col-sm-1 td">
-                            <div></div>
-                            <div><select id="form_elementsFormations_3_resultats" name="form[elementsFormations][3][resultats]"><option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">D</option><option value="5">E</option><option value="6">F</option><option value="7">Fx</option><option value="8">ABS</option><option value="9">RES</option><option value="10">ADM</option><option value="11">EQU</option></select></div>
-                        </div><div class="col-sm-1 td"><div class=""><div class="form-check"><input type="checkbox" id="form_elementsFormations_3_utt" name="form[elementsFormations][3][utt]" class="form-check-input" checked="checked" value="1"></div></div></div><div class="col-sm-1 td"><div class=""><div class="form-check"><input type="checkbox" id="form_elementsFormations_3_profil" name="form[elementsFormations][3][profil]" class="form-check-input" checked="checked" value="1"></div></div></div><div style="display: none">
-                            <div colspan="2"><input type="hidden" id="form_elementsFormations_3_credits" name="form[elementsFormations][3][credits]" placeholder="nombre de crédits obtenus" class="form-control form-control-sm form-control form-control-sm-sm" min="0"></div>
-                        </div><div style="display: none">
-                            <div colspan="2"><input type="hidden" id="form_elementsFormations_3_sem_seq" name="form[elementsFormations][3][sem_seq]" placeholder="numéro de semestre à l’UTT" class="form-control form-control-sm" min="0"></div>
-                        </div><div class="col-sm-1">
-
-                            <a href="#"><i class="fa fa-trash-o text-danger deleteRow" aria-hidden="true"></i></a>
-
-                        </div>
-                </div>
-            </tr>
-        </tbody>
-    </table>
-
-
-
-{#<div id="container-fluid col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">#}
-  {#<div class="row" >#}
-
-
-
-
-
-
-
-
-
-  {#<section class="row text-center placeholders">#}
-    {#<div class="well-block">#}
-      {#<div id="main_content">#}
-        {#<!-- Nav tabs -->#}
-
-        {#<div class="container-fluid">#}
-          {#<div class="row">#}
-            {#<div class="col-md-12">#}
-
-              {#<!-- <div class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">#}
-
-
-              {#<ul  class="nav nav-tabs  flex-column" role="tablist">#}
-                {#<li class="nav-item"   >#}
-                  {#<a class="nav-link active " role="tab" data-toggle="tab"  href="#form_tab_01" aria-controls="form_tab_01" >#}
-
-                    {#<div class="row">#}
-
-
-                     {#<input class="form-control col-md-5" size="7" type="text" name="_sem_seq" placeholder="N° Sem" value="">#}
-                     {#<input class="form-control col-md-5" size="7" type="text" name="_sem_label" placeholder="Sem X" value="">#}
-                     {#<span class=" col-md-2">#}
-                        {#<i class="fa fa-times" aria-hidden="true"></i>#}
-                    {#</span>#}
-                      {#</div>#}
-
-
-                   {#</a>#}
-                {#</li>#}
-
-
-
-                {#<li class="nav-item">#}
-                  {#<a class="add-tab"  href="#"  id="main_add"><i class="fa fa-plus"></i> Ajouter Semestre</a>#}
-
-                {#</li>#}
-
-              {#</ul>#}
-                {#</div> -->#}
-              {#<!-- Tab panes -->#}
-
-              {#<main class="">#}
-                {#<h3>Cursus </h3>#}
-                {#<div class="">#}
-                  {#<div class="row">#}
-                    {#<div class="col-sm-2">#}
-                    {#{{ form_label(form.label) }}#}
-
-                  {#</div>#}
-                  {#<div class="col-sm-10">#}
-                  {#{{ form_widget(form.label) }}#}
-
-                {#</div>#}
-
-              {#</div>#}
-
-            {#</div>#}
-
-            {#<h3> Ajouter des semestres et ajouter y vos UE </h3>#}
-
-
-              {#<div class="tab-content container-fluid ">#}
-
-                {#<div class="tab-pane active " id="form_tab_01" role="tabpanel">#}
-                  {#<div class="container table-responsive table">#}
-                    {#<div class="thead">#}
-                      {#<div class="row target" >#}
-
-
-                        {#<div class="col th">#}
-                          {#Sigle#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#Crédits#}
-                        {#</div>#}
-
-                        {#<div class="col th">#}
-                          {#N° Sem#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#Label Sem#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#Affectation#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#Catégories#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#Résultats#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#UTT#}
-                        {#</div>#}
-                        {#<div class="col th">#}
-                          {#profil#}
-                        {#</div>#}
-                         {#<div class="col th">#}
-                                                  {#Action#}
-                                                {#</div>#}
-
-                      {#</div>#}
-
-                      {#<div class="tbody row">#}
-                        {#{% for elem in form.elementsFormations %}#}
-                              {#{{ form_row(elem) }}#}
-                          {#{% endfor %}#}
-
-                      {#</div>#}
-                      {#<div class=" ">#}
-
-                          {#<button type="submit"    name="form[envoyer]" class="btn btn-sm btn-outline-success bouttonAjouterCours">Ajouter cours</button>#}
-                      {#</div>#}
-
-                    {#</div>#}
-                  {#</div>#}
-                {#</div>#}
-
-
-
-              {#</div>#}
-            {#</div>#}
-          {#</div>#}
-        {#</div>#}
-
-
-      {#</div>#}
-    {#</div>#}
-  {#</section>#}
-
-{#</main>#}
-{#</div>#}
-
-
-
-
-
-
-
-
-
-<ul class="nav nav-pills flex-column">
-  <ul id="elemFormationSidebar" class="elemFormation" data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
-
-  </ul>
-</ul>
-
-
-
-
-
-{{ form_errors(form) }}
-{{ form_row(form._token) }}
-
-
-{{ form_row(form.envoyer) }}
 </div>
 
 {% endblock %}

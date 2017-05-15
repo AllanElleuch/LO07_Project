@@ -1,6 +1,21 @@
 {% use "form_div_layout.html.twig" %}
 
 {%- block form_row -%}
+
+{% if attr['hidden'] is defined%}
+
+<td class="invisible" style="display:none" >
+        <div>
+            {{- form_label(form) -}}
+        </div>
+        <div>
+            {{- form_errors(form) -}}
+            {{- form_widget(form) -}}
+        </div>
+</td>
+{% else %}
+
+
     <td >
             <div>
                 {{- form_label(form) -}}
@@ -10,6 +25,9 @@
                 {{- form_widget(form) -}}
             </div>
     </td>
+
+    {% endif %}
+
 {%- endblock form_row -%}
 
 {%- block button_row -%}
@@ -68,7 +86,6 @@
 {% block checkbox_radio_row -%}
 
     {% spaceless %}
-
 
 
 

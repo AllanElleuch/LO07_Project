@@ -85,6 +85,8 @@ $('#newSemesterButton').on('click', function() {
                     <th>UTT</th>
                     <th>Profil</th>
                     <th>Action</th>
+                    <th><button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Cours</button></th>
+
                 </tr>
             </thead>`
     $('#cursusTableContainer').append(tableHeading)
