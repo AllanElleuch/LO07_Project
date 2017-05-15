@@ -13,8 +13,14 @@ class Etudiants
   /**
      * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+       * @ORM\Column(type="integer")
+       */
+      private $numEtu;
 
     /**
      * Un étudiant à plusieurs cursus
@@ -80,6 +86,30 @@ class Etudiants
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set numEtu
+     *
+     * @param integer $numEtu
+     *
+     * @return Etudiants
+     */
+    public function setNumEtu($numEtu)
+    {
+        $this->numEtu = $numEtu;
+
+        return $this;
+    }
+
+    /**
+     * Get numEtu
+     *
+     * @return integer
+     */
+    public function getNumEtu()
+    {
+        return $this->numEtu;
     }
 
     /**
