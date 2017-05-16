@@ -5,6 +5,28 @@ $( document ).ready(function() {
 //$(".slider").slider();
 ///new tab with remove
 
+$("#semestresNav").on('input', 'input', function() {
+
+  var input= $(this).val()
+  var name= $(this).attr('name');
+  console.log("input : "+ input + " name " + name)
+
+  var id = $(this).closest('li').attr('id'); /* 'tab_3' */
+  id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
+  var $list = $('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']")
+  console.log('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']");
+  // console.log($list.length);
+   for (var i = 0; i < $list.length; i++) {
+    //  console.log("boucle");
+
+      //  var id=$list[i].id
+       var s = $list.get(i)
+       $(s).attr('value',input);
+       console.log($(s).attr('value'));
+
+   }
+
+});
 
 $("#main_tab.nav-pills").on("click", "a", function(e) {
     e.preventDefault();
@@ -60,7 +82,7 @@ $('#newSemesterButton').on('click', function() {
     }
     var newSemesterContent = `
     <li class="row nav-item" id="form_tab_0` + id + `">
-        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="_sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="_sem_label" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
+        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="[sem_seq]" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="[sem_label]" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
         <div class="col-sm-3 btn-group">
             <a class="btn btn-sm btn-secondary" href="#tab_` + id + `">
                 <i class="fa fa-eye" aria-hidden="true"></i>
@@ -114,7 +136,7 @@ $(document).on('click', '.removeCursus', function() {
 $('#main_add.add-tab').click(function(e) {
   e.preventDefault();
   var id = $("#main_content  .nav-tabs").children().length;
-  $(this).closest('li').before('<li  class="nav-item "><a  id="tab_'+id+'" data-toggle="tab" role="tab" class="nav-link" aria-controls=form_tab_' + id + '"  href="#form_tab_' + id + '">  <div class="row"> <input class="form-control col-md-5" size="7" type="text" name="_sem_seq" placeholder="N° Sem" value=""><input class="form-control col-md-5" size="7" type="text" name="_sem_label" placeholder="Sem X" value="">  <span class=" col-md-2"><i class="fa fa-times" aria-hidden="true"></i></span></div></a></li>');
+  $(this).closest('li').before('<li  class="nav-item "><a  id="tab_'+id+'" data-toggle="tab" role="tab" class="nav-link" aria-controls=form_tab_' + id + '"  href="#form_tab_' + id + '">  <div class="row"> <input class="form-control col-md-5" size="7" type="text" name="form[elementsFormations][undefined][sem_seq]" placeholder="N° Sem" value=""><input class="form-control col-md-5" size="7" type="text" name="_sem_label" placeholder="Sem X" value="">  <span class=" col-md-2"><i class="fa fa-times" aria-hidden="true"></i></span></div></a></li>');
 
   $('#main_content  .tab-content').append(`<div class="tab-pane" id="form_tab_` + id + `" role="tabpanel" ">  ` +` <div class="container table-responsive table">
     <div class="thead">

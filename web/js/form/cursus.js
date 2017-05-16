@@ -28,10 +28,10 @@ jQuery(document).ready(function() {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
         console.log(
-         $(event.target).parent().parent().parent()
+         $(e.target).parent().parent().parent()
      );
      $collectionHolder=$("#cursusTableContainer");
-     $target=$(event.target).parent().parent().parent();
+     $target=$(e.target).parent().parent().parent();
 
         // add a new tag form (see next code block)
         ajouterCours($collectionHolder, $target);
@@ -46,8 +46,16 @@ jQuery(document).ready(function() {
              var id=list[i].id
              $("#"+id+name).val(input)
          }
+
+
+
+
+
+
     // get the current value of the input field.
 });
+
+
 
     //addTagForm2($collectionHolder, $newLinkLi);
 });
@@ -77,9 +85,12 @@ function addTagForm2($collectionHolder, $target) {
     var prototype = $collectionHolder.data('prototype');
 
     // get the new index
-
+    if($collectionHolder.data('index') == undefined ){
+      $collectionHolder.data('index',0)
+    }
+    
     var index = $collectionHolder.data('index');
-
+    console.log(index);
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
@@ -98,55 +109,11 @@ function addTagForm2($collectionHolder, $target) {
 
 function ajouterCours($collectionHolder, $target){
 
-  /*
-    var list=$(".elemFormation li div .form-control");
-    var $id=$collectionHolder.find("li div").get(0).id
-    var $form=$collectionHolder.find("#"+$id).clone()
-    window.test=$form;
 
-    $(".elemFormation li "+$id).clone().appendTo("#main_content .tab-pane.active .accordion")
-    $(".elemFormation li div ").detach();
-      var $html=$form;
-    var description="";
-
-    var arr = Array();
-    i=$($form).find("input").length
-
-    for (var i = 0; i < list.length; i++) {
-        arr.push($($form).find("input").get(i));
-    }
-    $('#example').DataTable().row.add( arr ).draw();
-
-
-    description+=list[0].value +" : "+list.find("option:selected").get(1).text
-    var card= `
-    <div class="row">
-      <div class="card">
-        <div class="card-header" role="tab" id=`+"headingOne"+$id+`>
-          <h5 class="mb-0">
-            <a data-toggle="collapse" data-parent="#accordion" href=`+"#collapseOne"+$id+` aria-expanded="true" aria-controls="collapseOne">
-              `+description+`
-            </a>
-          </h5>
-        </div>
-        <div id=`+"collapseOne"+$id+` class="collapse" role="tabpanel" aria-labelledby="`+"headingOne"+$id+`>
-          <div class="card-block">`+
-          `
-          </div>
-        </div>
-        </div>`
-        $("#main_content .tab-pane.active .accordion").append(card);
-        var $id2="#collapseOne"+$id;
-        //$($id2).append($form);
-        //$(".elemFormation li").detach().appendTo($($id2))
-        $($html).appendTo($($id2))
-
-        addTagForm2($collectionHolder, $newLinkLi);
-
-*/
 
 addTagForm2($collectionHolder, $target);
-$('.nav-tabs .active input').trigger('input');
+$('#semestresNav input').trigger('input');
+
 }
 
 

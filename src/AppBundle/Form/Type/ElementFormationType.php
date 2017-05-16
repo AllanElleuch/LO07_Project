@@ -30,10 +30,10 @@ class ElementFormationType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
-  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex. LO07', 'class' => 'form-control form-control-sm')))
+  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex : LO07', 'class' => 'form-control form-control-sm')))
 
-  ->add('sem_label', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'ISIx',
-      'class' => 'form-control form-control-sm')))
+  ->add('credits', TextType ::class, array('label' => false, 'attr' => array('placeholder' => 'Ex : 4 ', 'class' => 'form-control form-control-sm form-control form-control-sm-sm hidden', 'min' => '0')))
+
   ->add('affectations', EntityType::class, array(
       'class' => 'AppBundle:Affectations',
       'choice_label' => 'label',
@@ -54,8 +54,9 @@ public function buildForm(FormBuilderInterface $builder, array $options)
       'class' => 'form-control form-control-sm',
       'checked' => 'checked')
   ))
-      ->add('credits', TextType ::class, array('label' => false, 'attr' => array('placeholder' => 'nombre de crédits obtenus', 'class' => 'form-control form-control-sm form-control form-control-sm-sm hidden', 'min' => '0', "hidden"=>"")))
-      ->add('sem_seq', TextType ::class, array('label' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control form-control-sm', 'min' => '0',"style"=>"display:none", "hidden"=>"")));
+  ->add('sem_label', TextType::class, array('label' => false, 'required' => false, 'attr' => array('placeholder' => 'ISIx',
+      'class' => 'form-control form-control-sm',"hidden"=>"",'required' => false)))
+      ->add('sem_seq', TextType ::class, array('label' => false, 'required' => false, 'attr' => array('placeholder' => 'numéro de semestre à l’UTT', 'class' => 'form-control form-control-sm', 'min' => '0',"style"=>"display:none", "hidden"=>"")));
 
 
   /*$builder
