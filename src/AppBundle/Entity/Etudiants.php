@@ -24,7 +24,8 @@ class Etudiants
 
     /**
      * Un étudiant à plusieurs cursus
-     * @ORM\OneToMany(targetEntity="Cursus", mappedBy="etudiant")
+     * @ORM\ManyToMany(targetEntity="Cursus", inversedBy="etudiant")
+     * @ORM\JoinTable(name="etudiant_cursus")
      */
     private $cursus;
 
@@ -62,6 +63,7 @@ class Etudiants
     public function __construct()
     {
         $this->cursus = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     /**

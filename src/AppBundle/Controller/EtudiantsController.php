@@ -48,10 +48,7 @@ class EtudiantsController extends Controller{
           ->add('nom', TextType::class, array('label' => 'Prenom', 'attr' => array('placeholder' => 'Prénom de l\'étudiant', 'class' => 'form-control')))
           ->add('prenom', TextType::class, array('label' => 'Nom', 'attr' => array('placeholder' => 'Nom de l\'étudiant', 'class' => 'form-control')))
           ->add('numEtu', IntegerType::class, array('label' => 'Numéro', 'attr' => array('placeholder' => 'Numéro   de l\'étudiant', 'class' => 'form-control')))
-        //   ->add('cursus', EntityType::class, array(
-        //       'class' => 'AppBundle:Cursus',
-        //       'choice_label' => 'label',
-        //       'label' => 'Cursus'))
+
           ->add('filieres', EntityType::class, array(
               'class' => 'AppBundle:Filieres',
               'choice_label' => 'label',
@@ -61,6 +58,12 @@ class EtudiantsController extends Controller{
               'class' => 'AppBundle:Admissions',
               'choice_label' => 'label',
               'label' => 'Admissions'))
+              ->add('cursus', EntityType::class, array(
+                  'class' => 'AppBundle:Cursus',
+                  'choice_label' => 'label',
+                  'label' => 'Cursus',
+                  'required' => 'false'))
+
           ->add('envoyer', SubmitType::class, array('label' => 'Créer un étudiant'))
 
           ->getForm();

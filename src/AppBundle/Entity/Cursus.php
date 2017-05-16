@@ -29,14 +29,10 @@ class Cursus
 
     /**
      * Plusieurs cursust un seul étudiant.
-     * @ORM\ManyToOne(targetEntity="Etudiants", inversedBy="cursus")
-     * @ORM\JoinColumn(name="etudiants_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Etudiants", mappedBy="cursus")
      */
     private $etudiant;
 
-    public function __construct() {
-        $this->elementsFormations = new ArrayCollection();
-    }
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -134,5 +130,37 @@ class Cursus
     public function getEtudiant()
     {
         return $this->etudiant;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->elementsFormations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->etudiant = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add etudiant
+     *
+     * @param \AppBundle\Entity\Etudiants $etudiant
+     *
+     * @return Cursus
+     */
+    public function addEtudiant(\AppBundle\Entity\Etudiants $etudiant)
+    {
+        $this->etudiant[] = $etudiant;
+
+        return $this;
+    }
+
+    /**
+     * Remove etudiant
+     *
+     * @param \AppBundle\Entity\Etudiants $etudiant
+     */
+    public function removeEtudiant(\AppBundle\Entity\Etudiants $etudiant)
+    {
+        $this->etudiant->removeElement($etudiant);
     }
 }
