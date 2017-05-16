@@ -63,21 +63,6 @@ class Etudiants
     public function __construct()
     {
         $this->cursus = new \Doctrine\Common\Collections\ArrayCollection();
-
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return Etudiants
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**

@@ -58,11 +58,11 @@ class EtudiantsController extends Controller{
               'class' => 'AppBundle:Admissions',
               'choice_label' => 'label',
               'label' => 'Admissions'))
-              ->add('cursus', EntityType::class, array(
-                  'class' => 'AppBundle:Cursus',
-                  'choice_label' => 'label',
-                  'label' => 'Cursus',
-                  'required' => 'false'))
+              // ->add('cursus', EntityType::class, array(
+              //     'class' => 'AppBundle:Cursus',
+              //     'choice_label' => 'label',
+              //     'label' => 'Cursus',
+              //     'required' => 'false')
 
           ->add('envoyer', SubmitType::class, array('label' => 'Créer un étudiant'))
 

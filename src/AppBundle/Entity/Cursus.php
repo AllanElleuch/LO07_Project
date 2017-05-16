@@ -40,42 +40,35 @@ class Cursus
     private $label;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->elementsFormations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->etudiant = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
-    }
-
-    /**
-     * Set elementsFormations
-     *
-     * @param array $elementsFormations
-     * @return Cursus
-     */
-    public function setElementsFormations($elementsFormations) {
-        $this->elementsFormations = $elementsFormations;
-        return $this;
-    }
-
-    /**
-     * Get elementsFormations
-     *
-     * @return array
-     */
-    public function getElementsFormations() {
-        return $this->elementsFormations;
     }
 
     /**
      * Set label
      *
      * @param string $label
+     *
      * @return Cursus
      */
-    public function setLabel($label){
+    public function setLabel($label)
+    {
         $this->label = $label;
+
         return $this;
     }
 
@@ -84,7 +77,8 @@ class Cursus
      *
      * @return string
      */
-    public function getLabel() {
+    public function getLabel()
+    {
         return $this->label;
     }
 
@@ -92,10 +86,13 @@ class Cursus
      * Add elementsFormation
      *
      * @param \AppBundle\Entity\ElementFormation $elementsFormation
+     *
      * @return Cursus
      */
-    public function addElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation) {
+    public function addElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation)
+    {
         $this->elementsFormations[] = $elementsFormation;
+
         return $this;
     }
 
@@ -104,40 +101,19 @@ class Cursus
      *
      * @param \AppBundle\Entity\ElementFormation $elementsFormation
      */
-    public function removeElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation) {
+    public function removeElementsFormation(\AppBundle\Entity\ElementFormation $elementsFormation)
+    {
         $this->elementsFormations->removeElement($elementsFormation);
     }
 
     /**
-     * Set etudiant
+     * Get elementsFormations
      *
-     * @param \AppBundle\Entity\Etudiants $etudiant
-     *
-     * @return Cursus
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setEtudiant(\AppBundle\Entity\Etudiants $etudiant = null)
+    public function getElementsFormations()
     {
-        $this->etudiant = $etudiant;
-
-        return $this;
-    }
-
-    /**
-     * Get etudiant
-     *
-     * @return \AppBundle\Entity\Etudiants
-     */
-    public function getEtudiant()
-    {
-        return $this->etudiant;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->elementsFormations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->etudiant = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->elementsFormations;
     }
 
     /**
@@ -162,5 +138,15 @@ class Cursus
     public function removeEtudiant(\AppBundle\Entity\Etudiants $etudiant)
     {
         $this->etudiant->removeElement($etudiant);
+    }
+
+    /**
+     * Get etudiant
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEtudiant()
+    {
+        return $this->etudiant;
     }
 }
