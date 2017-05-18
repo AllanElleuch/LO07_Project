@@ -25,3 +25,4 @@ updateBD.bat
 *.php~
 *~
 /web/export_cursus
+/web/export_reglements
