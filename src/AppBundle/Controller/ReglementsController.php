@@ -88,8 +88,16 @@ class ReglementsController extends Controller {
         $rules = $reglement->getRegles();
 
         foreach ($rules as $rule){
+            /* Respect de la numérotation R01 => R10 */
+            $id = $rule->getId();
+            if ($id < 10) {
+                $firstElt = "R0" . $id;
+            } else {
+                $firstElt = "R" . $id;
+            }
+
             $line = array(
-                "R" . $rule->getId(),
+                $firstElt,
                 $this->getDoctrine()
                     ->getRepository('AppBundle:Agregat')
                     ->find($rule->getAgregat())->getLabel(),
