@@ -40,8 +40,7 @@
                             {% endif %}
                         </div>
 
-                        <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"
-                                                                        aria-hidden="true"></i> Appliquer un règlement</a>
+                        <a href="#" class="btn btn-secondary btn-sm" id="chooseReglementButton" data-toggle="modal" data-target="#chooseReglement" data-id="{{ oneCursus.id }}"><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> Appliquer un règlement</a>
 
                     </td>
                 </tr>
@@ -49,7 +48,7 @@
             </tbody>
         </table>
 
-
+        <!-- Modal to confirm delete cursus -->
         <div class="modal hide fade" id="confirmDelete">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -67,8 +66,33 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <a href="#" id="deleteConfirmedButton" class="btn btn-danger">Supprimer</a>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <a href="#" id="deleteConfirmedButton" class="btn btn-danger btn-sm">Supprimer</a>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Modal to choose reglement to apply-->
+        <div class="modal hide fade" id="chooseReglement">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-success">Choix du règlement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Quel règlement voulez-vous appliquer à ce cursus ?</p>
+                        <select class="" name="">
+                            <option value="Test">Test</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annuler</button>
                     </div>
                 </div>
             </div>
@@ -122,6 +146,13 @@
                     }
 
                 );
+            });
+
+            $(document).on('click', '#chooseReglementButton', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var cursusId = $(this).data('id')
+                console.log('Cursus Id : ' + cursusId);
             });
 
             $(document).on('click', '#deleteButton', function(event) {
