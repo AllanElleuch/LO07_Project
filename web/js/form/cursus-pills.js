@@ -69,7 +69,7 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 $('#newSemesterButton').on('click', function() {
     /* Création du semestre dans la sidebar */
     var id = $("#semestresNav").children().length;
-    var lastSemester = $("#semestresNav input[name=_sem_label]").last().val()
+    var lastSemester = $("#semestresNav input[name=sem_label]").last().val()
     if (lastSemester != undefined) {
         var lastSemesterLabel = lastSemester.match(/([a-zA-Z]+)/gu) /* /gu : /global, /unicode */
         var lastSemesterInt   = lastSemester.match(/([0-9]+)/gu)
@@ -82,7 +82,7 @@ $('#newSemesterButton').on('click', function() {
     }
     var newSemesterContent = `
     <li class="row nav-item" id="form_tab_0` + id + `">
-        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="[sem_seq]" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="[sem_label]" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
+        <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="sem_label" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
         <div class="col-sm-3 btn-group">
             <a class="btn btn-sm btn-secondary" href="#tab_` + id + `">
                 <i class="fa fa-eye" aria-hidden="true"></i>

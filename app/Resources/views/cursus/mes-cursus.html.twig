@@ -35,13 +35,9 @@
                                title="Modifier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a href="/cursus/duplicate/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
                                title="Dupliquer"><i class="fa fa-files-o" aria-hidden="true"></i></a>
-                            <a href="#" id="deleteButton" class="btn btn-secondary btn-sm text-danger" data-toggle="modal"
                             {% if oneCursus.etudiant.nom is defined and oneCursus.etudiant.prenom is defined %}
-
-
-
-                               data-target="#confirmDelete" data-id="{{ oneCursus.id }}" data-firstname="{{ oneCursus.etudiant.prenom }}" data-lastname="{{ oneCursus.etudiant.nom }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                               {% else %} --- {% endif %}
+                            <a href="#" id="deleteButton" class="btn btn-secondary btn-sm text-danger" data-toggle="modal" data-target="#confirmDelete" data-id="{{ oneCursus.id }}" data-firstname="{{ oneCursus.etudiant.prenom }}" data-lastname="{{ oneCursus.etudiant.nom }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            {% endif %}
                         </div>
 
                         <a href="#" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"

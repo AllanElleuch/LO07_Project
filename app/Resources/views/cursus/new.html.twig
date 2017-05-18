@@ -9,6 +9,8 @@ Nouveau cursus
 <link rel="stylesheet" href="{{ asset('css/cursus.css') }}">
 <link rel="stylesheet" href="{{ asset('css/nav-pills.css') }}">
 <link rel="stylesheet" href="{{ asset('css/cursus0.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+
 
 
 
@@ -48,7 +50,7 @@ Nouveau cursus
 
 
         <!-- Tableau contenant le contenu des cursus -->
-        <h5>Créez des semestres et ajoutez-y vos UE</h5>
+        <h5 class="mt-3">Créez des semestres et ajoutez-y vos UE</h5>
         <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
             <!-- Container rempli en JS -->
         </div>
@@ -71,7 +73,6 @@ Nouveau cursus
 
 {% block javascripts %}
 {{ parent() }}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
 <script src="{{ asset('js/form/cursus.js') }}"></script>
