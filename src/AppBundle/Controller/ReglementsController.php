@@ -44,9 +44,15 @@ class ReglementsController extends Controller {
      */
     public function exportReglementsAction(Request $request)
     {
+
+        $reglements = $this->getDoctrine()
+            ->getRepository('AppBundle:Reglement')
+            ->findAll();
+
         return $this->render('reglements/export.html.twig', array(
             'nav' => "reglements",
             'subnav' => "export",
+            'reglements' => $reglements
         ));
     }
 

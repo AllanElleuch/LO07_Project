@@ -5,5 +5,33 @@
 {% endblock %}
 
 {% block content %}
-    Export
+    {% if reglements is not empty %}
+        <table class="table">
+            <thead class="thead-default">
+            <tr>
+                <th>Règlement</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for reglement in reglements %}
+                    <tr>
+                        <td>{{ reglement.label }}</td>
+                        <td>
+                            <a href="/reglements/export/{{ reglement.id }}"class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"aria-hidden="true"></i> Exporter</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+    <div class="text-center grey">
+        <h1 class="display-4">Aucun règlement</h1>
+        <p class="lead">Importez un fichier de règlement au format csv.</p>
+    </div>
+    {% endif %}
+
+
+
+
 {% endblock %}
