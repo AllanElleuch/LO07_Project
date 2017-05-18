@@ -315,7 +315,6 @@ class InitialisationBddController extends Controller {
             $rules[] = $R14;
 
 
-
             /*
              * Enregistrement dans la BDD
              */
@@ -326,14 +325,171 @@ class InitialisationBddController extends Controller {
             $em->flush();
 
 
+
+
+
+
             /*
              * Création du règlement R_FUTUR_BR
              * --------------------------------
              */
-            $regActuel = new Reglement();
-            $regActuel->setLabel("R_FUTUR_BR");
+            $regFutur = new Reglement();
+            $regFutur->setLabel("R_FUTUR_BR");
             $em = $this->getDoctrine()->getManager();
-            $em->persist($regActuel);
+            $em->persist($regFutur);
+            $em->flush();
+
+            $reglementFutur = $this->getDoctrine()
+                ->getRepository('AppBundle:Reglement')
+                ->findOneBy(array('label' => 'R_FUTUR_BR'));
+
+            /*
+             * Définition des règles
+             */
+            $rules = [];
+
+            // R01;SUM;CS+TM;TCBR;42
+            $R01 = new Regle();
+            $R01->setAgregat($agregatSum);
+            $R01->setCibleAgregat("CS+TM");
+            $R01->setAffectations($affTCBR);
+            $R01->setSeuil(42);
+            $R01->setReglement($reglementFutur);
+            $rules[] = $R01;
+
+            // R02;SUM;CS+TM;FCBR;18
+            $R02 = new Regle();
+            $R02->setAgregat($agregatSum);
+            $R02->setCibleAgregat("CS+TM");
+            $R02->setAffectations($affFLBR);
+            $R02->setSeuil(18);
+            $R02->setReglement($reglementFutur);
+            $rules[] = $R02;
+
+            // R03;SUM;CS;BR;24
+            $R03 = new Regle();
+            $R03->setAgregat($agregatSum);
+            $R03->setCibleAgregat("CS");
+            $R03->setAffectations($affBR);
+            $R03->setSeuil(24);
+            $R03->setReglement($reglementFutur);
+            $rules[] = $R03;
+
+            // R04;SUM;TM;BR;24
+            $R04 = new Regle();
+            $R04->setAgregat($agregatSum);
+            $R04->setCibleAgregat("TM");
+            $R04->setAffectations($affBR);
+            $R04->setSeuil(24);
+            $R04->setReglement($reglementFutur);
+            $rules[] = $R04;
+
+            // R05;SUM;CS+TM;BR;84
+            $R05 = new Regle();
+            $R05->setAgregat($agregatSum);
+            $R05->setCibleAgregat("CS+TM");
+            $R05->setAffectations($affBR);
+            $R05->setSeuil(84);
+            $R05->setReglement($reglementFutur);
+            $rules[] = $R05;
+
+            // R06;SUM;ST;TCBR;30
+            $R06 = new Regle();
+            $R06->setAgregat($agregatSum);
+            $R06->setCibleAgregat("ST");
+            $R06->setAffectations($affTCBR);
+            $R06->setSeuil(30);
+            $R06->setReglement($reglementFutur);
+            $rules[] = $R06;
+
+            // R07;SUM;ST;FCBR;30
+            $R07 = new Regle();
+            $R07->setAgregat($agregatSum);
+            $R07->setCibleAgregat("ST");
+            $R07->setAffectations($affFLBR);
+            $R07->setSeuil(30);
+            $R07->setReglement($reglementFutur);
+            $rules[] = $R07;
+
+            // R08;SUM;EC;BR;12
+            $R08 = new Regle();
+            $R08->setAgregat($agregatSum);
+            $R08->setCibleAgregat("EC");
+            $R08->setAffectations($affBR);
+            $R08->setSeuil(12);
+            $R08->setReglement($reglementFutur);
+            $rules[] = $R08;
+
+            // R09;SUM;ME;BR;4
+            $R09 = new Regle();
+            $R09->setAgregat($agregatSum);
+            $R09->setCibleAgregat("ME");
+            $R09->setAffectations($affBR);
+            $R09->setSeuil(4);
+            $R09->setReglement($reglementFutur);
+            $rules[] = $R09;
+
+            // R10;SUM;CT;BR;4
+            $R10 = new Regle();
+            $R10->setAgregat($agregatSum);
+            $R10->setCibleAgregat("CT");
+            $R10->setAffectations($affBR);
+            $R10->setSeuil(4);
+            $R10->setReglement($reglementFutur);
+            $rules[] = $R10;
+
+            // R11;SUM;ME+CT;BR;16
+            $R11 = new Regle();
+            $R11->setAgregat($agregatSum);
+            $R11->setCibleAgregat("ME+CT");
+            $R11->setAffectations($affBR);
+            $R11->setSeuil(16);
+            $R11->setReglement($reglementFutur);
+            $rules[] = $R11;
+
+            // R12;SUM;UTT(CS+TM);BR;60
+            $R12 = new Regle();
+            $R12->setAgregat($agregatSum);
+            $R12->setCibleAgregat("UTT(CS+TM)");
+            $R12->setAffectations($affBR);
+            $R12->setSeuil(60);
+            $R12->setReglement($reglementFutur);
+            $rules[] = $R12;
+
+            // R13;EXIST;SE;BR;0
+            $R13 = new Regle();
+            $R13->setAgregat($agregatExist);
+            $R13->setCibleAgregat("SE");
+            $R13->setAffectations($affALL);
+            $R13->setSeuil(0);
+            $R13->setReglement($reglementFutur);
+            $rules[] = $R13;
+
+            // R14;EXIST;NPML;BR;0
+            $R14 = new Regle();
+            $R14->setAgregat($agregatExist);
+            $R14->setCibleAgregat("NPML");
+            $R14->setAffectations($affBR);
+            $R14->setSeuil(0);
+            $R14->setReglement($reglementFutur);
+            $rules[] = $R14;
+
+            // R15;SUM;ALL;180;
+            $R15 = new Regle();
+            $R15->setAgregat($agregatExist);
+            $R15->setCibleAgregat("ALL");
+            $R15->setAffectations($affALL);
+            $R15->setSeuil(180);
+            $R15->setReglement($reglementFutur);
+            $rules[] = $R15;
+
+            /*
+             * Enregistrement dans la BDD
+             */
+            $em = $this->getDoctrine()->getManager();
+            foreach ($rules as $rule) {
+                $em->persist($rule);
+            }
             $em->flush();
         }
 
@@ -342,4 +498,5 @@ class InitialisationBddController extends Controller {
         return $this->redirectToRoute('homepage');
 
     }
+
 }
