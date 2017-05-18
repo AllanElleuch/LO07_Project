@@ -72,7 +72,7 @@ class InitialisationBddController extends Controller {
         $res = $this->getDoctrine()->getRepository('AppBundle:Affectations')->findAll();
 
         if (empty($res)){
-            $affectations = array('TC', 'BR', 'TCBR', 'FLBR');
+            $affectations = array('TC', 'BR', 'TCBR', 'FLBR', 'ALL');
 
             foreach ($affectations as $aff){
                 $affObj = new Affectations();
@@ -173,6 +173,10 @@ class InitialisationBddController extends Controller {
             $affFLBR = $this->getDoctrine()
                 ->getRepository('AppBundle:Affectations')
                 ->findOneBy(array('label' => 'FLBR'));
+
+            $affALL = $this->getDoctrine()
+                ->getRepository('AppBundle:Affectations')
+                ->findOneBy(array('label' => 'ALL'));
 
             $reglementActuel = $this->getDoctrine()
                 ->getRepository('AppBundle:Reglement')
@@ -287,7 +291,7 @@ class InitialisationBddController extends Controller {
             $R12 = new Regle();
             $R12->setAgregat($agregatExist);
             $R12->setCibleAgregat("SE");
-            $R12->setAffectations(null);
+            $R12->setAffectations($affALL);
             $R12->setSeuil(0);
             $R12->setReglement($reglementActuel);
             $rules[] = $R12;
@@ -296,7 +300,7 @@ class InitialisationBddController extends Controller {
             $R13 = new Regle();
             $R13->setAgregat($agregatExist);
             $R13->setCibleAgregat("NPML");
-            $R13->setAffectations(null);
+            $R13->setAffectations($affALL);
             $R13->setSeuil(0);
             $R13->setReglement($reglementActuel);
             $rules[] = $R13;
@@ -305,7 +309,7 @@ class InitialisationBddController extends Controller {
             $R14 = new Regle();
             $R14->setAgregat($agregatSum);
             $R14->setCibleAgregat("ALL");
-            $R14->setAffectations(null);
+            $R14->setAffectations($affALL);
             $R14->setSeuil(180);
             $R14->setReglement($reglementActuel);
             $rules[] = $R14;
