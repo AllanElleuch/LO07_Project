@@ -349,7 +349,7 @@ class CursusController extends Controller {
                     /* Recherche de l'étudiant dans la base de données à partir des informations lues dans le fichier. */
                     $etudiant = $this->getDoctrine()
                         ->getRepository('AppBundle:Etudiants')
-                        ->find($stdId);
+                        ->findBy(array('numEtu' => $stdId));
                     /* Si l'étudiant n'existe pas, il est créé. */
                     if (empty($etudiant)){
                         $newStudent = new Etudiants();
