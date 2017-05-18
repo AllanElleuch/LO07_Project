@@ -28,9 +28,15 @@ class CursusController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->findAll();
 
+        $reglements = $this->getDoctrine()
+            ->getRepository('AppBundle:Reglement')
+            ->findAll();
+
         return $this->render('cursus/mes-cursus.html.twig', array(
             'nav' => "cursus",
-            'subnav' => 'mes-cursus', 'cursus' => $cursus,
+            'subnav' => 'mes-cursus',
+            'cursus' => $cursus,
+            'reglements' => $reglements
         ));
 
     }
