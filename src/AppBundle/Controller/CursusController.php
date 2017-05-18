@@ -355,7 +355,7 @@ class CursusController extends Controller {
                         $newStudent = new Etudiants();
                         $newStudent->setNom($stdName);
                         $newStudent->setPrenom($stdFirstName);
-                        $newStudent->setId($stdId);
+                        $newStudent->setNumEtu($stdId);
 
                         $filiere = $this->getDoctrine()
                             ->getRepository('AppBundle:Filieres')
@@ -377,7 +377,7 @@ class CursusController extends Controller {
 
 
                     $cursus->setLabel($label);
-                    $cursus->setEtudiant($etudiant);
+                    $cursus->addEtudiant($etudiant);
                     foreach ($eltsFormation as $element){
                         $element->setCursus($cursus);
                         $em = $this->getDoctrine()->getManager();
