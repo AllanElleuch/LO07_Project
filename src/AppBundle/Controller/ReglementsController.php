@@ -31,6 +31,29 @@ class ReglementsController extends Controller {
             'reglements' => $reglements
         ));
     }
+
+    /**
+     * @Route("/reglements/{cursusId}/{reglementId}")
+     */
+    public function ApplyReglementAction(Request $request, $cursusId, $reglementId)
+    {
+        $reglement = $this->getDoctrine()
+            ->getRepository('AppBundle:Reglement')
+            ->find($reglementId);
+
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->find($cursusId);
+
+        return $this->render('reglements/applied-cursus.html.twig', array(
+            'nav' => "reglements",
+            'subnav' => "mes-reglements",
+            'reglement' => $reglement,
+            'cursus' => $cursus
+        ));
+    }
+
+
     /**
      * @Route("/reglements/import/")
      */

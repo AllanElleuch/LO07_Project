@@ -166,7 +166,9 @@
                 var reglementId = $('#selectReglement').val()
                 var cursusId = $(this).data('id')
 
-                /* TODO : construire les routes dans le controller reglement pour gérer le couple d'ID et appliquer le règlement */
+
+                window.location.href = "/reglements/" + cursusId + "/" + reglementId
+
             });
 
             $(document).on('click', '#deleteButton', function(event) {
