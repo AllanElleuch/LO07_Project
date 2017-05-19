@@ -29,7 +29,8 @@ class Cursus
 
     /**
      * Plusieurs cursust un seul étudiant.
-     * @ORM\ManyToMany(targetEntity="Etudiants", mappedBy="cursus")
+     * @ORM\ManyToOne(targetEntity="Etudiants", inversedBy="cursus")
+     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
      */
     private $etudiant;
 
@@ -148,5 +149,19 @@ class Cursus
     public function getEtudiant()
     {
         return $this->etudiant;
+    }
+
+    /**
+     * Set etudiant
+     *
+     * @param \AppBundle\Entity\Etudiant $etudiant
+     *
+     * @return Cursus
+     */
+    public function setEtudiant(\AppBundle\Entity\Etudiant $etudiant = null)
+    {
+        $this->etudiant = $etudiant;
+
+        return $this;
     }
 }

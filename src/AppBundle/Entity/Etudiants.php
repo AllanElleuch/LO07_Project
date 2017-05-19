@@ -24,8 +24,7 @@ class Etudiants
 
     /**
      * Un étudiant à plusieurs cursus
-     * @ORM\ManyToMany(targetEntity="Cursus", inversedBy="etudiant")
-     * @ORM\JoinTable(name="etudiant_cursus")
+     * @ORM\OneToMany(targetEntity="Cursus", mappedBy="etudiant",cascade={"all"})
      */
     private $cursus;
 
