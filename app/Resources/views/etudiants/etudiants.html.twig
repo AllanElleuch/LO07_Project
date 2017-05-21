@@ -15,6 +15,7 @@
                     <th>Prénom</th>
                     <th>Filière</th>
                     <th>Admission</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,10 +26,41 @@
                         <td>{{ etudiant.prenom }}</td>
                         <td>{{ etudiant.filieres.label }}</td>
                         <td>{{ etudiant.admissions.label }}</td>
+                        <td>
+                            <a href="#" id="deleteButton" class="btn btn-sm btn-secondary text-danger" data-id="{{etudiant.id}}" data-firstname="{{ etudiant.prenom }}" data-lastname="{{ etudiant.nom }}" data-toggle="modal" data-target="#confirmDelete">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <!-- Modal to confirm delete student -->
+        <div class="modal hide fade" id="confirmDelete">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger">Suppression d'étudiant</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Voulez-vous vraiment supprimer
+                            <span id="toDeleteFirstname"></span>
+                            <span id="toDeleteName"></span>
+                            ?
+                        </p>
+                        <p>Les cursus associés à cet étudiant seront également supprimés.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="deleteConfirmedButton" class="btn btn-danger btn-sm">Supprimer</a>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         <div class="text-center grey">
             <h1 class="display-4">Aucun étudiant</h1>
@@ -75,6 +107,18 @@
                     }
 
                 );
+            });
+
+            /* Modal to confirm student deletion */
+            $(document).on('click', '#deleteButton', function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                var firstname = $(this).data('firstname')
+                var lastname = $(this).data('lastname')
+                var toDeleteId = $(this).data('id')
+                $('#toDeleteFirstname').text(firstname)
+                $('#toDeleteName').text(lastname)
+                $('#deleteConfirmedButton').attr("href", "/etudiants/delete/" + toDeleteId)
             });
         </script>
     {% endif %}

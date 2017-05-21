@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class EtudiantsController extends Controller{
     /**
      * affiche les cursus d'un étudiant
-     * @Route("/etudiants/etudiants/")
+     * @Route("/etudiants/etudiants/", name="homestudents")
      */
     public function viewStudentsAction(Request $request) {
 
@@ -84,7 +84,7 @@ class EtudiantsController extends Controller{
           $em->persist($etudiants);
           $em->flush();
 
-          return $this->redirectToRoute('homepage');
+          return $this->redirectToRoute('homestudents');
       }
 
 
@@ -95,6 +95,44 @@ class EtudiantsController extends Controller{
             'form' => $form->createView(),
 
         ));
+
+    }
+
+
+
+
+    /**
+     * Delete student and associated cursuses
+     * @Route("/etudiants/delete/{id}")
+     */
+    public function deleteStudentAction(Request $request, $id) {
+
+        $student = $this->getDoctrine()
+                    ->getRepository('AppBundle:Etudiants')
+                    ->find($id);
+
+        if (!$student) {
+            throw $this->createNotFoundException('Étudiant introuvable');
+        }
+
+        $cursuses = $this->getDoctrine()
+                    ->getRepository('AppBundle:Cursus')
+                    ->findBy(array(
+                        'etudiant' => $id,
+                    ));
+
+        $em = $this->getDoctrine()->getEntityManager();
+        foreach ($cursuses as $cursus) {
+            $em->remove($cursus);
+        }
+        $em->remove($student);
+        $em->flush();
+
+        $students = $this->getDoctrine()
+                    ->getRepository('AppBundle:Etudiants')
+                    ->findAll();
+
+        return $this->redirectToRoute('homestudents');
 
     }
 }
