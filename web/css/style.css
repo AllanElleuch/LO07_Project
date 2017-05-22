@@ -47,11 +47,12 @@ pre {
     background-color: #f5f5f5 !important;
 }
 .navbar {
-    padding-bottom: 0;
+    padding-bottom: 0em;
+    border-bottom: 1px solid #cecece;
 }
 .my-nav-item{
     margin: 0 1em 0 1em;
-    padding: 0 0 0 0;
+    padding: 0 0 .3em 0;
     border-bottom: 2px solid transparent;
     color: #777;
     -webkit-transition: all 0.3s ease-in-out 0s;
@@ -59,14 +60,14 @@ pre {
 }
 .my-nav-item:hover{
     margin: 0 .2em 0 .2em;
-    padding: 0 .8em 0  .8em;
+    padding: 0 .8em .3em  .8em;
     text-decoration: none;
     border-bottom: 2px solid rgb(193, 193, 193);
     color: #000;
 }
 .my-nav-item.active{
     margin: 0 .2em 0 .2em;
-    padding: 0 .8em 0  .8em;
+    padding: 0 .8em .3em  .8em;
     font-weight: 600;
     text-decoration: none;
     border-bottom: 2px solid #5cb85c;
@@ -80,7 +81,6 @@ pre {
     text-align: center;
     font-size: 0.9em;
     border-bottom: 1px solid #cecece;
-    border-top: 1px solid #cecece;
     background-color: #ebebeb;
 }
 .sub-nav-item{

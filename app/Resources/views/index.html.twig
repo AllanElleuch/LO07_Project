@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h1>EasyCursus</h1>
+            <p class="lead">Gestion de cursus pour les étudiants ISI de l'UTT</p>
+        </div>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-block text-center">
+                    <h4 class="card-title">Cursus</h4>
+                    <h4 class="display-3 text-success">
+                        {% if cursus is defined %}
+                            {{cursus}}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/cursus/mes-cursus" class="btn btn-success btn-sm">Voir les cursus</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block text-center">
+                    <h4 class="card-title">Règlements</h4>
+                    <h4 class="display-3 text-success">
+                        {% if reglements is defined %}
+                            {{reglements}}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/reglements/mes-reglements" class="btn btn-success btn-sm">Voir les règlements</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block text-center">
+                    <h4 class="card-title">Étudiants</h4>
+                    <h4 class="display-3 text-success">
+                        {% if etudiants is defined %}
+                            {{etudiants}}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/etudiants/etudiants" class="btn btn-success btn-sm">Voir les étudiants</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

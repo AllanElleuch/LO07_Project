@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class CursusController extends Controller {
     /**
      * affiche les cursus d'un étudiant
-     * @Route("/", name="homepage")
      * @Route("/cursus/mes-cursus/")
      */
     public function mesCursusAction(Request $request) {
