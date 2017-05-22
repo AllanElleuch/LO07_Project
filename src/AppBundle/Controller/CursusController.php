@@ -278,7 +278,7 @@ class CursusController extends Controller {
 
                         switch ($data[0]){
                             case "ID":
-                                $stdId = $data[1];
+                                 $stdNumber = $data[1];
                                 break;
                             case "NO":
                                 $stdName = ucfirst(strtolower($data[1]));
@@ -355,13 +355,13 @@ class CursusController extends Controller {
                     /* Recherche de l'étudiant dans la base de données à partir des informations lues dans le fichier. */
                     $etudiant = $this->getDoctrine()
                         ->getRepository('AppBundle:Etudiants')
-                        ->findBy(array('numEtu' => $stdId));
+                        ->findBy(array('numEtu' => $stdNumber));
                     /* Si l'étudiant n'existe pas, il est créé. */
                     if (empty($etudiant)){
                         $newStudent = new Etudiants();
                         $newStudent->setNom($stdName);
                         $newStudent->setPrenom($stdFirstName);
-                        $newStudent->setNumEtu($stdId);
+                        $newStudent->setNumEtu($stdNumber);
 
                         $filiere = $this->getDoctrine()
                             ->getRepository('AppBundle:Filieres')
