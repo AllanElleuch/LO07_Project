@@ -45,9 +45,9 @@ class EtudiantsController extends Controller{
       $etudiants = new Etudiants();
 
       $form = $this->createFormBuilder($etudiants)
-          ->add('nom', TextType::class, array('label' => 'Prenom', 'attr' => array('placeholder' => 'Prénom de l\'étudiant', 'class' => 'form-control')))
-          ->add('prenom', TextType::class, array('label' => 'Nom', 'attr' => array('placeholder' => 'Nom de l\'étudiant', 'class' => 'form-control')))
-          ->add('numEtu', IntegerType::class, array('label' => 'Numéro', 'attr' => array('placeholder' => 'Numéro   de l\'étudiant', 'class' => 'form-control')))
+          ->add('prenom', TextType::class, array('label' => 'Prenom', 'attr' => array('placeholder' => 'Prénom de l\'étudiant', 'class' => 'form-control')))
+          ->add('nom', TextType::class, array('label' => 'Nom', 'attr' => array('placeholder' => 'Nom de l\'étudiant', 'class' => 'form-control')))
+          ->add('numEtu', IntegerType::class, array('label' => 'Numéro', 'attr' => array('placeholder' => 'Numéro de l\'étudiant', 'class' => 'form-control')))
 
           ->add('filieres', EntityType::class, array(
               'class' => 'AppBundle:Filieres',
