@@ -62,6 +62,16 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
       });
 
 
+      $("#cursusTableContainer").on("click", ".deleteRow", function() {
+        console.log("hello");
+          var anchor = $(this).siblings('a');
+          console.log(anchor);
+          $(anchor.attr('href')).remove();
+          $(this).parent().parent().parent().remove();
+          $("#sub_tab.nav-pills li").children('a').first().click();
+        });
+
+
 
 /** Ajout d'un nouveau semestre
  *  ===========================

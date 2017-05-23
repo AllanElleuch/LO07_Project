@@ -17,6 +17,12 @@ use AppBundle\Entity\ElementFormation;
 use AppBundle\Form\Type\ElementFormationType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
+// use Symfony\Component\Serializer\Serializer;
+// use Symfony\Component\Serializer\Encoder\XmlEncoder;
+// use Symfony\Component\Serializer\Encoder\JsonEncoder;
+// use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+
 class CursusController extends Controller {
     /**
      * affiche les cursus d'un étudiant
@@ -98,19 +104,19 @@ class CursusController extends Controller {
 
 
         $form = $this->createFormBuilder($cursus)
-            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
-            //->add('elementsFormations', TextType::class, array('label' => 'Créer un test'))
-            //->add('elementsFormations', 'collection', array('type' => new ElementFormationType()))
-            // ->add('elementsFormations', ElementFormationType::class, array(
-            //           'placeholder' => 'Choose a gender',
-            //       ))
-            ->add('elementsFormations', CollectionType::class, array(
-            'entry_type'   => ElementFormationType::class,
-            'allow_add'    => true,
-            ))
-            ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
+        ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
 
-            ->getForm();
+          ->add('etudiant', EntityType::class, array(
+              'class' => 'AppBundle:Etudiants',
+              'choice_label' => 'numEtu',
+              'label' => "Étudiant"))
+        ->add('elementsFormations', CollectionType::class, array(
+        'entry_type'   => ElementFormationType::class,
+        'allow_add'    => true,
+        ))
+        ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
+
+        ->getForm();
 
 
         $form->handleRequest($request);
@@ -131,10 +137,48 @@ class CursusController extends Controller {
 
         }
 
+        // $encoders = array(new XmlEncoder(), new JsonEncoder());
+        // $normalizers = array(new ObjectNormalizer());
+        // $serializer = new Serializer($normalizers, $encoders);
+        // $json =  $serializer->serialize($cursus->getelementsFormations(), 'json');
+        // $normalizer = new PropertyNormalizer();
+        // $json      = $normalizer->normalize( $cursus );
+        // $arrayCursus = array( );
+        $arr = array();
+        foreach ($cursus->getelementsFormations() as $elem  ) {
+            // dump($elem);
+            $semseq=$elem->getSemSeq();
+            $semlabel=$elem->getSemLabel();
+
+             if(!array_key_exists($semseq,$arr)){
+                 $add = array($semseq=>array() );
+                 array_push($arr,$add);
+
+                 array_push($arr[$semseq-1],array("semlabel"=>$semlabel ));
+                 array_push($arr[$semseq-1],array("semseq"=>$semseq ));
+
+                // array_push($arr[$semseq-1], $semlabel);
+
+
+             }
+             array_push($arr[$semseq-1], $elem->toArray());
+            //  print($elem->getCredits());
+            //  print($elem->getAffectations());
+            //  print($elem->getCategories());
+            //  print($elem->getResultats());
+            //dump($elem->toArray());
+        }
+        // dump($arr);
+        $json = json_encode($arr);
+        // print($json);
+        // echo json_encode($arr);
+
+
         return $this->render('cursus/new.html.twig', array(
             'form' => $form->createView(),
             'nav' => "cursus",
             'subnav' => "new",
+            'cursus' => $json,
         ));
 
 
@@ -192,11 +236,6 @@ class CursusController extends Controller {
                   'class' => 'AppBundle:Etudiants',
                   'choice_label' => 'numEtu',
                   'label' => "Étudiant"))
-            //->add('elementsFormations', TextType::class, array('label' => 'Créer un test'))
-            //->add('elementsFormations', 'collection', array('type' => new ElementFormationType()))
-            // ->add('elementsFormations', ElementFormationType::class, array(
-            //           'placeholder' => 'Choose a gender',
-            //       ))
             ->add('elementsFormations', CollectionType::class, array(
             'entry_type'   => ElementFormationType::class,
             'allow_add'    => true,
@@ -226,11 +265,13 @@ class CursusController extends Controller {
             return $this->redirectToRoute('homepage');
         }
 
+         $json = json_encode($cursus);
 
         return $this->render('cursus/new.html.twig', array(
             'form' => $form->createView(),
             'nav' => "cursus",
             'subnav' => "new",
+            'cursus' => $json,
         ));
 
 

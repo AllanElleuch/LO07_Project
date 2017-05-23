@@ -59,6 +59,7 @@ Nouveau cursus
         <!-- Tableau contenant le contenu des cursus -->
         <h5 class="mt-3">Créez des semestres et ajoutez-y vos UE</h5>
         <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
+
             <!-- Container rempli en JS -->
         </div>
         {{ form_row(form.envoyer) }}
@@ -80,6 +81,13 @@ Nouveau cursus
 
 {% block javascripts %}
 {{ parent() }}
+<script type="text/javascript">
+
+window.json = {{ cursus|json_encode|raw }};
+window.parsed=JSON.parse(window.json);
+console.log({{ cursus|json_encode|raw }});
+
+</script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
 <script src="{{ asset('js/form/cursus.js') }}"></script>

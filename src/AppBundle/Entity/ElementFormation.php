@@ -79,6 +79,29 @@ class ElementFormation
      */
     private $cursus;
 
+    public function toArray(){
+
+        $arr = array();
+        array_push($arr, $this->getSigle() );
+        array_push($arr, $this->getCredits() );
+        array_push($arr, $this->getAffectations()->getId() );
+        array_push($arr, $this->getCategories()->getId() );
+        array_push($arr, $this->getResultats()->getId() );
+        array_push($arr, $this->getUtt() );
+        array_push($arr, $this->getProfil() );
+        // array_push($arr, $this->getCategories() );
+        // array_push($arr, $this->getAffectations() );
+        // array_push($arr, $this->getResultats() );
+        // array_push( $this->getSemLabel() ,$arr);
+        // array_push( $this->getSigle() ,$arr);
+        // array_push( $this->getUtt() ,$arr);
+        // array_push( $this->getProfil() ,$arr);
+        // array_push( $this->getCredits() ,$arr);
+        // array_push( $this->getCategories() ,$arr);
+        // array_push( $this->getAffectations() ,$arr);
+        // array_push( $this->getResultats() ,$arr);
+        return $arr;
+    }
 
 
 
