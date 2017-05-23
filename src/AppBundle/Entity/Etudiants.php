@@ -24,7 +24,7 @@ class Etudiants
 
     /**
      * Un étudiant à plusieurs cursus
-     * @ORM\OneToMany(targetEntity="Cursus", mappedBy="etudiant",cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Cursus", mappedBy="etudiant")
      */
     private $cursus;
 

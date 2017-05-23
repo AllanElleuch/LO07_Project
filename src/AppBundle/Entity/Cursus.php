@@ -27,10 +27,11 @@ class Cursus
     private $elementsFormations;
 
 
+
     /**
      * Plusieurs cursust un seul étudiant.
      * @ORM\ManyToOne(targetEntity="Etudiants", inversedBy="cursus")
-     * @ORM\JoinColumn(name="etudiant_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="etudiants_id", referencedColumnName="id")
      */
     private $etudiant;
 
@@ -46,7 +47,6 @@ class Cursus
     public function __construct()
     {
         $this->elementsFormations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->etudiant = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -118,50 +118,26 @@ class Cursus
     }
 
     /**
-     * Add etudiant
+     * Set etudiant
      *
      * @param \AppBundle\Entity\Etudiants $etudiant
      *
      * @return Cursus
      */
-    public function addEtudiant(\AppBundle\Entity\Etudiants $etudiant)
+    public function setEtudiant(\AppBundle\Entity\Etudiants $etudiant = null)
     {
-        $this->etudiant[] = $etudiant;
+        $this->etudiant = $etudiant;
 
         return $this;
-    }
-
-    /**
-     * Remove etudiant
-     *
-     * @param \AppBundle\Entity\Etudiants $etudiant
-     */
-    public function removeEtudiant(\AppBundle\Entity\Etudiants $etudiant)
-    {
-        $this->etudiant->removeElement($etudiant);
     }
 
     /**
      * Get etudiant
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Etudiants
      */
     public function getEtudiant()
     {
         return $this->etudiant;
-    }
-
-    /**
-     * Set etudiant
-     *
-     * @param \AppBundle\Entity\Etudiant $etudiant
-     *
-     * @return Cursus
-     */
-    public function setEtudiant(\AppBundle\Entity\Etudiant $etudiant = null)
-    {
-        $this->etudiant = $etudiant;
-
-        return $this;
     }
 }

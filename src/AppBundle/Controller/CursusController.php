@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Cursus;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use AppBundle\Entity\ElementFormation;
@@ -186,6 +187,11 @@ class CursusController extends Controller {
 
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+
+              ->add('etudiant', EntityType::class, array(
+                  'class' => 'AppBundle:Etudiants',
+                  'choice_label' => 'numEtu',
+                  'label' => "Étudiant"))
             //->add('elementsFormations', TextType::class, array('label' => 'Créer un test'))
             //->add('elementsFormations', 'collection', array('type' => new ElementFormationType()))
             // ->add('elementsFormations', ElementFormationType::class, array(
