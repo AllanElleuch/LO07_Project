@@ -429,7 +429,7 @@ class CursusController extends Controller {
 
 
                     $cursus->setLabel($label);
-                    $cursus->addEtudiant($etudiant);
+                    $cursus->setEtudiant($etudiant);
                     foreach ($eltsFormation as $element){
                         $element->setCursus($cursus);
                         $em = $this->getDoctrine()->getManager();
