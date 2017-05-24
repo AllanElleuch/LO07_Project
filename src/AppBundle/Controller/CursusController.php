@@ -564,6 +564,19 @@ class CursusController extends Controller {
     }
 
 
+
+    /**
+     * affiche les cursus d'un étudiant
+     * @Route("help/cursus/import/")
+     */
+    public function helpImportCursusAction(Request $request) {
+
+        return $this->render('help/import-cursus.html.twig', array(
+            'nav' => "", // nav est appellée dans base.html.twig et DOIT être définie
+        ));
+
+    }
+
     /**
      * @Route("/phpinfo")
      */

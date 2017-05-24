@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="text-center mb-5 mt-3">
+        <h1><span class="grey">#Help</span> Importer un cursus</h1>
+        <p class="lead">Importez un fichier contenant un cursus.</p>
+    </div>
+
+    <h5>Syntaxe des fichiers</h5>
+    <p>Pour importer des cursus au format .csv, le fichier doit respecter la syntaxe suivante.  Remplacer les
+        valeurs entre crochets par les données réelles.</p>
+    <pre>
+        <code>
+            ID;[num_étudiant];;;;;;;;
+            NO;[Nom];;;;;;;;
+            PR;[Prénom];;;;;;;;
+            AD;[BR|TC];;;;;;;;
+            FI;[MPL|PRI|MSI|LIB|?];;;;;;;;
+            ==;s_seq;s_label;sigle;categorie;affectation;utt;profil;credit;resultat
+            1*(EL;[num_semestre];[label_semestre];[label_UE];[categorie_ue];[TC|TCBR|FLBR];[Y|N];[Y|N];[credits];[resultat])
+            END;;;;;;;;;
+        </code>
+    </pre>
+    <h6><i>Exemple</i></h6>
+    <pre>
+        <code>
+            ID;12345;;;;;;;;
+            NO;Dupond;;;;;;;;
+            PR;Pierre;;;;;;;;
+            AD;BR;;;;;;;;
+            FI;MPL;;;;;;;;
+            ==;s_seq;s_label;sigle;categorie;affectation;utt;profil;credit;resultat
+            EL;1;ISI1;NF16;CS;TCBR;Y;Y;6;A
+            EL;1;ISI1;NF20;CS;TCBR;Y;Y;6;A
+            EL;1;ISI1;SY02;CS;TCBR;Y;Y;6;A
+            EL;1;ISI1;IF14;TM;TCBR;Y;Y;6;A
+            EL;1;ISI1;LE08;EC;BR;Y;Y;4;A
+            EL;1;ISI1;GE04;ME;BR;Y;Y;4;B
+            EL;1;ISI1;SC00;CT;TCBR;Y;Y;4;A
+            EL;1;ISI1;BULE;NPML;TCBR;Y;Y;0;ADM
+            EL;2;ISI2;AC10;CS;TCBR;Y;Y;6;A
+            EL;2;ISI2;IF02;CS;TCBR;Y;Y;6;C
+            EL;2;ISI2;LO12;CS;TCBR;Y;Y;6;A
+            EL;2;ISI2;IF03;TM;TCBR;Y;Y;6;B
+            EL;2;ISI2;LO07;TM;TCBR;Y;Y;6;C
+            EL;2;ISI2;LC00;EC;BR;Y;Y;4;A
+            EL;2;ISI2;HT05;CT;BR;Y;Y;4;A
+            EL;2;ISI2;ATDOC1;HP;BR;Y;Y;0;ADM
+            EL;2;ISI2;ATDOC2;HP;BR;Y;Y;0;ADM
+            END;;;;;;;;;
+        </code>
+    </pre>
+</div>
+
+
+
+{% endblock %}
