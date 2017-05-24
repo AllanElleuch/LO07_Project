@@ -563,24 +563,6 @@ class CursusController extends Controller {
 
     }
 
-    /**
-     * @Route("/cursus/export/",  name="exportCursusList")
-     */
-    public function exportCursusListAction(Request $request) {
-
-        $cursus = $this->getDoctrine()
-            ->getRepository('AppBundle:Cursus')
-            ->findAll();
-
-
-        // replace this example code with whatever you need
-        return $this->render('cursus/export.html.twig', array(
-            'nav' => "cursus",
-            'subnav' => "export",
-            'cursus' => $cursus,
-        ));
-    }
-
 
     /**
      * @Route("/phpinfo")

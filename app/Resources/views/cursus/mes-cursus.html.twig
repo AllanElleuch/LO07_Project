@@ -10,9 +10,10 @@
             <thead class="thead-default">
             <tr>
                 <th>Cursus</th>
+                <th>Prénom</th>
                 <th>Nom</th>
                 <th>N°</th>
-                <th>Actions</th>
+                <th class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -20,13 +21,18 @@
                 <tr>
                     <td>{{ oneCursus.label|e }}</td>
                     <td class="grey">
-                        {% if oneCursus.etudiant.nom is defined and oneCursus.etudiant.prenom is defined %}
-                            {{ oneCursus.etudiant.nom }} {{ oneCursus.etudiant.prenom }}
+                        {% if oneCursus.etudiant.nom is defined %}
+                            {{ oneCursus.etudiant.nom }}
                         {% else %} --- {% endif %}
                     </td>
-                    <td class="grey"> {% if oneCursus.etudiant.id is defined %}{{ oneCursus.etudiant.id }}{% else
+                    <td class="grey">
+                        {% if oneCursus.etudiant.prenom is defined  %}
+                            {{ oneCursus.etudiant.prenom }}
+                        {% else %} --- {% endif %}
+                    </td>
+                    <td class="grey"> {% if oneCursus.etudiant.numEtu is defined %}{{ oneCursus.etudiant.numEtu }}{% else
                         %} ---   {% endif %} </td>
-                    <td>
+                    <td class="text-center">
                         <div class="btn-group btn-group-sm">
                             <a href="/cursus/view/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip"
                                data-placement="bottom"
@@ -40,8 +46,9 @@
                             {% endif %}
                         </div>
 
-                        <a href="#" class="btn btn-secondary btn-sm" id="chooseReglementButton" data-toggle="modal" data-target="#chooseReglement" data-id="{{ oneCursus.id }}"><i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> Appliquer un règlement</a>
+                        <a href="#" class="btn btn-secondary btn-sm" id="chooseReglementButton" data-toggle="modal" data-target="#chooseReglement" data-id="{{ oneCursus.id }}">Appliquer un règlement</a>
 
+                        <a href="/cursus/export/{{ oneCursus.id }}" class="btn btn-secondary btn-sm">Exporter</a>
                     </td>
                 </tr>
             {% endfor %}
