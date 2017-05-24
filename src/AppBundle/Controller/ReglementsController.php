@@ -32,40 +32,6 @@ class ReglementsController extends Controller {
         ));
     }
 
-    /**
-     * @Route("/reglements/{cursusId}/{reglementId}")
-     */
-    public function ApplyReglementAction(Request $request, $cursusId, $reglementId)
-    {
-        $reglement = $this->getDoctrine()
-            ->getRepository('AppBundle:Reglement')
-            ->find($reglementId);
-
-        $cursus = $this->getDoctrine()
-            ->getRepository('AppBundle:Cursus')
-            ->find($cursusId);
-
-        return $this->render('reglements/applied-cursus.html.twig', array(
-            'nav' => "reglements",
-            'subnav' => "mes-reglements",
-            'reglement' => $reglement,
-            'cursus' => $cursus
-        ));
-    }
-
-
-    /**
-     * @Route("/reglements/import/")
-     */
-    public function importReglementsAction(Request $request)
-    {
-        return $this->render('reglements/import.html.twig', array(
-            'nav' => "reglements",
-            'subnav' => "import",
-        ));
-    }
-
-
 
     /**
      * @Route("/reglements/export/{id}")
@@ -150,21 +116,39 @@ class ReglementsController extends Controller {
 
 
 
+
     /**
-     * @Route("/reglements/export/")
+     * @Route("/reglements/{cursusId}/{reglementId}")
      */
-    public function exportReglementsAction(Request $request)
+    public function ApplyReglementAction(Request $request, $cursusId, $reglementId)
     {
-
-        $reglements = $this->getDoctrine()
+        $reglement = $this->getDoctrine()
             ->getRepository('AppBundle:Reglement')
-            ->findAll();
+            ->find($reglementId);
 
-        return $this->render('reglements/export.html.twig', array(
+        $cursus = $this->getDoctrine()
+            ->getRepository('AppBundle:Cursus')
+            ->find($cursusId);
+
+        return $this->render('reglements/applied-cursus.html.twig', array(
             'nav' => "reglements",
-            'subnav' => "export",
-            'reglements' => $reglements
+            'subnav' => "mes-reglements",
+            'reglement' => $reglement,
+            'cursus' => $cursus
         ));
     }
+
+
+    /**
+     * @Route("/reglements/import/")
+     */
+    public function importReglementsAction(Request $request)
+    {
+        return $this->render('reglements/import.html.twig', array(
+            'nav' => "reglements",
+            'subnav' => "import",
+        ));
+    }
+
 
 }

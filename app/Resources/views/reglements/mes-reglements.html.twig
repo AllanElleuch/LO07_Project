@@ -7,15 +7,40 @@
 
 {% block content %}
     {% if reglements is not empty %}
-        <div class="card-columns">
+        <table class="table">
+            <thead class="thead-default">
+            <tr>
+                <th>Règlement</th>
+                <th>Règles</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for reglement in reglements %}
-                <div class="card">
-                    <div class="card-header">
-                        {{ reglement.label }}
-                    </div>
-                    <div class="card-block">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"></li>
+                <tr>
+                    <td>{{ reglement.label }}</td>
+                    <td>{{ reglement.regles|length }}</td>
+                    <td>
+                        <a href="#" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#showReglement{{reglement.id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <a href="/reglements/export/{{ reglement.id }}"class="btn btn-secondary btn-sm">Exporter</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Création des modales pour afficher les règlements -->
+        {% for reglement in reglements %}
+            <div class="modal hide fade" id="showReglement{{reglement.id}}">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-success">{{reglement.label}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
                             {% for regle in reglement.regles %}
                                 <li class="list-group-item">
                                 {% if regle.agregat.label is defined %}
@@ -32,15 +57,26 @@
                                 {% endif %}
                                 </li>
                             {% endfor %}
-                        </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fermer</button>
+                        </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+
+        {% endfor %}
     {% else %}
         <div class="text-center grey">
             <h1 class="display-4">Aucun règlement</h1>
             <p class="lead">Importez un fichier de règlement au format csv.</p>
         </div>
     {% endif %}
+
+
+
+
+
+
+
 {% endblock %}
