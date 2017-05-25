@@ -263,7 +263,7 @@ class InitialisationBddController extends Controller {
             // R09;SUM;CT;BR;4
             $R09 = new Regle();
             $R09->setAgregat($agregatSum);
-            $R09->setCibleAgregat("CT");
+            $R09->setCibleAgregat("HT");
             $R09->setAffectations($affBR);
             $R09->setSeuil(4);
             $R09->setReglement($reglementActuel);
@@ -272,7 +272,7 @@ class InitialisationBddController extends Controller {
             // R10;SUM;ME+CT;BR;16
             $R10 = new Regle();
             $R10->setAgregat($agregatSum);
-            $R10->setCibleAgregat("ME+CT");
+            $R10->setCibleAgregat("ME+HT");
             $R10->setAffectations($affBR);
             $R10->setSeuil(16);
             $R10->setReglement($reglementActuel);

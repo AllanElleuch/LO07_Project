@@ -122,6 +122,8 @@ class ReglementsController extends Controller {
      */
     public function ApplyReglementAction(Request $request, $cursusId, $reglementId)
     {
+        /* Accès au règlement et au cursus concernés
+         * ========================================= */
         $reglement = $this->getDoctrine()
             ->getRepository('AppBundle:Reglement')
             ->find($reglementId);
@@ -130,11 +132,161 @@ class ReglementsController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->find($cursusId);
 
+        /* Initialisation d'un tableau contenant les types de crédits
+         * ========================================================== */
+        $results = array(
+            'CS_TCBR' => 0,
+            'CS_FLBR' => 0,
+            'CS_UTT'  => 0,
+            'TM_TCBR' => 0,
+            'TM_FLBR' => 0,
+            'TM_UTT'  => 0,
+            'ST_TCBR' => 0,
+            'ST_FLBR' => 0,
+            'EC_BR'   => 0,
+            'ME_BR'   => 0,
+            'HT_BR'   => 0,
+            'HP_BR'   => 0,
+            'SE'      => False,
+            'NPML'    => False,
+        );
+
+        /* Lecture des crédits et booléens du cursus
+         * ========================================= */
+        foreach ($cursus->getElementsFormations() as $elt) {
+            $utt          = $elt->getUtt();            // bool
+            $credits      = $elt->getCredits();        // int
+            $categories   = $elt->getCategories()->getLabel();     // CS, TM, ...
+            $affectations = $elt->getAffectations()->getLabel();   // BR, TCBR, FLBR
+
+            /* Lecture de la catégorie (CS, TM, ...) */
+            switch ($categories) {
+                case 'CS':
+                    /* Si le cours est suivi à l'utt, on ajoute les crédits au compteur de la catégorie UTT*/
+                    if ($utt) {
+                        $results['CS_UTT'] += $credits;
+                    }
+                    /* Lecture de l'affectation (BR, TCBR, FLBR) */
+                    switch ($affectations) {
+                        case 'TCBR':
+                            /* Ajout des crédits à catégorie_affectation */
+                            $results['CS_TCBR'] += $credits;
+                            break;
+                        case 'FLBR':
+                            $results['CS_FLBR'] += $credits;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case 'TM':
+                    /* Si le cours est suivi à l'utt, on ajoute les crédits au compteur de la catégorie UTT*/
+                    if ($utt) {
+                        $results['TM_UTT'] += $credits;
+                    }
+                    /* Lecture de l'affectation (BR, TCBR, FLBR) */
+                    switch ($affectations) {
+                        case 'TCBR':
+                            /* Ajout des crédits à catégorie_affectation */
+                            $results['TM_TCBR'] += $credits;
+                            break;
+                        case 'FLBR':
+                            $results['TM_FLBR'] += $credits;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case 'EC':
+                    $results['EC_BR'] += $credits;
+                    break;
+
+                case 'ME':
+                    $results['ME_BR'] += $credits;
+                    break;
+
+                case 'HT':
+                    $results['HT_BR'] += $credits;
+                    break;
+                case 'CT':
+                    $results['HT_BR'] += $credits;
+                    break;
+
+                case 'ST':
+                    /* Lecture de l'affectation (BR, TCBR, FLBR) */
+                    switch ($affectations) {
+                        case 'TCBR':
+                            /* Ajout des crédits à catégorie_affectation */
+                            $results['ST_TCBR'] += $credits;
+                            break;
+                        case 'FLBR':
+                            $results['ST_FLBR'] += $credits;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case 'HP':
+                    $results['HP_BR'] += $credits;
+                    break;
+
+                case 'SE':
+                    $results['SE'] = True;
+                    break;
+                case 'NPML':
+                    $results['NPML'] = True;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        /* Calcul des totaux
+         * ================= */
+        $results['CS+TM_UTT'] = $results['CS_UTT'] + $results['TM_UTT'];
+
+        $results['CS_BR']     = $results['CS_TCBR'] + $results['CS_FLBR'];
+        $results['TM_BR']     = $results['TM_TCBR'] + $results['TM_FLBR'];
+
+        $results['ST_BR']     = $results['ST_TCBR'] + $results['ST_FLBR'];
+
+        $results['ME+HT_BR']  = $results['ME_BR'] + $results['HT_BR'];
+
+        $results['ALL']  =
+            $results['CS_BR'] +
+            $results['TM_BR'] +
+            $results['EC_BR'] +
+            $results['ME_BR'] +
+            $results['HT_BR'] +
+            $results['ST_BR'] +
+            $results['HP_BR'];
+
+
+
+
+
+        $mainArray = array();
+
+        foreach ($reglement->getRegles() as $rule) {
+            $mainArray[] = array(
+                'ruleCibleAgregat' => $rule->getCibleAgregat(),
+                'ruleAffectation'  => $rule->getAffectations()->getLabel(),
+                'ruleRequired'     => $rule->getSeuil(),
+                'ruleObtained'     => 6,
+            );
+        }
+
         return $this->render('reglements/applied-cursus.html.twig', array(
             'nav' => "reglements",
             'subnav' => "mes-reglements",
-            'reglement' => $reglement,
-            'cursus' => $cursus
+            'cursus' => $cursus,
+            'reglementLabel' => $reglement->getLabel(),
+            'results' => $mainArray,
+            'credits' => $results
         ));
     }
 
