@@ -128,6 +128,11 @@ class ReglementsController extends Controller {
             ->getRepository('AppBundle:Reglement')
             ->find($reglementId);
 
+        // Pour pouvoir changer de règlement depuis la page
+        $reglements = $this->getDoctrine()
+            ->getRepository('AppBundle:Reglement')
+            ->findAll();
+
         $cursus = $this->getDoctrine()
             ->getRepository('AppBundle:Cursus')
             ->find($cursusId);
@@ -285,6 +290,7 @@ class ReglementsController extends Controller {
             'subnav' => "mes-reglements",
             'cursus' => $cursus,
             'reglementLabel' => $reglement->getLabel(),
+            'reglements' => $reglements,
             'results' => $mainArray,
             'credits' => $results
         ));
