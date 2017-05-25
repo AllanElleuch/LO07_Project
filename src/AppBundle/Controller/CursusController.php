@@ -73,6 +73,10 @@ class CursusController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        $reglements = $this->getDoctrine()
+            ->getRepository('AppBundle:Reglement')
+            ->findAll();
+
         $cursusElements =  $this->getDoctrine()
             ->getRepository("AppBundle:ElementFormation")
             ->findBy(array("cursus" => $id));
@@ -83,6 +87,7 @@ class CursusController extends Controller {
             'subnav' => 'mes-cursus',
             'cursus' => $cursus,
             'cursusElements' => $cursusElements,
+            'reglements' => $reglements,
         ));
 
     }

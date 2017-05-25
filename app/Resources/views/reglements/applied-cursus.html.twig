@@ -6,7 +6,10 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="mb-3">{{cursus.etudiant.prenom}} {{cursus.etudiant.nom}}</h1>
+<h2 class="mb-3">{{cursus.label}}<span class="grey light"> {{cursus.etudiant.prenom}} {{cursus.etudiant.nom}} #{{cursus.etudiant.numEtu}}</span> </h2>
+
+<hr class="jumbotron-hr mb-5">
+
 <div class="row">
     <div class="col-md-7">
         <table class="table table-responsive">

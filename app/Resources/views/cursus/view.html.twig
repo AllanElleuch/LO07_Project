@@ -8,11 +8,12 @@
     <div class="row">
         <div class="col-md-10">
 
-            <h3>{{ cursus.label }}</h3>
-            <h6 class="grey"><i class="fa fa-address-card" aria-hidden="true"></i>{% if cursus.etudiant.prenom is defined %}
+            <h2 class="mb-3">{{cursus.label}}</h2>
+            <h4>
+                <span class="grey light"> {{cursus.etudiant.prenom}} {{cursus.etudiant.nom}} #{{cursus.etudiant.numEtu}}</span>
+                <a href="#" class="pull-right btn btn-sm btn-secondary" id="chooseReglementButton" data-toggle="modal" data-target="#chooseReglement">Appliquer un règlement</a>
+            </h4>
 
-                 {{ cursus.etudiant.prenom }} {{
-                cursus.etudiant.nom }} - {{ cursus.etudiant.id }}{% else %} ---   {% endif %}</h6>
             <hr class="jumbotron-hr mb-5">
 
             {% if cursusElements is defined %}
@@ -51,7 +52,7 @@
         </div>
         <div class="col-md-1 offset-1">
                     {% if cursusElements is defined %}
-                        <nav class="navbar" id="scrollspyToC">
+                        <nav id="scrollspyToC">
                             <ul class="nav flex-column">
                                 {% set previousSemSeq = 0 %}
                                 {% for element in cursus.elementsFormations %}
@@ -70,6 +71,34 @@
     </div>
 
 
+    <!-- Modal to choose reglement to apply-->
+    <div class="modal hide fade" id="chooseReglement">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success">Choix du règlement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Quel règlement voulez-vous appliquer à ce cursus ?</p>
+                    <select class="custom-select" id="selectReglement">
+                        {% for reglement in reglements %}
+                            <option value="{{reglement.id}}">{{reglement.label}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button id="applyReglementButton" data-id="" class="btn btn-success btn-sm">Appliquer</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 {% endblock %}
@@ -77,5 +106,25 @@
 {% block javascripts %}
     <script>
         $('body').scrollspy()
+
+        $(document).on('click', '#chooseReglementButton', function(event) {
+            event.preventDefault();
+            /* Récupération de l'ID du cursus choisi.
+             * Ajout de cet ID à l'attribut 'data-id' du bouton appliquer de la fenêtre modale. */
+            var cursusId = {{cursus.id}}
+            $('#applyReglementButton').attr('data-id', cursusId);
+        });
+
+        $(document).on('click', '#applyReglementButton', function(event) {
+            event.preventDefault();
+            /* Récupération de l'ID du règlement choisi via le select.
+             * Récupération de l'ID du cursus choisi via l'attribut 'data-id' configuré dans la méthode précédente. */
+            var reglementId = $('#selectReglement').val()
+            var cursusId = $(this).data('id')
+
+
+            window.location.href = "/reglements/" + cursusId + "/" + reglementId
+
+        });
     </script>
 {% endblock %}

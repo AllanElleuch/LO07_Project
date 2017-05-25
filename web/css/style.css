@@ -25,6 +25,9 @@ body {
 .grey{
     color: #777;
 }
+.light{
+    font-weight: 200 !important;
+}
 
 /* Pre, Code */
 pre {
