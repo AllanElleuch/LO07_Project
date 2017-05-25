@@ -8,12 +8,13 @@
 {% block content %}
 <h1 class="mb-3">{{cursus.etudiant.prenom}} {{cursus.etudiant.nom}}</h1>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-7">
         <table class="table table-responsive">
             <thead class="thead-default">
             <tr>
                 <th>Règles</th>
                 <th>Crédits acquis</th>
+                <th>Manquants</th>
                 <th>Requis</th>
             </tr>
             </thead>
@@ -22,23 +23,40 @@
                 <tr>
                     <td>{{result.ruleCibleAgregat}} <span class="grey">({{result.ruleAffectation}})</span></td>
                     {% if result.ruleCibleAgregat == 'SE' or result.ruleCibleAgregat == 'NPML' %}
-                        <td class="text-center">
-                            <span class="badge badge-danger">
-                                <i class="fa fa-times-circle" aria-hidden="true"></i>
-                            </span>
-                            <span class="badge badge-success">
-                                <i class="fa fa-check-circle" aria-hidden="true"></i>
-                            </span>
-                        </td>
+                        {% if result.ruleObtained == 0 %}
+                            <td class="text-center">
+                                <span class="badge badge-danger">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        {% elseif result.ruleObtained == 1 %}
+                            <td class="text-center">
+                                <span class="badge badge-success">
+                                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        {% endif %}
+                        <td>-</td>
                         <td>-</td>
                     {% else %}
-                        {% set percent = ((result.ruleObtained + 1) / (result.ruleRequired + 1)) * 100 %}
+                        {% if result.ruleSeuil != 0 %}
+                            {% set percent = (result.ruleObtained / result.ruleSeuil) * 100 %}
+                        {% endif %}
                         <td>
                             <div class="progress" style="width:15rem;">
-                                <div class="progress-bar" role="progressbar" style="width: {{result.ruleObtained}}%; height: 1.2rem;" aria-valuenow="{{result.ruleObtained}}" aria-valuemin="0" aria-valuemax="100">{{result.ruleObtained}}</div>
+                                <div class="progress-bar
+                                {% if result.ruleObtained >= result.ruleSeuil %}
+                                    bg-success
+                                {% endif %}
+                                " role="progressbar" style="width: {{percent}}%; height: 1.2rem;" aria-valuenow="{{percent}}" aria-valuemin="0" aria-valuemax="100">{{result.ruleObtained}}</div>
                             </div>
                         </td>
-                        <td>{{result.ruleRequired}}</td>
+                        {% set rest = result.ruleSeuil - result.ruleObtained %}
+                        {% if rest <= 0 %}
+                            {% set rest = 0 %}
+                        {% endif %}
+                        <td>{{ rest }}</td>
+                        <td>{{result.ruleSeuil}}</td>
                     {% endif %}
 
                 </tr>
@@ -46,23 +64,30 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Éléments manquants</h4>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <ul class="card-text">
+                    {% for miss in missingArray %}
+                        {% if miss.key == 'ST_TCBR' %}
+                            <li><b>Stage ST09 !</b></li>
+                        {% elseif miss.key == 'ST_FLBR'  %}
+                            <li><b>Stage ST10 !</b></li>
+                        {% elseif miss.key == 'NPML'  %}
+                            <li><b>NPML !</b></li>
+                        {% elseif miss.key == 'SE'  %}
+                            <li><b>Semestre à l'étranger !</b></li>
+                        {% elseif miss.key == 'ALL_ALL'  %}
+                            <li class="text-danger"><b>Total crédits manquants : {{miss.credits}}</b></li>
+                        {% else %}
+                            <li>{{miss.key}} : {{miss.credits}}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
                 <p class="card-text"><small class="text-muted">Règlement utilisé : <a href="#" id="chooseReglementButton" data-toggle="modal" data-target="#chooseReglement" >{{reglementLabel}}</a> </small></p>
             </div>
         </div>
-        <br>
-        <pre>
-            <b>DEBUG</b>
-            <code>
-                {% for key,value in credits %}
-                    {{key}} => {{value}}
-                {% endfor %}
-            </code>
-        </pre>
     </div>
 </div>
 

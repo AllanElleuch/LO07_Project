@@ -152,8 +152,8 @@ class ReglementsController extends Controller {
             'ME_BR'   => 0,
             'HT_BR'   => 0,
             'HP_BR'   => 0,
-            'SE'      => False,
-            'NPML'    => False,
+            'SE_ALL'  => 0,
+            'NPML_ALL'=> 0,
         );
 
         /* Lecture des crédits et booléens du cursus
@@ -239,10 +239,10 @@ class ReglementsController extends Controller {
                     break;
 
                 case 'SE':
-                    $results['SE'] = True;
+                    $results['SE_ALL'] = 1;
                     break;
                 case 'NPML':
-                    $results['NPML'] = True;
+                    $results['NPML_ALL'] = 1;
                     break;
 
                 default:
@@ -252,7 +252,10 @@ class ReglementsController extends Controller {
 
         /* Calcul des totaux
          * ================= */
-        $results['CS+TM_UTT'] = $results['CS_UTT'] + $results['TM_UTT'];
+        $results['UTT(CS+TM)_BR'] = $results['CS_UTT'] + $results['TM_UTT'];
+        $results['CS+TM_TCBR'] = $results['CS_TCBR'] + $results['TM_TCBR'];
+        $results['CS+TM_FLBR'] = $results['CS_FLBR'] + $results['TM_FLBR'];
+        $results['CS+TM_BR']   = $results['CS+TM_TCBR'] + $results['CS+TM_FLBR'];
 
         $results['CS_BR']     = $results['CS_TCBR'] + $results['CS_FLBR'];
         $results['TM_BR']     = $results['TM_TCBR'] + $results['TM_FLBR'];
@@ -261,7 +264,7 @@ class ReglementsController extends Controller {
 
         $results['ME+HT_BR']  = $results['ME_BR'] + $results['HT_BR'];
 
-        $results['ALL']  =
+        $results['ALL_ALL']  =
             $results['CS_BR'] +
             $results['TM_BR'] +
             $results['EC_BR'] +
@@ -274,14 +277,44 @@ class ReglementsController extends Controller {
 
 
 
-        $mainArray = array();
+        $mainArray    = array();
+        $missingArray = array();
 
         foreach ($reglement->getRegles() as $rule) {
+
+            /* Lecture de la règle */
+            $cibleAgregat = $rule->getCibleAgregat();
+            $affectations = $rule->getAffectations()->getLabel();
+            $seuil        = $rule->getSeuil();
+
+            $key = $cibleAgregat . '_' . $affectations;
+
+            /**/
+            $obtained = $results[$key];
+
+            if ($obtained < $seuil) {
+                $miss = array(
+                    'key' => $key,
+                    'credits' => $seuil - $obtained
+                );
+                $missingArray[] = $miss;
+            }
+
+            if (($cibleAgregat == 'SE') || ($cibleAgregat == 'NPML')) {
+                if ($obtained == 0) {
+                    $miss = array(
+                        'key' => $cibleAgregat,
+                        'credits' => $obtained
+                    );
+                    $missingArray[] = $miss;
+                }
+            }
+
             $mainArray[] = array(
-                'ruleCibleAgregat' => $rule->getCibleAgregat(),
-                'ruleAffectation'  => $rule->getAffectations()->getLabel(),
-                'ruleRequired'     => $rule->getSeuil(),
-                'ruleObtained'     => 6,
+                'ruleCibleAgregat' => $cibleAgregat,
+                'ruleAffectation'  => $affectations,
+                'ruleSeuil'     => $seuil,
+                'ruleObtained'     => $obtained,
             );
         }
 
@@ -292,7 +325,7 @@ class ReglementsController extends Controller {
             'reglementLabel' => $reglement->getLabel(),
             'reglements' => $reglements,
             'results' => $mainArray,
-            'credits' => $results
+            'missingArray' => $missingArray,
         ));
     }
 
