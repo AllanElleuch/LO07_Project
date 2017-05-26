@@ -6,13 +6,14 @@
 
 {% block content %}
     {% if cursus is not empty %}
-        <table class="table" id="myTable" cellspacing="0">
+        <table class="table text-center" id="myTable" cellspacing="0">
             <thead class="thead-default">
             <tr>
-                <th>Cursus</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>N°</th>
+                <th class="text-center">Cursus</th>
+                <th class="text-center">Éléments</th>
+                <th class="text-center">Prénom</th>
+                <th class="text-center">Nom</th>
+                <th class="text-center">N° Étudiant</th>
                 <th class="text-center">Actions</th>
             </tr>
             </thead>
@@ -20,6 +21,10 @@
             {% for oneCursus in cursus %}
                 <tr>
                     <td>{{ oneCursus.label|e }}</td>
+                    <td>{% if oneCursus.elementsFormations is defined %}
+                        {{ oneCursus.elementsFormations|length }}
+                    {% else %} ---   {% endif %}
+                    </td>
                     <td class="grey">
                         {% if oneCursus.etudiant.nom is defined %}
                             {{ oneCursus.etudiant.nom }}
@@ -30,8 +35,11 @@
                             {{ oneCursus.etudiant.prenom }}
                         {% else %} --- {% endif %}
                     </td>
-                    <td class="grey"> {% if oneCursus.etudiant.numEtu is defined %}{{ oneCursus.etudiant.numEtu }}{% else
-                        %} ---   {% endif %} </td>
+                    <td class="grey">
+                        {% if oneCursus.etudiant.numEtu is defined %}
+                            {{ oneCursus.etudiant.numEtu }}
+                        {% else %} ---   {% endif %}
+                    </td>
                     <td class="text-center">
                         <div class="btn-group btn-group-sm">
                             <a href="/cursus/view/{{oneCursus.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip"
