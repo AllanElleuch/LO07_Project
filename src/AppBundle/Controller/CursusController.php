@@ -26,7 +26,7 @@ use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 class CursusController extends Controller {
     /**
      * affiche les cursus d'un étudiant
-     * @Route("/cursus/mes-cursus/")
+     * @Route("/cursus/mes-cursus/", name="homeCursus")
      */
     public function mesCursusAction(Request $request) {
 
@@ -60,7 +60,7 @@ class CursusController extends Controller {
 
         $em->remove($cursus);
         $em->flush();
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('homeCursus');
 
     }
 
