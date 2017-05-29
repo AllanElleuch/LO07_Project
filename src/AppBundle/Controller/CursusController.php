@@ -201,13 +201,25 @@ class CursusController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        $elemsFormation = $this->getDoctrine()
+            ->getRepository('AppBundle:ElementFormation')
+            ->findBy(array(
+                'cursus' => $cursus,
+            ));
+
         $em = $this->getDoctrine()->getManager();
-        $new = clone $cursus;
-        $em->persist($new);
+        $newCursus = clone $cursus;
+        $em->persist($newCursus);
+
+        foreach ($elemsFormation as $elt) {
+            $newElt = clone $elt;
+            $newElt->setCursus($newCursus);
+            $em->persist($newElt);
+        }
         $em->flush();
 
 
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('homeCursus');
 
 
     }
