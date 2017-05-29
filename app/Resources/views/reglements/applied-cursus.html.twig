@@ -52,7 +52,8 @@
                                     bg-success
                                 {% endif %}
                                 " role="progressbar" style="width: {{percent}}%; height: 1.2rem;" aria-valuenow="{{percent}}" aria-valuemin="0" aria-valuemax="100">{{result.ruleObtained}}</div>
-                            </div>
+                            </div><br>
+                            <div id="bar_{{result.ruleId}}" style="width: 90%; height:17px"></div>
                         </td>
                         {% set rest = result.ruleSeuil - result.ruleObtained %}
                         {% if rest <= 0 %}
@@ -125,7 +126,44 @@
 
 
 {% block javascripts %}
+<script src="{{ asset('js/progressbar.js') }}" charset="utf-8"></script>
 <script type="text/javascript">
+
+    window.onload = function onLoad () {
+        var bar;
+        {% for result in results %}
+        {% if result.ruleCibleAgregat != 'SE' and result.ruleCibleAgregat != 'NPML' %}
+            bar = new ProgressBar.Line('#bar_{{result.ruleId}}', {
+                strokeWidth: 4,
+                easing: 'easeInOut',
+                duration: 1400,
+                color: '#333',
+                trailColor: '#eee',
+                trailWidth: 4,
+                svgStyle: {width: '100%', height: '100%'},
+                from: {color: '#FFCC80'},
+                to: {color: '#AED581'},
+                step: (state, bar) => {
+                    bar.path.setAttribute('stroke', state.color);
+                    bar.setText('{{result.ruleObtained}}');
+
+                }
+            });
+            // Calcul du pourcentage pour la longueur de la progressbar
+            {% if result.ruleSeuil != 0 %}
+                {% set percent = (result.ruleObtained / result.ruleSeuil) %}
+            {% endif %}
+            // Si > 1 (réalisé > objectif requis), affectation à 1 pour que 1 soit la valeur max
+            {% if percent > 1 %}
+                {% set percent = 1 %}
+            {% endif %}
+            bar.animate({{percent}});  // Number from 0.0 to 1.0
+        {% endif %}
+        {% endfor %}
+    }
+
+
+
     $(document).on('click', '#chooseReglementButton', function(event) {
         event.preventDefault();
         /* Récupération de l'ID du cursus choisi.

@@ -286,6 +286,7 @@ class ReglementsController extends Controller {
             $cibleAgregat = $rule->getCibleAgregat();
             $affectations = $rule->getAffectations()->getLabel();
             $seuil        = $rule->getSeuil();
+            $id           = $rule->getId();
 
             $key = $cibleAgregat . '_' . $affectations;
 
@@ -315,6 +316,7 @@ class ReglementsController extends Controller {
                 'ruleAffectation'  => $affectations,
                 'ruleSeuil'     => $seuil,
                 'ruleObtained'     => $obtained,
+                'ruleId'     => $id,
             );
         }
 
