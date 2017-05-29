@@ -20,6 +20,7 @@
 body {
     padding: 0;
     position: relative;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu', Arial, sans-serif;
 }
 
 .grey{
