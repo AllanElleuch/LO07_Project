@@ -180,6 +180,14 @@ class CursusController extends Controller {
 
         // $elemFormation = $cursus->getelementsFormations();
 
+        // TODO : faire une liste avec les semestre => semseq
+        // TODO : faire une liste semseq ==> [ elemformation1, elemFormation2]
+        // $listSem=array( );
+        // foreach ($cursus->getelementsFormations as $key ) {
+        //     if(array_key_exists($key->semlabel,$listSem)){
+        //         listSem["semlabel"]=;
+        //     }
+        // }
 
         return $this->render('cursus/new.html.twig', array(
             'form' => $form->createView(),
@@ -289,7 +297,7 @@ class CursusController extends Controller {
             'form' => $form->createView(),
             'nav' => "cursus",
             'subnav' => "new",
-            ''
+            'cursus' => $cursus,
             ));
 
 

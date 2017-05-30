@@ -13,17 +13,25 @@ Nouveau cursus
 
 {% set tabs = {} %}
 {% set tabsmenu = {} %}
+{% set listSemestre = {} %}
 
 {% for elem in cursus.elementsFormations %}
 
     {% set label =elem.getSemLabel %}
+    {% set listSemestre = listSemestre | merge ([(elem.getSemLabel)]) %}
 
-    {% set tabs = tabs | merge ({(elem.getSemSeq):[elem]}) %}
-    {% set tabsmenu = tabsmenu | merge ({(elem.getSemSeq):label}) %}
+    {% set tabsmenu = tabsmenu | merge ({ (elem.getSemLabel):(elem.getSemSeq)}) %}
+
+{%  endfor %}
+{% for elem in form.elementsFormations %}
+{# {% dump(elem.vars.value) %} #}
+{% dump(elem) %}
+{% dump((elem.vars.value.getSemLabel)) %}
+
+{% set tabs = tabs | merge ({(elem.vars.value.getSemLabel):elem}) %}
 
 {%  endfor %}
 {% dump(tabs) %}
-
 
 
 
@@ -33,11 +41,9 @@ Nouveau cursus
 
     <!-- Sidebar contenant les semestres
 
-    {% for elem in form.elementsFormations %}
-        <li>{{ form_row(elem) }}</li>
-    {%  endfor %}
 
 -->
+
     <div class="col-md-3">
         <nav class="navbar semesters-list">
             <ul class="nav flex-column" id='semestresNav'>
@@ -45,7 +51,7 @@ Nouveau cursus
             {% for key, value in tabsmenu %}
 
             <li class="row nav-item" id="form_tab_01">
-                    <input class="form-control form-control-sm col-sm-3" type="number" min="0" max="8" name="sem_seq" value="{{key}}"> <input class="form-control form-control-sm col-sm-4" type="text" name="sem_label" placeholder="" value="{{value}}">
+                    <input class="form-control form-control-sm col-sm-3" type="number" min="0" max="8" name="sem_seq" value="{{value}}"> <input class="form-control form-control-sm col-sm-4" type="text" name="sem_label" placeholder="" value="{{key}}">
                     <div class="col-sm-3 btn-group">
                         <a class="btn btn-sm btn-secondary" href="#tab_1">
                             <i class="fa fa-eye" aria-hidden="true"></i>
@@ -96,8 +102,7 @@ Nouveau cursus
         <!-- Tableau contenant le contenu des cursus -->
         <h5 class="mt-3">Créez des semestres et ajoutez-y vos UE</h5>
         <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
-
-            {% for key, value in tabs %}
+            {% for sem in listSemestre %}
 
 
             <table class="table" id="tab_2">
@@ -115,18 +120,29 @@ Nouveau cursus
 
                             </tr>
 
-                            
+            {% for elem  in tabs[sem] %}
+            {% dump(elem) %}
 
-                        </thead></table>
+
+
+
+
+                            {{ form_row(elem) }}
+
+
+
+
+
 
                 {%  endfor %}
+            </thead></table>
 
+                {%  endfor %}
 
 
             <!-- Container rempli en JS -->
         </div>
         {{ form_row(form.envoyer) }}
-
 
 
 
