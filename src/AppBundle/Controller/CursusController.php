@@ -174,16 +174,18 @@ class CursusController extends Controller {
             //dump($elem->toArray());
         }
         // dump($arr);
-        $json = json_encode($arr);
+        // $json = json_encode($arr);
         // print($json);
         // echo json_encode($arr);
+
+        // $elemFormation = $cursus->getelementsFormations();
 
 
         return $this->render('cursus/new.html.twig', array(
             'form' => $form->createView(),
             'nav' => "cursus",
             'subnav' => "new",
-            'cursus' => $json,
+            'cursus' => $cursus,
         ));
 
 
@@ -282,14 +284,13 @@ class CursusController extends Controller {
             return $this->redirectToRoute('homepage');
         }
 
-         $json = json_encode($cursus);
-
+        //  $json = json_encode($cursus);
         return $this->render('cursus/new.html.twig', array(
             'form' => $form->createView(),
             'nav' => "cursus",
             'subnav' => "new",
-            'cursus' => $json,
-        ));
+            ''
+            ));
 
 
     }

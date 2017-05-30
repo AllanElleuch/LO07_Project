@@ -11,6 +11,19 @@ Nouveau cursus
 <link rel="stylesheet" href="{{ asset('css/cursus0.css') }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 
+{% set tabs = {} %}
+{% set tabsmenu = {} %}
+
+{% for elem in cursus.elementsFormations %}
+
+    {% set label =elem.getSemLabel %}
+
+    {% set tabs = tabs | merge ({(elem.getSemSeq):[elem]}) %}
+    {% set tabsmenu = tabsmenu | merge ({(elem.getSemSeq):label}) %}
+
+{%  endfor %}
+{% dump(tabs) %}
+
 
 
 
@@ -18,10 +31,34 @@ Nouveau cursus
      ================= -->
 <div class="row">
 
-    <!-- Sidebar contenant les semestres -->
+    <!-- Sidebar contenant les semestres
+
+    {% for elem in form.elementsFormations %}
+        <li>{{ form_row(elem) }}</li>
+    {%  endfor %}
+
+-->
     <div class="col-md-3">
         <nav class="navbar semesters-list">
             <ul class="nav flex-column" id='semestresNav'>
+
+            {% for key, value in tabsmenu %}
+
+            <li class="row nav-item" id="form_tab_01">
+                    <input class="form-control form-control-sm col-sm-3" type="number" min="0" max="8" name="sem_seq" value="{{key}}"> <input class="form-control form-control-sm col-sm-4" type="text" name="sem_label" placeholder="" value="{{value}}">
+                    <div class="col-sm-3 btn-group">
+                        <a class="btn btn-sm btn-secondary" href="#tab_1">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-sm btn-secondary text-danger removeCursus" href="#">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
+
+            {%  endfor %}
+
+
                 <li class="add_item">
                     <a class="btn btn-sm btn-outline-success" href="#" id="newSemesterButton"><i class="fa fa-plus"></i> Ajouter un semestre</a>
                 </li>
@@ -60,6 +97,32 @@ Nouveau cursus
         <h5 class="mt-3">Créez des semestres et ajoutez-y vos UE</h5>
         <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
 
+            {% for key, value in tabs %}
+
+
+            <table class="table" id="tab_2">
+                        <thead class="thead-default">
+                            <tr>
+                                <th>Sigle</th>
+                                <th>Crédits</th>
+                                <th>Affectation</th>
+                                <th>Catégorie</th>
+                                <th>Résultat</th>
+                                <th>UTT</th>
+                                <th>Profil</th>
+                                <th>Action</th>
+                                <th><button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Cours</button></th>
+
+                            </tr>
+
+                            
+
+                        </thead></table>
+
+                {%  endfor %}
+
+
+
             <!-- Container rempli en JS -->
         </div>
         {{ form_row(form.envoyer) }}
@@ -83,9 +146,6 @@ Nouveau cursus
 {{ parent() }}
 <script type="text/javascript">
 
-window.json = {{ cursus|json_encode|raw }};
-window.parsed=JSON.parse(window.json);
-console.log({{ cursus|json_encode|raw }});
 
 </script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
