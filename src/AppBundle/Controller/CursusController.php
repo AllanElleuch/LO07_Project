@@ -182,18 +182,59 @@ class CursusController extends Controller {
 
         // TODO : faire une liste avec les semestre => semseq
         // TODO : faire une liste semseq ==> [ elemformation1, elemFormation2]
-        // $listSem=array( );
-        // foreach ($cursus->getelementsFormations as $key ) {
-        //     if(array_key_exists($key->semlabel,$listSem)){
-        //         listSem["semlabel"]=;
-        //     }
-        // }
 
+        $formview=$form->createView();
+        // dump($formview);
+
+
+        $it = $formview->getIterator();
+        $listElemFormView = array();
+        while( $it->valid() ){
+            $item =$it->current() ;
+            $vars = $item->vars;
+            if(array_key_exists("name",$vars)){
+
+            if($vars["name"] == "elementsFormations"){
+
+                foreach ($item as $key => $value) {
+                    dump($value);
+                    $lab = $value["sem_label"];
+                    $currentlabel = $value["sem_label"]->vars["value"];
+                    if(!array_key_exists($currentlabel,$listElemFormView)){
+
+                        $listElemFormView[$currentlabel]=array();
+                    }
+                    array_push($listElemFormView[$currentlabel], $value);
+                }
+            }
+        }
+    $it->next();
+}
+// dump($listElemFormView);
+
+
+
+        $listSem=array( );
+        foreach ($cursus->getelementsFormations() as $elemForm ) {
+
+                $label = $elemForm->getSemLabel();
+                $semseq = $elemForm->getSemSeq();
+                $listSem[$label]=$semseq;
+
+        }
+
+
+
+
+
+        // dump($listSem);
         return $this->render('cursus/new.html.twig', array(
             'form' => $form->createView(),
             'nav' => "cursus",
             'subnav' => "new",
             'cursus' => $cursus,
+            'coursParSemestre' => $listElemFormView,
+            'listSem'=>$listSem,
         ));
 
 
@@ -292,12 +333,20 @@ class CursusController extends Controller {
             return $this->redirectToRoute('homepage');
         }
 
+        $formview=$form->createView();
+        $listElemFormView = array();
+        $listSem=array( );
+
+
+
         //  $json = json_encode($cursus);
         return $this->render('cursus/new.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $formview,
             'nav' => "cursus",
             'subnav' => "new",
             'cursus' => $cursus,
+            'coursParSemestre' => $listElemFormView,
+            'listSem'=>$listSem,
             ));
 
 
