@@ -113,7 +113,7 @@ class CursusController extends Controller {
 
           ->add('etudiant', EntityType::class, array(
               'class' => 'AppBundle:Etudiants',
-              'choice_label' => 'numEtu',
+              'choice_label' => 'uniqueName',
               'label' => "Étudiant"))
         ->add('elementsFormations', CollectionType::class, array(
         'entry_type'   => ElementFormationType::class,

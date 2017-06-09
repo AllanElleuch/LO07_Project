@@ -120,7 +120,14 @@ Nouveau cursus
 
 
             {% for elem  in coursParSemestre[sem] %}
-                            {{ form_row(elem) }}
+
+                    {{ form_widget(elem) }}
+
+
+
+
+
+
             {%  endfor %}
 
 
