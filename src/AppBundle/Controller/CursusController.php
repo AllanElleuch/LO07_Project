@@ -109,7 +109,7 @@ class CursusController extends Controller {
 
 
         $form = $this->createFormBuilder($cursus)
-        ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+        ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
 
           ->add('etudiant', EntityType::class, array(
               'class' => 'AppBundle:Etudiants',
@@ -298,7 +298,7 @@ class CursusController extends Controller {
         //
 
         $form = $this->createFormBuilder($cursus)
-            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'ISI/SRT Semestre X Branche Y', 'class' => 'form-control')))
+            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
 
               ->add('etudiant', EntityType::class, array(
                   'class' => 'AppBundle:Etudiants',
