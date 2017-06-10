@@ -1,1 +1,43 @@
-LO07;Technologies du Web;
+CS;GL02;6;Fondements de l’ingénierie logicielle
+CS;GS13;6;Gestion de la sécurité
+CS;IF02;6;Modélisation pour la conception de Systèmes d'Information
+CS;IF05;6;Qualité du logiciel
+CS;IF10;6;Conception centrée usages des systèmes interactifs
+CS;IF15;6;Ingénierie des connaissances
+CS;IF19;6;Sociologie des organisations pour l'ingénieur
+CS;IF25;6;Data-mining pour les réseaux sociaux
+CS;LO12;6;Intelligence artificielle et applications
+CS ;NF16;6;Bases de données
+CS ;NF20;6;Modélisation et évaluation des systèmes complexes
+CS ;RE04;6;Réseaux de l'internet
+EC;LE00;4;Anglais - remise à niveau A2
+EC ;LE01;4;Anglais - niveau pratique B1
+EC ;LE02;4;Anglais - niveau pratique B1/B2
+EC ;LE03;4;Anglais - niveau pratique B2
+EC  ;LE08;4;Anglais - Professional English - BULATS preparation
+HP;LO01;6;Bases de l'informatique
+HP;SY01;6;Bases de calcul des probabilités pour l’ingénieur
+ME;GE04;4;Gestion des ressources humaines
+ME;GE10;4;Introduction à la microéconomie
+ME;GE21;4;L'entreprise et le droit
+ME;GE28;4;Droit du commerce et des affaires
+ME ;GE34;4;Stratégie et management de l'entreprise
+ME  ;SP20;4;Conception d’un évènement sportif
+TM;EG23;6;Interface Homme-Machine et ergonomie
+TM;GS11;6;Techniques de sécurisation
+TM;IF03;6;Initiation à la Sécurité des Systèmes d'Information
+TM;IF07;6;Ingénierie pédagogique et de la formation en ligne (e-learning)
+TM;IF08;6;Management de projets informatiques
+TM;IF09;6;Systèmes documentaires
+TM;IF11;6;Portail CRM et e-commerce
+TM;IF14;6;Analyse du système d'information
+TM;IF16;6;Travail collaboratif assisté par ordinateur
+TM;IF17;6;Architectures décisionnelles
+TM;IF20;6;Modélisation de processus métier
+TM;IF22;6;Gestion des Systèmes d'information
+TM;IF24;6;Progiciels de gestion intégrée
+TM;IF26;6;Conception sécurisée d'applications : Web Mobile
+TM;LO10;6;Architectures orientées services
+TM ;LO02;6;Principe et pratique de la programmation orientée objets
+TM ;LO07;6;Technologies du Web
+TM ;NF19;6;Administration et virtualisation des systèmes et des bases de données
