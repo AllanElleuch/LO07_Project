@@ -300,10 +300,10 @@ class CursusController extends Controller {
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
 
-              ->add('etudiant', EntityType::class, array(
-                  'class' => 'AppBundle:Etudiants',
-                  'choice_label' => 'numEtu',
-                  'label' => "Étudiant"))
+            ->add('etudiant', EntityType::class, array(
+                'class' => 'AppBundle:Etudiants',
+                'choice_label' => 'uniqueName',
+                'label' => "Étudiant"))
             ->add('elementsFormations', CollectionType::class, array(
             'entry_type'   => ElementFormationType::class,
             'allow_add'    => true,
