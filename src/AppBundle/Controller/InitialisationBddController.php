@@ -15,6 +15,7 @@ use AppBundle\Entity\Filieres;
 use AppBundle\Entity\Regle;
 use AppBundle\Entity\Resultats;
 use AppBundle\Entity\Reglement;
+use AppBundle\Entity\CatalogueUE;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -494,6 +495,43 @@ class InitialisationBddController extends Controller {
         }
 
 
+        /**
+         * PART 3
+         * ======
+         * Importation du catalogue d'UE dans la base de données.
+         * Le fichier importé est web/catalogue_ue/catalogue_ue.csv
+         */
+
+        $res = $this->getDoctrine()->getRepository('AppBundle:CatalogueUE')->findAll();
+
+        $UEToCreate = array();
+
+        if (empty($res)) {
+            // Ouverture du fichier en lecture s'il existe
+            if (($handle = fopen('./catalogue_ue/catalogue_ue.csv', 'r')) !== False) {
+                while(($row = fgetcsv($handle)) !== FALSE) {
+                    $data = explode(";", $row[0]);
+                    $label = $data[0];
+                    $description = $data[1];
+
+                    $UE = new CatalogueUE();
+                    $UE->setLabel($label);
+                    $UE->setDescription($description);
+
+                    $UEToCreate[] = $UE;
+
+
+                }
+            }
+
+            // Écriture dans la base de données
+            $em = $this->getDoctrine()->getManager();
+            foreach ($UEToCreate as $UE) {
+                $em->persist($UE);
+            }
+            $em->flush();
+
+        }
 
         return $this->redirectToRoute('homepage');
 
