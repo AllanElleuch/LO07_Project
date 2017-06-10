@@ -194,25 +194,23 @@ class CursusController extends Controller {
             $vars = $item->vars;
             if(array_key_exists("name",$vars)){
 
-            if($vars["name"] == "elementsFormations"){
+                if($vars["name"] == "elementsFormations"){
 
-                foreach ($item as $key => $value) {
-                    dump($value);
-                    $lab = $value["sem_label"];
-                    $currentlabel = $value["sem_label"]->vars["value"];
-                    if(!array_key_exists($currentlabel,$listElemFormView)){
+                    foreach ($item as $key => $value) {
+                        dump($value);
+                        $lab = $value["sem_label"];
+                        $currentlabel = $value["sem_label"]->vars["value"];
+                        if(!array_key_exists($currentlabel,$listElemFormView)){
 
-                        $listElemFormView[$currentlabel]=array();
+                            $listElemFormView[$currentlabel]=array();
+                        }
+                        array_push($listElemFormView[$currentlabel], $value);
                     }
-                    array_push($listElemFormView[$currentlabel], $value);
                 }
             }
+        $it->next();
         }
-    $it->next();
-}
 // dump($listElemFormView);
-
-
 
         $listSem=array( );
         foreach ($cursus->getelementsFormations() as $elemForm ) {
@@ -229,8 +227,8 @@ class CursusController extends Controller {
 
         // dump($listSem);
         return $this->render('cursus/new.html.twig', array(
-            'form' => $form->createView(),
-            'nav' => "cursus",
+            'form'   => $form->createView(),
+            'nav'    => "cursus",
             'subnav' => "new",
             'cursus' => $cursus,
             'coursParSemestre' => $listElemFormView,
