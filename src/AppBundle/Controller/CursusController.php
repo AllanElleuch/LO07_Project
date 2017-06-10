@@ -503,14 +503,11 @@ class CursusController extends Controller {
 
                     $cursus->setLabel($label);
                     $cursus->setEtudiant($etudiant);
+                    $em = $this->getDoctrine()->getManager();
                     foreach ($eltsFormation as $element){
                         $element->setCursus($cursus);
-                        $em = $this->getDoctrine()->getManager();
                         $em->persist($element);
-                        $em->flush();
                     }
-
-                    $em = $this->getDoctrine()->getManager();
                     $em->persist($cursus);
                     $em->flush();
 
