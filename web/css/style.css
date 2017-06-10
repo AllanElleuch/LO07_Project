@@ -108,6 +108,8 @@ pre {
 /* LISTE SEMESTRES */
 /* =============== */
 .semesters-list {
+    position: fixed;
+    width: 250px;
     background-color: #f5f5f5;
     border-bottom: 1px solid #cecece;
     border-top: 1px solid #cecece;
