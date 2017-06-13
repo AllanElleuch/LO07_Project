@@ -3,17 +3,18 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Etudiants;
+use AppBundle\Entity\Cursus;
+use AppBundle\Entity\ElementFormation;
+use AppBundle\Entity\CatalogueUE;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Cursus;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use AppBundle\Entity\ElementFormation;
 use AppBundle\Form\Type\ElementFormationType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -319,6 +320,19 @@ class CursusController extends Controller {
 
             foreach($cursus->getelementsFormations() as $elemFormation){
               $elemFormation->setCursus($cursus);
+
+              /* Apprentissage des labels d'UE :
+               * On recherche si l'UE existe déjà dans la table CatalogueUE.
+               * Si non, on la crée
+               */
+              $res = $this->getDoctrine()
+                  ->getRepository('AppBundle:CatalogueUE')
+                  ->findOneBy(array('label' => $elemFormation->getSigle()));
+              if (empty($res)) {
+                  $newUE = new CatalogueUE();
+                  $newUE->setLabel($elemFormation->getSigle());
+                  $em->persist($newUE);
+              }
             }
 
             // ... perform some action, such as saving the task to the database
@@ -499,15 +513,30 @@ class CursusController extends Controller {
 
 
                     $cursus = new Cursus();
-
-
                     $cursus->setLabel($label);
                     $cursus->setEtudiant($etudiant);
+
                     $em = $this->getDoctrine()->getManager();
+
                     foreach ($eltsFormation as $element){
+                        /* Affectation de chaque élément lu au nouveau cursus */
                         $element->setCursus($cursus);
                         $em->persist($element);
+
+                        /* Apprentissage des labels d'UE :
+                         * On recherche si l'UE existe déjà dans la table CatalogueUE.
+                         * Si non, on la crée
+                         */
+                        $res = $this->getDoctrine()
+                            ->getRepository('AppBundle:CatalogueUE')
+                            ->findOneBy(array('label' => $element->getSigle()));
+                        if (empty($res)) {
+                            $newUE = new CatalogueUE();
+                            $newUE->setLabel($element->getSigle());
+                            $em->persist($newUE);
+                        }
                     }
+
                     $em->persist($cursus);
                     $em->flush();
 
