@@ -36,11 +36,7 @@ Nouveau cursus
      ================= -->
 <div class="row">
 
-    <!-- Sidebar contenant les semestres
-
-
--->
-
+    <!-- Sidebar contenant les semestres -->
     <div class="col-md-3">
         <nav class="navbar semesters-list">
             <ul class="nav flex-column" id='semestresNav'>
@@ -63,7 +59,7 @@ Nouveau cursus
 
 
                 <li class="add_item">
-                    <a class="btn btn-sm btn-outline-success" href="#" id="newSemesterButton"><i class="fa fa-plus"></i> Ajouter un semestre</a>
+                    <button class="btn btn-sm btn-outline-success" id="newSemesterButton"><i class="fa fa-plus"></i> Ajouter un semestre</button>
                 </li>
             </ul>
         </nav>
@@ -120,7 +116,14 @@ Nouveau cursus
 
 
             {% for elem  in coursParSemestre[sem] %}
-                            {{ form_row(elem) }}
+
+                    {{ form_widget(elem) }}
+
+
+
+
+
+
             {%  endfor %}
 
 

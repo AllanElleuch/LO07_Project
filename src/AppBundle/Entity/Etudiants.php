@@ -65,6 +65,11 @@ class Etudiants
         $this->cursus = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function getUniqueName()
+    {
+        return sprintf('%s %s - n°%s', $this->nom, $this->prenom , $this->numEtu);
+    }
+
     /**
      * Get id
      *

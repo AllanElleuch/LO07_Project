@@ -3,17 +3,18 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Etudiants;
+use AppBundle\Entity\Cursus;
+use AppBundle\Entity\ElementFormation;
+use AppBundle\Entity\CatalogueUE;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Cursus;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use AppBundle\Entity\ElementFormation;
 use AppBundle\Form\Type\ElementFormationType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -113,7 +114,7 @@ class CursusController extends Controller {
 
           ->add('etudiant', EntityType::class, array(
               'class' => 'AppBundle:Etudiants',
-              'choice_label' => 'numEtu',
+              'choice_label' => 'uniqueName',
               'label' => "Étudiant"))
         ->add('elementsFormations', CollectionType::class, array(
         'entry_type'   => ElementFormationType::class,
@@ -194,25 +195,23 @@ class CursusController extends Controller {
             $vars = $item->vars;
             if(array_key_exists("name",$vars)){
 
-            if($vars["name"] == "elementsFormations"){
+                if($vars["name"] == "elementsFormations"){
 
-                foreach ($item as $key => $value) {
-                    dump($value);
-                    $lab = $value["sem_label"];
-                    $currentlabel = $value["sem_label"]->vars["value"];
-                    if(!array_key_exists($currentlabel,$listElemFormView)){
+                    foreach ($item as $key => $value) {
+                        dump($value);
+                        $lab = $value["sem_label"];
+                        $currentlabel = $value["sem_label"]->vars["value"];
+                        if(!array_key_exists($currentlabel,$listElemFormView)){
 
-                        $listElemFormView[$currentlabel]=array();
+                            $listElemFormView[$currentlabel]=array();
+                        }
+                        array_push($listElemFormView[$currentlabel], $value);
                     }
-                    array_push($listElemFormView[$currentlabel], $value);
                 }
             }
+        $it->next();
         }
-    $it->next();
-}
 // dump($listElemFormView);
-
-
 
         $listSem=array( );
         foreach ($cursus->getelementsFormations() as $elemForm ) {
@@ -229,8 +228,8 @@ class CursusController extends Controller {
 
         // dump($listSem);
         return $this->render('cursus/new.html.twig', array(
-            'form' => $form->createView(),
-            'nav' => "cursus",
+            'form'   => $form->createView(),
+            'nav'    => "cursus",
             'subnav' => "new",
             'cursus' => $cursus,
             'coursParSemestre' => $listElemFormView,
@@ -300,10 +299,10 @@ class CursusController extends Controller {
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
 
-              ->add('etudiant', EntityType::class, array(
-                  'class' => 'AppBundle:Etudiants',
-                  'choice_label' => 'numEtu',
-                  'label' => "Étudiant"))
+            ->add('etudiant', EntityType::class, array(
+                'class' => 'AppBundle:Etudiants',
+                'choice_label' => 'uniqueName',
+                'label' => "Étudiant"))
             ->add('elementsFormations', CollectionType::class, array(
             'entry_type'   => ElementFormationType::class,
             'allow_add'    => true,
@@ -321,6 +320,19 @@ class CursusController extends Controller {
 
             foreach($cursus->getelementsFormations() as $elemFormation){
               $elemFormation->setCursus($cursus);
+
+              /* Apprentissage des labels d'UE :
+               * On recherche si l'UE existe déjà dans la table CatalogueUE.
+               * Si non, on la crée
+               */
+              $res = $this->getDoctrine()
+                  ->getRepository('AppBundle:CatalogueUE')
+                  ->findOneBy(array('label' => $elemFormation->getSigle()));
+              if (empty($res)) {
+                  $newUE = new CatalogueUE();
+                  $newUE->setLabel($elemFormation->getSigle());
+                  $em->persist($newUE);
+              }
             }
 
             // ... perform some action, such as saving the task to the database
@@ -507,18 +519,30 @@ class CursusController extends Controller {
 
 
                     $cursus = new Cursus();
-
-
                     $cursus->setLabel($label);
                     $cursus->setEtudiant($etudiant);
-                    foreach ($eltsFormation as $element){
-                        $element->setCursus($cursus);
-                        $em = $this->getDoctrine()->getManager();
-                        $em->persist($element);
-                        $em->flush();
-                    }
 
                     $em = $this->getDoctrine()->getManager();
+
+                    foreach ($eltsFormation as $element){
+                        /* Affectation de chaque élément lu au nouveau cursus */
+                        $element->setCursus($cursus);
+                        $em->persist($element);
+
+                        /* Apprentissage des labels d'UE :
+                         * On recherche si l'UE existe déjà dans la table CatalogueUE.
+                         * Si non, on la crée
+                         */
+                        $res = $this->getDoctrine()
+                            ->getRepository('AppBundle:CatalogueUE')
+                            ->findOneBy(array('label' => $element->getSigle()));
+                        if (empty($res)) {
+                            $newUE = new CatalogueUE();
+                            $newUE->setLabel($element->getSigle());
+                            $em->persist($newUE);
+                        }
+                    }
+
                     $em->persist($cursus);
                     $em->flush();
 
