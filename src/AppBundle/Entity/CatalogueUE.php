@@ -23,7 +23,7 @@ class CatalogueUE
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, nullable=true)
      */
     private $description;
 
