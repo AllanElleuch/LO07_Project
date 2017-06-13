@@ -333,10 +333,16 @@ class CursusController extends Controller {
             return $this->redirectToRoute('homepage');
         }
 
+
         $formview=$form->createView();
         $listElemFormView = array();
         $listSem=array( );
 
+        $listUV = $this->getDoctrine()
+            ->getRepository('AppBundle:CatalogueUE')
+            ->findAll();
+
+      var_dump($listUV);
 
 
         //  $json = json_encode($cursus);
