@@ -9,12 +9,12 @@ $("#semestresNav").on('input', 'input', function() {
 
   var input= $(this).val()
   var name= $(this).attr('name');
-  console.log("input : "+ input + " name " + name)
+  // console.log("input : "+ input + " name " + name)
 
   var id = $(this).closest('li').attr('id'); /* 'tab_3' */
   id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
   var $list = $('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']")
-  console.log('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']");
+  // console.log('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']");
   // console.log($list.length);
    for (var i = 0; i < $list.length; i++) {
     //  console.log("boucle");
@@ -22,7 +22,7 @@ $("#semestresNav").on('input', 'input', function() {
       //  var id=$list[i].id
        var s = $list.get(i)
        $(s).attr('value',input);
-       console.log($(s).attr('value'));
+      //  console.log($(s).attr('value'));
 
    }
 
@@ -47,7 +47,7 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 
   $("#main_content  .nav-tabs").on("click", "span", function() {
       var anchor = $(this).siblings('a');
-      console.log(anchor);
+      // console.log(anchor);
       $(anchor.attr('href')).remove();
       $(this).parent().parent().remove();
       $("#sub_tab.nav-pills li").children('a').first().click();
@@ -55,7 +55,7 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 
     $(".tab-content").on("click", "span", function() {
         var anchor = $(this).siblings('a');
-        console.log(anchor);
+        // console.log(anchor);
         $(anchor.attr('href')).remove();
         $(this).parent().parent().remove();
         $("#sub_tab.nav-pills li").children('a').first().click();
@@ -63,9 +63,9 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 
 
       $("#cursusTableContainer").on("click", ".deleteRow", function() {
-        console.log("hello");
+        // console.log("hello");
           var anchor = $(this).siblings('a');
-          console.log(anchor);
+          // console.log(anchor);
           $(anchor.attr('href')).remove();
           $(this).parent().parent().parent().remove();
           $("#sub_tab.nav-pills li").children('a').first().click();
@@ -84,8 +84,8 @@ $('#newSemesterButton').on('click', function() {
         var lastSemesterLabel = lastSemester.match(/([a-zA-Z]+)/gu) /* /gu : /global, /unicode */
         var lastSemesterInt   = lastSemester.match(/([0-9]+)/gu)
         lastSemesterInt = parseInt(lastSemesterInt)
-        console.log("lastSemesterLabel = " + lastSemesterLabel)
-        console.log("lastSemesterInt = " + lastSemesterInt)
+        // console.log("lastSemesterLabel = " + lastSemesterLabel)
+        // console.log("lastSemesterInt = " + lastSemesterInt)
     } else {
         var lastSemesterInt   = 0
         var lastSemesterLabel = "ISI"

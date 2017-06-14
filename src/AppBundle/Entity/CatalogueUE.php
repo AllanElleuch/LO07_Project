@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -19,11 +20,12 @@ class CatalogueUE
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"labelUV"})
      */
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=180, nullable=true)
+     * @ORM\Column(type="string", length=180)
      */
     private $description;
 

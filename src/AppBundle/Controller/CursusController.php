@@ -23,6 +23,12 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 // use Symfony\Component\Serializer\Encoder\JsonEncoder;
 // use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+// For annotations
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 
 class CursusController extends Controller {
     /**
@@ -223,7 +229,19 @@ class CursusController extends Controller {
         }
 
 
+        $formview=$form->createView();
+        $listElemFormView = array();
+        $listSem=array( );
 
+        $listUV = $this->getDoctrine()
+            ->getRepository('AppBundle:CatalogueUE')
+            ->findAll();
+      $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+            $normalizer = new ObjectNormalizer($classMetadataFactory);
+            $serializer = new Serializer(array($normalizer));
+
+            $data = $serializer->normalize($listUV, null, array('groups' => array('labelUV')));
+         $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
 
 
         // dump($listSem);
@@ -234,6 +252,8 @@ class CursusController extends Controller {
             'cursus' => $cursus,
             'coursParSemestre' => $listElemFormView,
             'listSem'=>$listSem,
+            'listUV'=>$json_listUV
+
         ));
 
 
@@ -353,11 +373,13 @@ class CursusController extends Controller {
         $listUV = $this->getDoctrine()
             ->getRepository('AppBundle:CatalogueUE')
             ->findAll();
+$classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+            $normalizer = new ObjectNormalizer($classMetadataFactory);
+            $serializer = new Serializer(array($normalizer));
 
-      var_dump($listUV);
+            $data = $serializer->normalize($listUV, null, array('groups' => array('labelUV')));
+         $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-
-        //  $json = json_encode($cursus);
         return $this->render('cursus/new.html.twig', array(
             'form' => $formview,
             'nav' => "cursus",
@@ -365,6 +387,7 @@ class CursusController extends Controller {
             'cursus' => $cursus,
             'coursParSemestre' => $listElemFormView,
             'listSem'=>$listSem,
+            'listUV'=>$json_listUV,
             ));
 
 

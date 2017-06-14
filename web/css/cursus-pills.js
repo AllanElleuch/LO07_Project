@@ -7,7 +7,7 @@ $( document ).ready(function() {
 
 
 $("#main_content .nav-pills").on("click", "a", function(e) {
-  console.log("yo");
+  // console.log("yo");
     e.preventDefault();
     $(this).tab('show');
     $()
@@ -22,7 +22,7 @@ $("#main_content .nav-pills").on("click", "a", function(e) {
 
   $("#main_content > .nav-pills").on("click", "span", function() {
       var anchor = $(this).siblings('a');
-      console.log(anchor);
+      // console.log(anchor);
       $(anchor.attr('href')).remove();
       $(this).parent().remove();
       $("#sub_tab.nav-pills li").children('a').first().click();
