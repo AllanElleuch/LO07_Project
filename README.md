@@ -5,9 +5,9 @@ Allan Elleuch, Corentin Laithier
 
 # TODO
 
-[] Datalist
-[] Popover sur new cursus
-[] Clean code
-[] Comment code
-    [] Functions
-    [] PHP head file
+- [ ] Datalist
+- [ ] Popover sur new cursus
+- [ ] Clean code
+- [ ] Comment code
+    - [ ] Functions
+    - [ ] PHP head file
