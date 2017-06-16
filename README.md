@@ -9,3 +9,5 @@ Allan Elleuch, Corentin Laithier
 [] Popover sur new cursus
 [] Clean code
 [] Comment code
+    [] Functions
+    [] PHP head file
