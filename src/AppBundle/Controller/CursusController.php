@@ -119,7 +119,7 @@ class CursusController extends Controller {
         'entry_type'   => ElementFormationType::class,
         'allow_add'    => true,
         ))
-        ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
+        ->add('envoyer', SubmitType::class, array('label' => 'Modifier le cursus'))
 
         ->getForm();
 
