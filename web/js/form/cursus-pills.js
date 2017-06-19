@@ -2,20 +2,17 @@ $( document ).ready(function() {
 
 
 
-//$(".slider").slider();
-///new tab with remove
-
+// sur input desemestre on modifie les les inputs invisible
 $("#semestresNav").on('input', 'input', function() {
 
   var input= $(this).val()
   var name= $(this).attr('name');
-  // console.log("input : "+ input + " name " + name)
+console.log(input);
+console.log(name);
 
   var id = $(this).closest('li').attr('id'); /* 'tab_3' */
   id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
   var $list = $('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']")
-  // console.log('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']");
-  // console.log($list.length);
    for (var i = 0; i < $list.length; i++) {
     //  console.log("boucle");
 
@@ -47,7 +44,6 @@ $("#main_tab.nav-pills").on("click", "a", function(e) {
 
   $("#main_content  .nav-tabs").on("click", "span", function() {
       var anchor = $(this).siblings('a');
-      // console.log(anchor);
       $(anchor.attr('href')).remove();
       $(this).parent().parent().remove();
       $("#sub_tab.nav-pills li").children('a').first().click();

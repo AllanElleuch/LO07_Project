@@ -116,17 +116,18 @@ class CursusController extends Controller {
 
 
         $form = $this->createFormBuilder($cursus)
-        ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
+            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
 
-          ->add('etudiant', EntityType::class, array(
-              'class' => 'AppBundle:Etudiants',
-              'choice_label' => 'uniqueName',
-              'label' => "Étudiant"))
-        ->add('elementsFormations', CollectionType::class, array(
-        'entry_type'   => ElementFormationType::class,
-        'allow_add'    => true,
-        ))
-        ->add('envoyer', SubmitType::class, array('label' => 'Modifier le cursus'))
+            ->add('etudiant', EntityType::class, array(
+                'class' => 'AppBundle:Etudiants',
+                'choice_label' => 'uniqueName',
+                'label' => "Étudiant"))
+            ->add('elementsFormations', CollectionType::class, array(
+            'entry_type'   => ElementFormationType::class,
+            'allow_add'    => true,
+            ))
+            ->add('envoyer', SubmitType::class, array('label' => 'Modifier le cursus'))
+
 
         ->getForm();
 
@@ -134,65 +135,34 @@ class CursusController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
             $cursus = $form->getData();
-
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
             $em = $this->getDoctrine()->getManager();
             $em->persist($cursus);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('homeCursus');
 
 
         }
 
-        // $encoders = array(new XmlEncoder(), new JsonEncoder());
-        // $normalizers = array(new ObjectNormalizer());
-        // $serializer = new Serializer($normalizers, $encoders);
-        // $json =  $serializer->serialize($cursus->getelementsFormations(), 'json');
-        // $normalizer = new PropertyNormalizer();
-        // $json      = $normalizer->normalize( $cursus );
-        // $arrayCursus = array( );
+
         $arr = array();
         foreach ($cursus->getelementsFormations() as $elem  ) {
-            // dump($elem);
             $semseq=$elem->getSemSeq();
             $semlabel=$elem->getSemLabel();
 
              if(!array_key_exists($semseq,$arr)){
                  $add = array($semseq=>array() );
                  array_push($arr,$add);
-
                  array_push($arr[$semseq-1],array("semlabel"=>$semlabel ));
                  array_push($arr[$semseq-1],array("semseq"=>$semseq ));
-
-                // array_push($arr[$semseq-1], $semlabel);
-
-
              }
              array_push($arr[$semseq-1], $elem->toArray());
-            //  print($elem->getCredits());
-            //  print($elem->getAffectations());
-            //  print($elem->getCategories());
-            //  print($elem->getResultats());
-            //dump($elem->toArray());
+
         }
-        // dump($arr);
-        // $json = json_encode($arr);
-        // print($json);
-        // echo json_encode($arr);
 
-        // $elemFormation = $cursus->getelementsFormations();
-
-        // TODO : faire une liste avec les semestre => semseq
-        // TODO : faire une liste semseq ==> [ elemformation1, elemFormation2]
 
         $formview=$form->createView();
-        // dump($formview);
-
 
         $it = $formview->getIterator();
         $listElemFormView = array();
@@ -217,7 +187,6 @@ class CursusController extends Controller {
             }
         $it->next();
         }
-// dump($listElemFormView);
 
         $listSem=array( );
         foreach ($cursus->getelementsFormations() as $elemForm ) {
@@ -228,10 +197,6 @@ class CursusController extends Controller {
 
         }
 
-
-        $formview=$form->createView();
-        $listElemFormView = array();
-        $listSem=array( );
 
         $listUV = $this->getDoctrine()
             ->getRepository('AppBundle:CatalogueUE')
@@ -246,7 +211,7 @@ class CursusController extends Controller {
 
         // dump($listSem);
         return $this->render('cursus/new.html.twig', array(
-            'form'   => $form->createView(),
+            'form'   => $formview,
             'nav'    => "cursus",
             'subnav' => "new",
             'cursus' => $cursus,
@@ -302,19 +267,6 @@ class CursusController extends Controller {
 
         // create a cursus and give it some dummy data for this example
         $cursus = new Cursus();
-        //$cursus->setLabel('Mon cursus de ...');
-
-        // $e = new ElementFormation();
-        // $e->setCursus($cursus);
-        // $e->setSemLabel('a');
-        // $e->setSigle('a');
-        // $e->setUtt(true);
-        // $e->setProfil(true);
-        // $e->setSemSeq(2);
-        // $e->setCredit(1);
-        //
-        // $cursus->addElementsFormation($e);
-        //
 
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
@@ -334,8 +286,6 @@ class CursusController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
             $cursus = $form->getData();
 
             foreach($cursus->getelementsFormations() as $elemFormation){
@@ -358,13 +308,12 @@ class CursusController extends Controller {
               }
             }
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
+
 
             $em->persist($cursus);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('homeCursus');
         }
 
 
@@ -375,7 +324,7 @@ class CursusController extends Controller {
         $listUV = $this->getDoctrine()
             ->getRepository('AppBundle:CatalogueUE')
             ->findAll();
-$classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+            $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
             $normalizer = new ObjectNormalizer($classMetadataFactory);
             $serializer = new Serializer(array($normalizer));
 
