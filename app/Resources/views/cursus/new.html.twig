@@ -10,7 +10,7 @@ Nouveau cursus
 <link rel="stylesheet" href="{{ asset('css/nav-pills.css') }}">
 <link rel="stylesheet" href="{{ asset('css/cursus0.css') }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-
+<link rel="stylesheet" href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.css') }}">
 {% set tabs = {} %}
 {% set tabsmenu = {} %}
 {% set listSemestre = {} %}
@@ -30,6 +30,20 @@ Nouveau cursus
 
 {%  endfor %}
 {% dump(form.elementsFormations) %}
+
+
+<!-- <div id="tableUV"  >
+
+{% for uv in listUV %}
+<div class="">
+{{ uv.label }}
+
+{{ uv.description }}
+
+</div>
+{%  endfor %}
+
+</div> -->
 
 
 <!-- CONTENU PRINCIPAL
@@ -151,11 +165,43 @@ Nouveau cursus
 
 
 </div>
-
 {% endblock %}
+
 
 {% block javascripts %}
 {{ parent() }}
+<script type="text/javascript">
+// window.l={{listUV|json_encode()|raw }}
+var stringListuv = {{listUV|json_encode()|raw }};
+var jsonListUV = JSON.parse(stringListuv);
+// $("input" ).autocomplete({
+//   source: listuv
+// });
+var tableUV = [];
+$.each(jsonListUV, function(i, val) {
+  tableUV.push(val.label);
+});
+
+
+$("body #cursusTableContainer  ").on('click', 'tr input:first-child', function() {
+
+  // $(this).autocomplete({
+  //     lookup: tableUV
+  // });
+
+$(this).autocomplete({
+  source: tableUV,
+  // open: function() {
+  //           $('.ui-autocomplete').width('auto');
+  //           $('.ui-widget-content').css('background', '#E1F7DE');
+  //           $('.ui-menu-item a').removeClass('ui-corner-all');
+  //       }
+
+});
+})
+
+</script>
+
 <script type="text/javascript">
 
 
@@ -164,5 +210,6 @@ Nouveau cursus
 
 <script src="{{ asset('js/form/cursus.js') }}"></script>
 <script src="{{ asset('js/form/cursus-pills.js') }}"></script>
+<script src="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
 
 {% endblock %}

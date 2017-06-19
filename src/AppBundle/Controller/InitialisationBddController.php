@@ -511,8 +511,8 @@ class InitialisationBddController extends Controller {
             if (($handle = fopen('./catalogue_ue/catalogue_ue.csv', 'r')) !== False) {
                 while(($row = fgetcsv($handle)) !== FALSE) {
                     $data = explode(";", $row[0]);
-                    $label = $data[0];
-                    $description = $data[1];
+                    $label = $data[1];
+                    $description = $data[3];
 
                     $UE = new CatalogueUE();
                     $UE->setLabel($label);
