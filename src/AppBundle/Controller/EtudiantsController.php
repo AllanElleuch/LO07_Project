@@ -58,12 +58,6 @@ class EtudiantsController extends Controller{
               'class' => 'AppBundle:Admissions',
               'choice_label' => 'label',
               'label' => 'Admissions'))
-              // ->add('cursus', EntityType::class, array(
-              //     'class' => 'AppBundle:Cursus',
-              //     'choice_label' => 'label',
-              //     'label' => 'Cursus',
-              //     'required' => 'false')
-
           ->add('envoyer', SubmitType::class, array('label' => 'Créer un étudiant'))
 
           ->getForm();
@@ -99,7 +93,72 @@ class EtudiantsController extends Controller{
     }
 
 
+    /**
+      * Modification d'un étudiant
+       * @Route("/etudiants/update/{id}")
+       */
+      public function updateStudent(Request $request, $id) {
 
+
+          // create a cursus and give it some dummy data for this example
+          $student = $this->getDoctrine()
+              ->getRepository('AppBundle:Etudiants')
+              ->find($id);
+
+          if (!$student) {
+              throw $this->createNotFoundException('Aucun étudiant à édité.');
+          }
+
+
+          $form = $this->createFormBuilder($student)
+          ->add('prenom', TextType::class, array('label' => 'Prenom', 'attr' => array('placeholder' => 'Prénom de l\'étudiant', 'class' => 'form-control')))
+          ->add('nom', TextType::class, array('label' => 'Nom', 'attr' => array('placeholder' => 'Nom de l\'étudiant', 'class' => 'form-control')))
+          ->add('numEtu', IntegerType::class, array('label' => 'Numéro', 'attr' => array('placeholder' => 'Numéro de l\'étudiant', 'class' => 'form-control')))
+
+          ->add('filieres', EntityType::class, array(
+              'class' => 'AppBundle:Filieres',
+              'choice_label' => 'label',
+              'label' => 'Filiere'))
+
+          ->add('admissions', EntityType::class, array(
+              'class' => 'AppBundle:Admissions',
+              'choice_label' => 'label',
+              'label' => 'Admissions'))
+          ->add('envoyer', SubmitType::class, array('label' => 'Modifier l\'étudiant'))
+
+          ->getForm();
+
+
+          $form->handleRequest($request);
+
+          if ($form->isSubmitted() && $form->isValid()) {
+              // $form->getData() holds the submitted values
+              // but, the original `$task` variable has also been updated
+              $student = $form->getData();
+
+              // ... perform some action, such as saving the task to the database
+              // for example, if Task is a Doctrine entity, save it!
+              $em = $this->getDoctrine()->getManager();
+              $em->persist($student);
+              $em->flush();
+
+              return $this->redirectToRoute('homestudents');
+
+
+          }
+
+          return $this->render('etudiants/new.html.twig', array(
+              'nav' => "etudiants",
+              'subnav' => 'new',
+              'form' => $form->createView(),
+              'etudiant' => $student,
+
+
+          ));
+
+
+
+      }
 
     /**
      * Delete student and associated cursuses

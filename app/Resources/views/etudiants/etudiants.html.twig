@@ -27,6 +27,9 @@
                         <td>{{ etudiant.filieres.label }}</td>
                         <td>{{ etudiant.admissions.label }}</td>
                         <td>
+                            <a href="/etudiants/update/{{etudiant.id}}" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="bottom"
+   title="Modifier"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
                             <a href="#" id="deleteButton" class="btn btn-sm btn-secondary text-danger" data-id="{{etudiant.id}}" data-firstname="{{ etudiant.prenom }}" data-lastname="{{ etudiant.nom }}" data-toggle="modal" data-target="#confirmDelete">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
