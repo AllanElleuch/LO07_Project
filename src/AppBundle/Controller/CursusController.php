@@ -345,9 +345,12 @@ class CursusController extends Controller {
                * On recherche si l'UE existe déjà dans la table CatalogueUE.
                * Si non, on la crée
                */
+               $em = $this->getDoctrine()->getManager();
+
               $res = $this->getDoctrine()
                   ->getRepository('AppBundle:CatalogueUE')
                   ->findOneBy(array('label' => $elemFormation->getSigle()));
+
               if (empty($res)) {
                   $newUE = new CatalogueUE();
                   $newUE->setLabel($elemFormation->getSigle());
@@ -357,7 +360,6 @@ class CursusController extends Controller {
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            $em = $this->getDoctrine()->getManager();
 
             $em->persist($cursus);
             $em->flush();
