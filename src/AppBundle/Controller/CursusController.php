@@ -125,6 +125,8 @@ class CursusController extends Controller {
             ->add('elementsFormations', CollectionType::class, array(
             'entry_type'   => ElementFormationType::class,
             'allow_add'    => true,
+            'allow_delete' => true,
+
             ))
             ->add('envoyer', SubmitType::class, array('label' => 'Valider modifications', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
             ->getForm();
@@ -274,6 +276,8 @@ class CursusController extends Controller {
         ->add('elementsFormations', CollectionType::class, array(
         'entry_type'   => ElementFormationType::class,
         'allow_add'    => true,
+        'allow_delete' => true,
+
         ))
         ->add('envoyer', SubmitType::class, array('label' => 'Création du création', 'attr' => array('class' => 'btn btn-sm btn-outline-success ')))
         ->getForm();
