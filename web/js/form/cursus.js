@@ -2,8 +2,10 @@
 
 jQuery(document).ready(function() {
   InitialisationDOM();
-
+InitialisationAutocompletion();
 });
+
+
 
 // Va permettre d'ajouté dynamiquement des cours aux tableaux de semestre
 function InitialisationDOM(){

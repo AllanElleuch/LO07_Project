@@ -115,40 +115,30 @@ class CursusController extends Controller {
             throw $this->createNotFoundException('Aucun cursus à édité.');
         }
 
-
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
-
             ->add('etudiant', EntityType::class, array(
                 'class' => 'AppBundle:Etudiants',
                 'choice_label' => 'uniqueName',
-                'label' => "Étudiant"))
+                'label' => "Étudiant",
+            'attr' => array('class' => 'form-control')))
             ->add('elementsFormations', CollectionType::class, array(
             'entry_type'   => ElementFormationType::class,
             'allow_add'    => true,
             ))
-            ->add('envoyer', SubmitType::class, array('label' => 'Modifier le cursus'))
-
-
-        ->getForm();
-
-
+            ->add('envoyer', SubmitType::class, array('label' => 'Modifier le cursus', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
+            ->getForm();
+            //réception formulaire
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $cursus = $form->getData();
-
             foreach($cursus->getelementsFormations() as $elemFormation){
               $elemFormation->setCursus($cursus);
             }
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($cursus);
             $em->flush();
-
-            return $this->redirectToRoute('homeCursus');
-
-
+            return $this->redirectToRoute('homeCursus'); //redirection sur la view des cursus
         }
 
         $cursusElements =  $this->getDoctrine()
@@ -171,9 +161,8 @@ class CursusController extends Controller {
 
         }
 
-
+        // création d'un array efficacement afficher les semestre/cours
         $formview=$form->createView();
-
         $it = $formview->getIterator();
         $listElemFormView = array();
         while( $it->valid() ){
@@ -184,11 +173,9 @@ class CursusController extends Controller {
                 if($vars["name"] == "elementsFormations"){
 
                     foreach ($item as $key => $value) {
-                        dump($value);
                         $lab = $value["sem_label"];
                         $currentlabel = $value["sem_label"]->vars["value"];
                         if(!array_key_exists($currentlabel,$listElemFormView)){
-
                             $listElemFormView[$currentlabel]=array();
                         }
                         array_push($listElemFormView[$currentlabel], $value);
@@ -207,7 +194,7 @@ class CursusController extends Controller {
 
         }
 
-
+        // création d'un array json pour le catalogue d'ue nécessaire à l'autocomplétion
         $listUV = $this->getDoctrine()
             ->getRepository('AppBundle:CatalogueUE')
             ->findAll();
@@ -219,7 +206,6 @@ class CursusController extends Controller {
          $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
 
 
-        // dump($listSem);
         return $this->render('cursus/new.html.twig', array(
             'form'   => $formview,
             'nav'    => "cursus",
@@ -279,19 +265,18 @@ class CursusController extends Controller {
         $cursus = new Cursus();
 
         $form = $this->createFormBuilder($cursus)
-            ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
-
-            ->add('etudiant', EntityType::class, array(
-                'class' => 'AppBundle:Etudiants',
-                'choice_label' => 'uniqueName',
-                'label' => "Étudiant"))
-            ->add('elementsFormations', CollectionType::class, array(
-            'entry_type'   => ElementFormationType::class,
-            'allow_add'    => true,
-            ))
-            ->add('envoyer', SubmitType::class, array('label' => 'Créer un cursus'))
-
-            ->getForm();
+        ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
+        ->add('etudiant', EntityType::class, array(
+            'class' => 'AppBundle:Etudiants',
+            'choice_label' => 'uniqueName',
+            'label' => "Étudiant",
+        'attr' => array('class' => 'form-control')))
+        ->add('elementsFormations', CollectionType::class, array(
+        'entry_type'   => ElementFormationType::class,
+        'allow_add'    => true,
+        ))
+        ->add('envoyer', SubmitType::class, array('label' => 'Créer le cursus', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
+        ->getForm();
 
         $form->handleRequest($request);
 

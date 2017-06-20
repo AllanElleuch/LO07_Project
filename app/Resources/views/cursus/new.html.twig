@@ -99,7 +99,6 @@ Nouveau cursus
         {{ form_errors(form) }}
         {{ form_row(form._token) }}
 
-        {% dump(listSem) %}
         <!-- Tableau contenant le contenu des cursus -->
         <h5 class="mt-3">Créez des semestres et ajoutez-y vos UE</h5>
         <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
@@ -122,7 +121,6 @@ Nouveau cursus
                             <th>Action</th>
                             <th><button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Cours</button></th>
                         </tr>
-                        {% dump(coursParSemestre) %}
                         {% for elem  in coursParSemestre[sem] %}
                         {{ form_widget(elem) }}
                         {%  endfor %}
@@ -134,44 +132,29 @@ Nouveau cursus
                     <!-- Container rempli en JS -->
                 </div>
                 {{ form_row(form.envoyer) }}
-
-
-
-
-
-
-
-
-
-
-
             </div>
         {% endblock %}
 
 
         {% block javascripts %}
-        {{ parent() }}
-        <script type="text/javascript">
-        var stringListuv = {{listUV|json_encode()|raw }};
-        var jsonListUV = JSON.parse(stringListuv);
-        var tableUV = [];
-        $.each(jsonListUV, function(i, val) {
-            tableUV.push(val.label);
-        });
 
-        $("body #cursusTableContainer  ").on('click', '.inputUELabel', function() {
-            $(this).autocomplete({
-                source: tableUV,
-            });
-        })
+<script type="text/javascript">
+function InitialisationAutocompletion(){
 
-        </script>
+  var stringListuv = {{listUV|json_encode()|raw }};
+  var jsonListUV = JSON.parse(stringListuv);
+  var tableUV = [];
+  $.each(jsonListUV, function(i, val) {
+      tableUV.push(val.label);
+  });
 
-        <script type="text/javascript">
-
-
-        </script>
-
+  $("body #cursusTableContainer  ").on('click', '.inputUELabel', function() {
+      $(this).autocomplete({
+          source: tableUV,
+      });
+  })
+}
+</script>
         <script src="{{ asset('js/form/cursus.js') }}"></script>
         <script src="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
 
