@@ -24,8 +24,9 @@ jQuery(document).ready(function() {
       $(e.target).parent().parent().parent()
     );
     console.log(
-      $(e.target)[0].getAttribute('class')
+      $(e.target)[0]
     );
+    window.l=$(e.target)[0]
     id=$(e.target).get(0).id;
     $collectionHolder=$("#cursusTableContainer");
     if(id=="newCoursButton"){
@@ -60,7 +61,7 @@ function addTagForm2($collectionHolder, $target) {
 
   // get the new index
   if($collectionHolder.data('index') == undefined ){
-    $collectionHolder.data('index',0)
+    $collectionHolder.data('index',$($target).children().length-1)
   }
 
   var index = $collectionHolder.data('index');

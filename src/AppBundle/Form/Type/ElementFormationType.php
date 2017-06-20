@@ -30,7 +30,7 @@ class ElementFormationType extends AbstractType
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
   $builder
-  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex : LO07', 'class' => 'form-control form-control-sm')))
+  ->add('sigle', TextType::class, array('label' => false, 'attr' => array('placeholder' => 'Ex : LO07', 'class' => 'form-control form-control-sm inputUELabel')))
 
   ->add('credits', TextType ::class, array('label' => false, 'attr' => array('placeholder' => 'Ex : 4 ', 'class' => 'form-control form-control-sm form-control form-control-sm-sm hidden', 'min' => '0')))
 

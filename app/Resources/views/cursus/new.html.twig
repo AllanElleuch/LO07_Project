@@ -180,7 +180,7 @@ $.each(jsonListUV, function(i, val) {
 });
 
 
-$("body #cursusTableContainer  ").on('click', 'tr input:first-child', function() {
+$("body #cursusTableContainer  ").on('click', '.inputUELabel', function() {
 
   // $(this).autocomplete({
   //     lookup: tableUV
@@ -188,12 +188,6 @@ $("body #cursusTableContainer  ").on('click', 'tr input:first-child', function()
 
 $(this).autocomplete({
   source: tableUV,
-  // open: function() {
-  //           $('.ui-autocomplete').width('auto');
-  //           $('.ui-widget-content').css('background', '#E1F7DE');
-  //           $('.ui-menu-item a').removeClass('ui-corner-all');
-  //       }
-
 });
 })
 

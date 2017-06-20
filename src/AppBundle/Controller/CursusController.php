@@ -136,6 +136,11 @@ class CursusController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cursus = $form->getData();
+
+            foreach($cursus->getelementsFormations() as $elemFormation){
+              $elemFormation->setCursus($cursus);
+            }
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($cursus);
             $em->flush();
