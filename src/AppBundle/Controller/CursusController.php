@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 // For annotations
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class CursusController extends Controller {
     /**
@@ -111,6 +112,7 @@ class CursusController extends Controller {
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+
         if (!$cursus) {
             throw $this->createNotFoundException('Aucun cursus à édité.');
         }
@@ -133,10 +135,58 @@ class CursusController extends Controller {
             //réception formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $cursus = $form->getData();
-            foreach($cursus->getelementsFormations() as $elemFormation){
-              $elemFormation->setCursus($cursus);
+
+
+            $cursusForm = $form->getData();
+
+            $cursusBD = $this->getDoctrine()
+                ->getRepository('AppBundle:Cursus')
+                ->find($id);
+                $originalElemFormation = $cursusBD->getElementsFormations();
+                dump($originalElemFormation);
+
+            // $originalElemFormation = new ArrayCollection();
+            // foreach ($cursusBD->getElementsFormations() as $elem) {
+            //       $originalElemFormation->add($elem);
+            //   }
+            dump($id);
+
+              dump($cursusForm->getElementsFormations());
+
+
+              foreach ($originalElemFormation as $elem) {
+                  dump($cursusForm->getElementsFormations()->contains($elem));
+
+            if (false === $cursusForm->getElementsFormations()->contains($elem)) {
+
+                // remove the Task from the Tag
+                $cursus->getElementsFormations()->removeElement($elem);
+                dump($elem);
+                // if it was a many-to-one relationship, remove the relationship like this
+                // $tag->setTask(null);
+
+                // $em->persist($elem);
+
+                $em->remove($elem);
+
+                // if you wanted to delete the Tag entirely, you can also do that
+                // $em->remove($tag);
             }
+            else{
+                foreach($cursus->getelementsFormations() as $elemFormation){
+                  $elemFormation->setCursus($cursus);
+                }
+            }
+
+        }
+        // trigger_error("Impossible de diviser par zéro", E_USER_ERROR);
+
+
+
+
+
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($cursus);
             $em->flush();
