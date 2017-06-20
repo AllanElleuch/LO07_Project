@@ -279,6 +279,7 @@ class CursusController extends Controller {
         ->getForm();
 
         $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cursus = $form->getData();
@@ -290,7 +291,6 @@ class CursusController extends Controller {
                * On recherche si l'UE existe déjà dans la table CatalogueUE.
                * Si non, on la crée
                */
-               $em = $this->getDoctrine()->getManager();
 
               $res = $this->getDoctrine()
                   ->getRepository('AppBundle:CatalogueUE')
@@ -306,6 +306,7 @@ class CursusController extends Controller {
 
 
             $em->persist($cursus);
+
             $em->flush();
 
             return $this->redirectToRoute('homeCursus');
