@@ -86,8 +86,9 @@ class CursusController extends Controller {
 
         $cursusElements =  $this->getDoctrine()
             ->getRepository("AppBundle:ElementFormation")
-            ->findBy(array("cursus" => $id));
+            ->findBy(array("cursus" => $id), array('sem_seq' => 'ASC'));
 
+            //->findBy(array("cursus" => $id));
 
         return $this->render('cursus/view.html.twig', array(
             'nav' => "cursus",
@@ -140,7 +141,7 @@ class CursusController extends Controller {
             foreach($cursus->getelementsFormations() as $elemFormation){
               $elemFormation->setCursus($cursus);
             }
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($cursus);
             $em->flush();
@@ -150,9 +151,13 @@ class CursusController extends Controller {
 
         }
 
+        $cursusElements =  $this->getDoctrine()
+            ->getRepository("AppBundle:ElementFormation")
+            ->findBy(array("cursus" => $id), array('sem_seq' => 'ASC'));
+
 
         $arr = array();
-        foreach ($cursus->getelementsFormations() as $elem  ) {
+        foreach ($cursusElements as $elem  ) {
             $semseq=$elem->getSemSeq();
             $semlabel=$elem->getSemLabel();
 
@@ -194,7 +199,7 @@ class CursusController extends Controller {
         }
 
         $listSem=array( );
-        foreach ($cursus->getelementsFormations() as $elemForm ) {
+        foreach ($cursusElements as $elemForm ) {
 
                 $label = $elemForm->getSemLabel();
                 $semseq = $elemForm->getSemSeq();
@@ -222,7 +227,7 @@ class CursusController extends Controller {
             'cursus' => $cursus,
             'coursParSemestre' => $listElemFormView,
             'listSem'=>$listSem,
-            'listUV'=>$json_listUV
+            'listUV'=>$json_listUV,
 
         ));
 
@@ -391,6 +396,10 @@ class CursusController extends Controller {
                      *
                      * !! Seul l'en-tête est lu, la boucle de lecture s'arrête avant la description du cursus.
                      */
+
+
+
+
                     while(($row = fgetcsv($handle)) !== FALSE) {
                         $data = explode(";", $row[0]);
 

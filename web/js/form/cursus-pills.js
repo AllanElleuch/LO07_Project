@@ -11,6 +11,9 @@ console.log(input);
 console.log(name);
 
   var id = $(this).closest('li').attr('id'); /* 'tab_3' */
+  console.log("id : " +id);
+  console.log($(this).closest('li'));
+
   id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
   var $list = $('#cursusTableContainer > #tab_' + id + " input[name*='"+name+"']")
    for (var i = 0; i < $list.length; i++) {

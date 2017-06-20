@@ -18,7 +18,7 @@
 
             {% if cursusElements is defined %}
                 {% set previousSemSeq = 0 %}
-                {% for element in cursus.elementsFormations %}
+                {% for element in cursusElements %}
                     {% set semSeq = element.semSeq %}
                     {% if semSeq == previousSemSeq %}
                         {% include('cursus/table-cursus-view.html.twig') %}
