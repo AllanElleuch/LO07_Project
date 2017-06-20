@@ -8,6 +8,7 @@ Nouveau cursus
 {% block content %}
 
 <link rel="stylesheet" href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/cursus.css') }}">
 {% set tabs = {} %}
 {% set tabsmenu = {} %}
 {% set listSemestre = {} %}
@@ -88,7 +89,7 @@ Nouveau cursus
                 {{ form_widget(form.label) }}
             </div>
         </div>
-        <div class="row">
+        <div class="mt-2 row">
             <div class="col-sm-2">
                 {{ form_label(form.etudiant) }}
             </div>
@@ -100,15 +101,20 @@ Nouveau cursus
         {{ form_row(form._token) }}
 
         <!-- Tableau contenant le contenu des cursus -->
-        <h5 class="mt-3">Créez des semestres et ajoutez-y vos UE</h5>
-        <div id="cursusTableContainer"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
+        <h5 class="mt-4">Créez des semestres et ajoutez-y vos UE</h5>
+        <div id="cursusTableContainer" class="mt-3"  data-prototype="{{ form_widget(form.elementsFormations.vars.prototype)|e('html_attr') }}">
             {% set i = 1 %}
             {% for  sem,key in listSem %}
 
-            <h5 id="sem{{ key }}"><i class="fa fa-book pr-2" aria-hidden="true"></i>
-                {{sem}}</h5>
-                <table class="table" id="tab_{{i}}">
-                {% set i = i + 1 %}
+
+
+
+                <h5 id="sem{{ key }}"><i class="fa fa-book pr-2" aria-hidden="true"></i>
+                <span class="semlabel">
+                    {{sem}}
+                </span>    </h5>
+                    <table class="table" id="tab_{{i}}">
+
                     <thead class="thead-default">
                         <tr>
                             <th>Sigle</th>
@@ -125,14 +131,21 @@ Nouveau cursus
                         {{ form_widget(elem) }}
                         {%  endfor %}
                     </thead></table>
+                    {% set i = i + 1 %}
 
                     {%  endfor %}
 
 
                     <!-- Container rempli en JS -->
                 </div>
+                <div class="row mb-4">
+
                 {{ form_row(form.envoyer) }}
             </div>
+
+            </div>
+
+
         {% endblock %}
 
 

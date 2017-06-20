@@ -91,11 +91,18 @@ $( document ).ready(function() {
 
     var input= $(this).val()
     var name= $(this).attr('name');
+    if(name="sem_label"){
+      var semseq=  $(this).parent().children().first().val();
+    $('#cursusTableContainer > #sem' + semseq+" .semlabel").html(input);
+
+  }
+
+
     console.log(input);
     console.log(name);
 
     var id = $(this).closest('li').attr('id'); /* 'tab_3' */
-    console.log("id : " +id);
+    console.log("id : " +' #cursusTableContainer > #sem' + id+" .semlabel");
     console.log($(this).closest('li'));
 
     id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
@@ -109,6 +116,8 @@ $( document ).ready(function() {
       //  console.log($(s).attr('value'));
 
     }
+
+
 
   });
 
@@ -158,6 +167,8 @@ $('#newSemesterButton').on('click', function() {
     var lastSemesterLabel = "ISI"
   }
   var newSemesterContent = `
+
+
   <li class="row nav-item" id="form_tab_0` + id + `">
   <input class="form-control form-control-sm col-sm-3"  type="number" min="0" max="8" name="sem_seq" value="` + id + `"> <input class="form-control form-control-sm col-sm-4"  type="text" name="sem_label" placeholder="" value="` + lastSemesterLabel + (lastSemesterInt + 1) + `">
   <div class="col-sm-3 btn-group">
@@ -173,6 +184,10 @@ $('#newSemesterButton').on('click', function() {
 
   /* Création d'un tableau contenant le cursus */
   var tableHeading = `
+  <h5 id="sem` + id + `"><i class="fa fa-book pr-2" aria-hidden="true"></i>
+          <span class="semlabel">
+              ` + "ISI"+id + `
+          </span>    </h5>
   <table class="table" id="tab_` + id + `">
   <thead class="thead-default">
   <tr>
@@ -202,6 +217,8 @@ $(document).on('click', '.removeCursus', function() {
   id = id.substr(id.length - 1) /* Sélection avec l'indice du dernier caractère (substr - 1) : '3' */
   $(this).closest('li').remove()
   $('#cursusTableContainer > #tab_' + id).remove();
+  $('#cursusTableContainer > #sem' + id).remove();
+
 });
 
 

@@ -126,7 +126,7 @@ class CursusController extends Controller {
             'entry_type'   => ElementFormationType::class,
             'allow_add'    => true,
             ))
-            ->add('envoyer', SubmitType::class, array('label' => 'Modifier le cursus', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
+            ->add('envoyer', SubmitType::class, array('label' => 'Valider modifications', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
             ->getForm();
             //réception formulaire
         $form->handleRequest($request);
@@ -275,7 +275,7 @@ class CursusController extends Controller {
         'entry_type'   => ElementFormationType::class,
         'allow_add'    => true,
         ))
-        ->add('envoyer', SubmitType::class, array('label' => 'Créer le cursus', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
+        ->add('envoyer', SubmitType::class, array('label' => 'Création du création', 'attr' => array('class' => 'btn btn-sm btn-outline-success ')))
         ->getForm();
 
         $form->handleRequest($request);

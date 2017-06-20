@@ -37,15 +37,18 @@ public function buildForm(FormBuilderInterface $builder, array $options)
   ->add('affectations', EntityType::class, array(
       'class' => 'AppBundle:Affectations',
       'choice_label' => 'label',
-      'label' => false))
+      'label' => false,
+    'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
   ->add('categories', EntityType::class, array(
       'class' => 'AppBundle:Categories',
       'choice_label' => 'label',
-      'label' => false))
+      'label' => false,
+    'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
   ->add('resultats', EntityType::class, array(
       'class' => 'AppBundle:Resultats',
       'choice_label' => 'label',
-      'label' => false))
+      'label' => false,
+    'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
   ->add('utt', CheckboxType::class, array('label' => false,'required' => false, 'attr' => array(
       'class' => 'form-control form-control-sm',
       'checked' => 'checked',
