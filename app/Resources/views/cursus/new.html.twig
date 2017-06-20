@@ -6,20 +6,18 @@ Nouveau cursus
 
 
 {% block content %}
-<!-- <link rel="stylesheet" href="{{ asset('css/cursus.css') }}">
-<link rel="stylesheet" href="{{ asset('css/nav-pills.css') }}">
-<link rel="stylesheet" href="{{ asset('css/cursus0.css') }}">
-<link rel="stylesheet" href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.css') }}"> -->
+
+<link rel="stylesheet" href="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.css') }}">
 {% set tabs = {} %}
 {% set tabsmenu = {} %}
 {% set listSemestre = {} %}
 
 {% for elem in cursus.elementsFormations %}
 
-    {% set label =elem.getSemLabel %}
-    {% set listSemestre = listSemestre | merge ([(elem.getSemLabel)]) %}
+{% set label =elem.getSemLabel %}
+{% set listSemestre = listSemestre | merge ([(elem.getSemLabel)]) %}
 
-    {% set tabsmenu = tabsmenu | merge ({ (elem.getSemLabel):(elem.getSemSeq)}) %}
+{% set tabsmenu = tabsmenu | merge ({ (elem.getSemLabel):(elem.getSemSeq)}) %}
 
 {%  endfor %}
 {% for elem in form.elementsFormations %}
@@ -28,10 +26,8 @@ Nouveau cursus
 {% set tabs = tabs | merge ({(elem.vars.value.getSemLabel):elem}) %}
 
 {%  endfor %}
-{% dump(form.elementsFormations) %}
 
 
-<!-- <div id="tableUV"  >
 
 {% for uv in listUV %}
 <div class="">
@@ -42,21 +38,20 @@ Nouveau cursus
 </div>
 {%  endfor %}
 
-</div> -->
+</div>
 
 
 <!-- CONTENU PRINCIPAL
-     ================= -->
+================= -->
 <div class="row">
 
     <!-- Sidebar contenant les semestres -->
     <div class="col-md-3">
         <nav class="navbar semesters-list">
             <ul class="nav flex-column" id='semestresNav'>
-            {% set i = 1 %}
-            {% for key, value in listSem %}
-
-            <li class="row nav-item" id="form_tab_{{i}}">
+                {% set i = 1 %}
+                {% for key, value in listSem %}
+                <li class="row nav-item" id="form_tab_{{i}}">
                     <input class="form-control form-control-sm col-sm-3" type="number" min="0" max="8" name="sem_seq" value="{{value}}"> <input class="form-control form-control-sm col-sm-4" type="text" name="sem_label" placeholder="" value="{{key}}">
                     <div class="col-sm-3 btn-group">
                         <a class="btn btn-sm btn-secondary" href="#tab_1">
@@ -68,8 +63,7 @@ Nouveau cursus
                     </div>
                 </li>
                 {% set i = i + 1 %}
-
-            {%  endfor %}
+                {%  endfor %}
 
 
                 <li class="add_item">
@@ -114,44 +108,32 @@ Nouveau cursus
 
             <h5 id="sem{{ key }}"><i class="fa fa-book pr-2" aria-hidden="true"></i>
                 {{sem}}</h5>
-            <table class="table" id="tab_{{i}}">      {% set i = i + 1 %}
+                <table class="table" id="tab_{{i}}">
+                {% set i = i + 1 %}
+                    <thead class="thead-default">
+                        <tr>
+                            <th>Sigle</th>
+                            <th>Crédits</th>
+                            <th>Affectation</th>
+                            <th>Catégorie</th>
+                            <th>Résultat</th>
+                            <th>UTT</th>
+                            <th>Profil</th>
+                            <th>Action</th>
+                            <th><button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Cours</button></th>
+                        </tr>
+                        {% dump(coursParSemestre) %}
+                        {% for elem  in coursParSemestre[sem] %}
+                        {{ form_widget(elem) }}
+                        {%  endfor %}
+                    </thead></table>
 
-                        <thead class="thead-default">
-                            <tr>
-                                <th>Sigle</th>
-                                <th>Crédits</th>
-                                <th>Affectation</th>
-                                <th>Catégorie</th>
-                                <th>Résultat</th>
-                                <th>UTT</th>
-                                <th>Profil</th>
-                                <th>Action</th>
-                                <th><button class="btn btn-sm btn-outline-success" id="newCoursButton"><i class="fa fa-plus"></i> Cours</button></th>
-
-                            </tr>
-
-
-
-{% dump(coursParSemestre) %}
-            {% for elem  in coursParSemestre[sem] %}
-
-                    {{ form_widget(elem) }}
-
-            {%  endfor %}
+                    {%  endfor %}
 
 
-
-
-
-
-            </thead></table>
-
-                {%  endfor %}
-
-
-            <!-- Container rempli en JS -->
-        </div>
-        {{ form_row(form.envoyer) }}
+                    <!-- Container rempli en JS -->
+                </div>
+                {{ form_row(form.envoyer) }}
 
 
 
@@ -163,40 +145,34 @@ Nouveau cursus
 
 
 
-</div>
-{% endblock %}
+            </div>
+        {% endblock %}
 
 
-{% block javascripts %}
-{{ parent() }}
-<script type="text/javascript">
-// window.l={{listUV|json_encode()|raw }}
-var stringListuv = {{listUV|json_encode()|raw }};
-var jsonListUV = JSON.parse(stringListuv);
-// $("input" ).autocomplete({
-//   source: listuv
-// });
-var tableUV = [];
-$.each(jsonListUV, function(i, val) {
-  tableUV.push(val.label);
-});
+        {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript">
+        var stringListuv = {{listUV|json_encode()|raw }};
+        var jsonListUV = JSON.parse(stringListuv);
+        var tableUV = [];
+        $.each(jsonListUV, function(i, val) {
+            tableUV.push(val.label);
+        });
 
-$("body #cursusTableContainer  ").on('click', '.inputUELabel', function() {
-$(this).autocomplete({
-  source: tableUV,
-});
-})
+        $("body #cursusTableContainer  ").on('click', '.inputUELabel', function() {
+            $(this).autocomplete({
+                source: tableUV,
+            });
+        })
 
-</script>
+        </script>
 
-<script type="text/javascript">
+        <script type="text/javascript">
 
 
-</script>
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        </script>
 
-<script src="{{ asset('js/form/cursus.js') }}"></script>
-<script src="{{ asset('js/form/cursus-pills.js') }}"></script>
-<script src="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('js/form/cursus.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
 
-{% endblock %}
+    {% endblock %}
