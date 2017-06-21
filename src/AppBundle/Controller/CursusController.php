@@ -18,10 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use AppBundle\Form\Type\ElementFormationType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-// use Symfony\Component\Serializer\Serializer;
-// use Symfony\Component\Serializer\Encoder\XmlEncoder;
-// use Symfony\Component\Serializer\Encoder\JsonEncoder;
-// use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -32,16 +28,23 @@ use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class CursusController extends Controller {
+
     /**
-     * affiche les cursus d'un étudiant
+     * mesCursusAction
+     * ===============
+     * Affiche la liste des cursus du système
      * @Route("/cursus/mes-cursus/", name="homeCursus")
      */
     public function mesCursusAction(Request $request) {
 
+        /* Récupération de tous les cursus dans la base de données */
         $cursus = $this->getDoctrine()
             ->getRepository('AppBundle:Cursus')
             ->findAll();
 
+        /* Récupération des règlements
+         * Utilisé pour les boutons 'Appliquer règlement' sur les cursus
+         */
         $reglements = $this->getDoctrine()
             ->getRepository('AppBundle:Reglement')
             ->findAll();
@@ -57,39 +60,53 @@ class CursusController extends Controller {
 
 
     /**
+     * deleteCursusAction
+     * ==================
+     * Suppression d'un cursus identifié par son id passé via l'URL
      * @Route("/cursus/delete/{id}")
      */
-    public function deleteCursus(Cursus $cursus) {
+    public function deleteCursusAction(Cursus $cursus) {
 
+        /* Vérification de l'existence du cursus à supprimer
+         * S'il n'existe pas, une exception est levée.
+         */
         if (!$cursus) {
             throw $this->createNotFoundException('Cursus introuvable');
         }
-        $em = $this->getDoctrine()->getEntityManager();
 
+        /* Suppression du cursus */
+        $em = $this->getDoctrine()->getEntityManager();
         $em->remove($cursus);
         $em->flush();
+
         return $this->redirectToRoute('homeCursus');
 
     }
 
     /**
+     * viewOneCursusAction
+     * ===================
+     * Permet d'afficher en détail un cursus identifié par son id passé dans l'URL
      * @Route("/cursus/view/{id}")
      */
-    public function viewOneCursus(Cursus $cursus, $id) {
+    public function viewOneCursusAction(Cursus $cursus, $id) {
 
+        /* Récupération du cursus à partir de son id */
         $cursus = $this->getDoctrine()
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        /* Récupération des règlements
+         * Utilisé pour les boutons 'Appliquer règlement' sur les cursus
+         */
         $reglements = $this->getDoctrine()
             ->getRepository('AppBundle:Reglement')
             ->findAll();
 
+        /* Récupération de tous les éléments de formation associés au cursus */
         $cursusElements =  $this->getDoctrine()
             ->getRepository("AppBundle:ElementFormation")
             ->findBy(array("cursus" => $id), array('sem_seq' => 'ASC'));
-
-            //->findBy(array("cursus" => $id));
 
         return $this->render('cursus/view.html.twig', array(
             'nav' => "cursus",
@@ -102,97 +119,86 @@ class CursusController extends Controller {
     }
 
     /**
+     * updateCursusAction
+     * ==================
+     * Modification d'un cursus identifié par son id dans l'URL.
      * @Route("/cursus/update/{id}")
      */
-    public function updateCursus(Request $request, $id) {
+    public function updateCursusAction(Request $request, $id) {
 
 
-        // create a cursus and give it some dummy data for this example
+        /* Récupération du cursus à partir de son id */
         $cursus = $this->getDoctrine()
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
-
+        /* Vérification de l'existence du cursus à modifier
+         * S'il n'existe pas, une exception est levée.
+         */
         if (!$cursus) {
             throw $this->createNotFoundException('Aucun cursus à édité.');
         }
 
+        /* Création du formulaire */
         $form = $this->createFormBuilder($cursus)
             ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
             ->add('etudiant', EntityType::class, array(
                 'class' => 'AppBundle:Etudiants',
                 'choice_label' => 'uniqueName',
                 'label' => "Étudiant",
-            'attr' => array('class' => 'form-control')))
-            ->add('elementsFormations', CollectionType::class, array(
-            'entry_type'   => ElementFormationType::class,
-            'allow_add'    => true,
-            'allow_delete' => true,
-
+                'attr' => array(
+                    'class' => 'form-control'
+                )
             ))
-            ->add('envoyer', SubmitType::class, array('label' => 'Enregister les modifications', 'attr' => array('class' => 'btn btn-sm btn-outline-success')))
+            ->add('elementsFormations', CollectionType::class, array(
+                'entry_type'   => ElementFormationType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
+            ))
+            ->add('envoyer', SubmitType::class, array(
+                'label' => 'Enregister les modifications',
+                'attr' => array(
+                    'class' => 'btn btn-sm btn-outline-success'
+                )
+            ))
             ->getForm();
-            //réception formulaire
+
         $form->handleRequest($request);
+
+        /* Lors de la soumission du formulaire ...*/
         if ($form->isSubmitted() && $form->isValid()) {
 
-
+            /* Lecture des données du formulaire */
             $cursusForm = $form->getData();
 
+            /* Lecture des données déjà présentes sur le cursus dans la BDD */
             $cursusBD = $this->getDoctrine()
                 ->getRepository('AppBundle:Cursus')
                 ->find($id);
-                $originalElemFormation = $cursusBD->getElementsFormations();
-                dump($originalElemFormation);
-
-            // $originalElemFormation = new ArrayCollection();
-            // foreach ($cursusBD->getElementsFormations() as $elem) {
-            //       $originalElemFormation->add($elem);
-            //   }
-            dump($id);
-
-              dump($cursusForm->getElementsFormations());
+            $originalElemFormation = $cursusBD->getElementsFormations();
 
 
-              foreach ($originalElemFormation as $elem) {
-                  dump($cursusForm->getElementsFormations()->contains($elem));
 
-            if (false === $cursusForm->getElementsFormations()->contains($elem)) {
-
-                // remove the Task from the Tag
-                $cursus->getElementsFormations()->removeElement($elem);
-                dump($elem);
-                // if it was a many-to-one relationship, remove the relationship like this
-                // $tag->setTask(null);
-
-                // $em->persist($elem);
-
-                $em->remove($elem);
-
-                // if you wanted to delete the Tag entirely, you can also do that
-                // $em->remove($tag);
-            }
-            else{
-                foreach($cursus->getelementsFormations() as $elemFormation){
-                  $elemFormation->setCursus($cursus);
+            /* Mise à jour du cursus avec les différences entre le formulaire et la BDD */
+            foreach ($originalElemFormation as $elem) {
+                if (false === $cursusForm->getElementsFormations()->contains($elem)) {
+                    $cursus->getElementsFormations()->removeElement($elem);
+                    $em->remove($elem);
+                } else{
+                    foreach($cursus->getelementsFormations() as $elemFormation){
+                        $elemFormation->setCursus($cursus);
+                    }
                 }
             }
 
-        }
-        // trigger_error("Impossible de diviser par zéro", E_USER_ERROR);
-
-
-
-
-
-
-
+            /* Écriture dans la base de données */
             $em = $this->getDoctrine()->getManager();
             $em->persist($cursus);
             $em->flush();
             return $this->redirectToRoute('homeCursus'); //redirection sur la view des cursus
         }
 
+        /* Récupération de tous les éléments de formation du cursus */
         $cursusElements =  $this->getDoctrine()
             ->getRepository("AppBundle:ElementFormation")
             ->findBy(array("cursus" => $id), array('sem_seq' => 'ASC'));
@@ -203,14 +209,13 @@ class CursusController extends Controller {
             $semseq=$elem->getSemSeq();
             $semlabel=$elem->getSemLabel();
 
-             if(!array_key_exists($semseq,$arr)){
-                 $add = array($semseq=>array() );
-                 array_push($arr,$add);
-                 array_push($arr[$semseq-1],array("semlabel"=>$semlabel ));
-                 array_push($arr[$semseq-1],array("semseq"=>$semseq ));
-             }
-             array_push($arr[$semseq-1], $elem->toArray());
-
+            if(!array_key_exists($semseq,$arr)){
+                $add = array($semseq=>array() );
+                array_push($arr,$add);
+                array_push($arr[$semseq-1],array("semlabel"=>$semlabel ));
+                array_push($arr[$semseq-1],array("semseq"=>$semseq ));
+            }
+            array_push($arr[$semseq-1], $elem->toArray());
         }
 
         // création d'un array efficacement afficher les semestre/cours
@@ -234,29 +239,26 @@ class CursusController extends Controller {
                     }
                 }
             }
-        $it->next();
+            $it->next();
         }
 
         $listSem=array( );
         foreach ($cursusElements as $elemForm ) {
-
                 $label = $elemForm->getSemLabel();
                 $semseq = $elemForm->getSemSeq();
                 $listSem[$label]=$semseq;
-
         }
 
         // création d'un array json pour le catalogue d'ue nécessaire à l'autocomplétion
         $listUV = $this->getDoctrine()
             ->getRepository('AppBundle:CatalogueUE')
             ->findAll();
-      $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-            $normalizer = new ObjectNormalizer($classMetadataFactory);
-            $serializer = new Serializer(array($normalizer));
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $normalizer = new ObjectNormalizer($classMetadataFactory);
+        $serializer = new Serializer(array($normalizer));
 
-            $data = $serializer->normalize($listUV, null, array('groups' => array('labelUV')));
-         $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
-
+        $data = $serializer->normalize($listUV, null, array('groups' => array('labelUV')));
+        $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         return $this->render('cursus/new.html.twig', array(
             'form'   => $formview,
@@ -274,95 +276,114 @@ class CursusController extends Controller {
 
 
     /**
+     * duplicateCursusAction
+     * =====================
+     * Duplique un cursus identifié par l'id passé dans l'URL
      * @Route("/cursus/duplicate/{id}")
      */
-    public function duplicateCursus(Request $request, $id) {
+    public function duplicateCursusAction(Request $request, $id) {
 
 
-        // create a cursus and give it some dummy data for this example
+        /* Récupération du cursus à dupliquer */
         $cursus = $this->getDoctrine()
             ->getRepository('AppBundle:Cursus')
             ->find($id);
 
+        /* Récupération des éléments de formation liés au cursus à dupliquer */
         $elemsFormation = $this->getDoctrine()
             ->getRepository('AppBundle:ElementFormation')
             ->findBy(array(
                 'cursus' => $cursus,
             ));
 
+        /* Duplication du cursus */
         $em = $this->getDoctrine()->getManager();
         $newCursus = clone $cursus;
         $em->persist($newCursus);
 
+        /* Duplication des éléments de formation
+         * Affectation des nouveaux éléments de formation au nouveau cursus
+         */
         foreach ($elemsFormation as $elt) {
             $newElt = clone $elt;
             $newElt->setCursus($newCursus);
             $em->persist($newElt);
         }
+
         $em->flush();
 
-
         return $this->redirectToRoute('homeCursus');
-
-
     }
 
 
     /**
+     * newCursusAction
+     * ===============
+     * Crée un nouveau cursus
      * @Route("/cursus/new/")
      */
     public function newCursusAction(Request $request) {
 
-        // create a cursus and give it some dummy data for this example
+        /* Création d'un nouveau cursus */
         $cursus = new Cursus();
 
+        /* Création du formulaire */
         $form = $this->createFormBuilder($cursus)
-        ->add('label', TextType::class, array('label' => 'Nom du cursus', 'attr' => array('placeholder' => 'Mon cursus UTT', 'class' => 'form-control')))
-        ->add('etudiant', EntityType::class, array(
-            'class' => 'AppBundle:Etudiants',
-            'choice_label' => 'uniqueName',
-            'label' => "Étudiant",
-        'attr' => array('class' => 'form-control')))
-        ->add('elementsFormations', CollectionType::class, array(
-        'entry_type'   => ElementFormationType::class,
-        'allow_add'    => true,
-        'allow_delete' => true,
-
-        ))
-        ->add('envoyer', SubmitType::class, array('label' => 'Créer le cursus', 'attr' => array('class' => 'btn btn-sm btn-outline-success ')))
-        ->getForm();
+            ->add('label', TextType::class, array(
+                'label' => 'Nom du cursus',
+                'attr' => array(
+                    'placeholder' => 'Mon cursus UTT',
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('etudiant', EntityType::class, array(
+                'class' => 'AppBundle:Etudiants',
+                'choice_label' => 'uniqueName',
+                'label' => "Étudiant",
+                'attr' => array(
+                    'class' => 'form-control'
+                )
+            ))
+            ->add('elementsFormations', CollectionType::class, array(
+                'entry_type'   => ElementFormationType::class,
+                'allow_add'    => true,
+                'allow_delete' => true,
+            ))
+            ->add('envoyer', SubmitType::class, array(
+                'label' => 'Créer le cursus',
+                'attr' => array(
+                    'class' => 'btn btn-sm btn-outline-success'
+                )
+            ))
+            ->getForm();
 
         $form->handleRequest($request);
-        $em = $this->getDoctrine()->getManager();
 
+        /* Lorsque le formulaire est soumis ... */
         if ($form->isSubmitted() && $form->isValid()) {
+
             $cursus = $form->getData();
+            $em = $this->getDoctrine()->getManager();
 
             foreach($cursus->getelementsFormations() as $elemFormation){
-              $elemFormation->setCursus($cursus);
+                $elemFormation->setCursus($cursus);
 
-              /* Apprentissage des labels d'UE :
-               * On recherche si l'UE existe déjà dans la table CatalogueUE.
-               * Si non, on la crée
-               */
+                /* Apprentissage des labels d'UE :
+                 * On recherche si l'UE existe déjà dans la table CatalogueUE.
+                 * Si non, on la crée
+                 */
+                $res = $this->getDoctrine()
+                    ->getRepository('AppBundle:CatalogueUE')
+                    ->findOneBy(array('label' => $elemFormation->getSigle()));
 
-              $res = $this->getDoctrine()
-                  ->getRepository('AppBundle:CatalogueUE')
-                  ->findOneBy(array('label' => $elemFormation->getSigle()));
-
-              if (empty($res)) {
-                  $newUE = new CatalogueUE();
-                  $newUE->setLabel($elemFormation->getSigle());
-                  $em->persist($newUE);
-              }
+                if (empty($res)) {
+                    $newUE = new CatalogueUE();
+                    $newUE->setLabel($elemFormation->getSigle());
+                    $em->persist($newUE);
+                }
             }
-
-
-
             $em->persist($cursus);
-
             $em->flush();
-
             return $this->redirectToRoute('homeCursus');
         }
 
@@ -374,12 +395,13 @@ class CursusController extends Controller {
         $listUV = $this->getDoctrine()
             ->getRepository('AppBundle:CatalogueUE')
             ->findAll();
-            $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-            $normalizer = new ObjectNormalizer($classMetadataFactory);
-            $serializer = new Serializer(array($normalizer));
 
-            $data = $serializer->normalize($listUV, null, array('groups' => array('labelUV')));
-         $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $normalizer = new ObjectNormalizer($classMetadataFactory);
+        $serializer = new Serializer(array($normalizer));
+
+        $data = $serializer->normalize($listUV, null, array('groups' => array('labelUV')));
+        $json_listUV = json_encode($data, JSON_UNESCAPED_UNICODE);
 
         return $this->render('cursus/new.html.twig', array(
             'form' => $formview,
@@ -390,17 +412,20 @@ class CursusController extends Controller {
             'listSem'=>$listSem,
             'listUV'=>$json_listUV,
             ));
-
-
     }
 
 
-    /**
+    /** importCursusAction
+     *  ==================
+     *  Importation d'un cursus au format csv
      * @Route("/cursus/import/")
      */
     public function importCursusAction(Request $request) {
 
-        /*Initialisation de variables utilisées pour la vue */
+        /* Initialisation de variables utilisées pour la value
+         * On part du principe que tout se passera bien
+         * Une erreur changera la classe et le message de la notification
+         */
         $notifClass = 'success';
         $notifBody  = 'Le fichier a été importé.';
 
@@ -417,12 +442,9 @@ class CursusController extends Controller {
             ->getForm();
 
         if ($request->getMethod('post') == 'POST') {
-            // Bind request to the form
             $form->handleRequest($request);
 
-            // If form is valid
             if ($form->isValid()) {
-                // Get file
                 $file = $form->get('submitFile');
                 $file = $file->getData();
 
@@ -436,10 +458,6 @@ class CursusController extends Controller {
                      *
                      * !! Seul l'en-tête est lu, la boucle de lecture s'arrête avant la description du cursus.
                      */
-
-
-
-
                     while(($row = fgetcsv($handle)) !== FALSE) {
                         $data = explode(";", $row[0]);
 
@@ -586,7 +604,6 @@ class CursusController extends Controller {
 
         }
 
-        // replace this example code with whatever you need
         return $this->render('cursus/import.html.twig', array(
             'nav' => "cursus",
             'subnav' => "import",
@@ -596,6 +613,9 @@ class CursusController extends Controller {
 
 
     /**
+     * exportOneCursusAction
+     * =====================
+     * Exporte un cursus choisi au format csv
      * @Route("/cursus/export/{id}")
      */
     public function exportOneCursusAction(Request $request, $id) {
@@ -691,14 +711,14 @@ class CursusController extends Controller {
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT
         );
-
         return $response;
-
     }
 
 
 
     /**
+     * helpImportCursusAction
+     * ======================
      * affiche les cursus d'un étudiant
      * @Route("help/cursus/import/")
      */
