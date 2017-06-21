@@ -730,14 +730,4 @@ class CursusController extends Controller {
 
     }
 
-    /**
-     * @Route("/phpinfo")
-     */
-    public function phpInfoAction(Request $request) {
-
-        phpinfo();
-
-    }
-
-
 }
