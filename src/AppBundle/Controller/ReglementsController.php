@@ -17,10 +17,14 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ReglementsController extends Controller {
 
     /**
+     * mesReglementsAction
+     * ===================
+     * Affichage de la liste des règlements
      * @Route("/reglements/mes-reglements/")
      */
     public function mesReglementsAction(Request $request)
     {
+        /* Récupération des règlements dans la base de données */
         $reglements = $this->getDoctrine()
             ->getRepository('AppBundle:Reglement')
             ->findAll();
@@ -34,6 +38,9 @@ class ReglementsController extends Controller {
 
 
     /**
+     * exportOneReglementAction
+     * ========================
+     * Exporte le règlement choisi au format csv
      * @Route("/reglements/export/{id}")
      */
     public function exportOneReglementAction(Request $request, $id) {
@@ -91,11 +98,9 @@ class ReglementsController extends Controller {
                     ->getRepository('AppBundle:Agregat')
                     ->find($rule->getAgregat())->getLabel(),
                 $rule->getCibleAgregat(),
-                /* BEGIN : ISSUE HERE */
                 $this->getDoctrine()
                     ->getRepository('AppBundle:Affectations')
                     ->find($rule->getAffectations())->getLabel(),
-                /* END : ISSUE HERE */
                 $rule->getSeuil(),
             );
             fputcsv($csvFile, $line, ";");
@@ -118,6 +123,9 @@ class ReglementsController extends Controller {
 
 
     /**
+     * ApplyReglementAction
+     * ====================
+     * Permet d'appliquer un règlement à un cursus
      * @Route("/reglements/{cursusId}/{reglementId}")
      */
     public function ApplyReglementAction(Request $request, $cursusId, $reglementId)
@@ -273,10 +281,6 @@ class ReglementsController extends Controller {
             $results['ST_BR'] +
             $results['HP_BR'];
 
-
-
-
-
         $mainArray    = array();
         $missingArray = array();
 
@@ -290,7 +294,6 @@ class ReglementsController extends Controller {
 
             $key = $cibleAgregat . '_' . $affectations;
 
-            /**/
             $obtained = $results[$key];
 
             if ($obtained < $seuil) {
@@ -333,6 +336,10 @@ class ReglementsController extends Controller {
 
 
     /**
+     * importReglementsAction
+     * ======================
+     * NOT USED
+     * Permet(era?) d'importer un règlement au format csv
      * @Route("/reglements/import/")
      */
     public function importReglementsAction(Request $request)
