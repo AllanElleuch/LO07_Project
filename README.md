@@ -1,7 +1,9 @@
 # LO07 Project : EasyCursus
----
+===================
+
  
 ### Introduction 
+-------------------
 
 A tool for the management of students' curriculum in ISI program at the UTT. 
 
@@ -15,11 +17,13 @@ Tools used for development :
 
 
 ### Contributor 
+-------------------
 
 * Allan Elleuch 
 * Corentin Laithier
 
 ### Goal
+-------------------
 
 The tool must be a website allowing:
 * help students better understand their program's rules they are enrolled in
@@ -28,6 +32,7 @@ The tool must be a website allowing:
 
 
 ### UML Modeling
+-------------------
 
 #### Class diagram
 
