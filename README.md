@@ -1,5 +1,5 @@
 # LO07 Project : EasyCursus
-===================
+
 
  
 ### Introduction 
@@ -44,6 +44,7 @@ The tool must be a website allowing:
 
 
 ### Design and features
+-------------------
 
 #### Autocompletion with jQuery UI
 
